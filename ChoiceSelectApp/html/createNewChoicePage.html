@@ -37,7 +37,7 @@
 	<br><br><br>
 	<input type = button value = "Create Choice" onClick = createChoice() />
 	<br>
-	<input type = button value = "Back" onClick = backToLogin() />
+	<input type = button value = "Back" onClick = "location.href='userLogin.html'" />
 	
 	</form>
 	</div>
@@ -48,6 +48,10 @@
 		//consume user and password to create new team
 		//consume descriptions and create choice
 		//add choice to team
+		
+		//redirect to main UI after making sure all info was entered
+		
+		//location.href = 'mainUI.html'
 	}
 	
 	function backToLogin() {

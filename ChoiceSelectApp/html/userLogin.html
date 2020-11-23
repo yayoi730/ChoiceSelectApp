@@ -26,7 +26,7 @@
 	<br><br><br>
 	<input type = "button" value = "Login" onClick = "loginUser()" />
 	<br>
-	<input type = "button" value = "Create New Choice" onClick = toCreateChoice()/>
+	<input type = "button" value = "Create New Choice" onClick = "location.href = 'createNewChoicePage.html'" />
 	<br><br>
 	<input type = "button" value = "Login As Administrator" onClick = attemptAsAdmin()/>
 	
@@ -39,10 +39,6 @@
 		//consume inputs and check if member exists in database
 		//if not, create new member and store in database
 		//if no password is used, store "" (empty string)
-	}
-	
-	function toCreateChoice() {
-		//redirect to createNewChoicePage.html
 	}
 	
 	function attemptAsAdmin() {
