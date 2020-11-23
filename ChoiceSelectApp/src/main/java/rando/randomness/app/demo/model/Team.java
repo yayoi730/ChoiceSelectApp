@@ -5,6 +5,7 @@ import java.util.Iterator;
 
 
 public class Team implements Iterable<Member>{
+	String tID;
 	ArrayList<Member> members;
 	Choice choice;
 	public Team(ArrayList<Member> members,Choice choice) {
@@ -14,4 +15,7 @@ public class Team implements Iterable<Member>{
 	public Iterator<Member> iterator() {
 		return members.iterator();
 	}
+	
+	public String getTID() {return this.tID;}
+	public void setTID(String tID) {this.tID = tID;}
 }

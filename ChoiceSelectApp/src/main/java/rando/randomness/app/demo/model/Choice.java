@@ -6,6 +6,7 @@ import java.util.Iterator;
 public class Choice {
 	Iterator<Alternative> iterator;
 	String id;
+	String tID;
 	String description;
 	Timestamp creationDate;
 	Timestamp completionDate;
@@ -18,5 +19,10 @@ public class Choice {
 	public String getID() {return this.id;}
 	public String getDescription() {return this.description;}
 	public Timestamp getCreationDate() {return this.creationDate;}
+	
+	public void setID(String cID) {this.id = cID;}
+	
+	public String getTID() {return this.tID;}
+	public void setTID(String tID) {this.tID = tID;}
 	
 }
