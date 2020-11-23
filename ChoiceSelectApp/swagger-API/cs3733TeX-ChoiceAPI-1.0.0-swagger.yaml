@@ -1,0 +1,575 @@
+swagger: '2.0'
+info:
+  description: 
+    "Choice WebApp API for creating, commenting, and deciding on a choice and its alternatives"
+  version: 1.0.0
+  title: ChoiceAPI
+  contact:
+    name: CS3733 Team TeX
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+# basePath: /v2
+
+paths:
+  /createModel:
+    post:
+      tags:
+      - Model
+      operationId: createModel
+      description: "Create a model"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "operation successful"
+        400: 
+          description: "unexpected error"
+  /setTeam:
+    post: 
+      tags:
+      - Model
+      operationId: setTeam
+      description: "Set team for model"
+      consumes:
+      - "application/jason"
+      produces:
+      - "application/json"
+      parameters:
+      - in: body
+        name: team
+        schema:
+          $ref: '#/definitions/Team'
+      responses:
+        200:
+          description: "operation successful"
+        400: 
+          description: "unexpected error"
+  /setAdmin:
+    post:
+      tags:
+      - Model
+      operationId: setAdmin
+      description: "Set admin of model"
+      consumes:
+      - "application/jason"
+      produces: 
+      - "application/json"
+      parameters:
+      - in: body
+        name: adminUser
+        schema:
+          $ref: '#/definitions/Member'
+      responses:
+        200:
+          description: "operation successful"
+        400:
+          description: "unexpected error"
+        404: 
+          description: "member not found or does not exist"
+
+# Should be called using the given user to confirm he/she is admin
+  /getReports:
+    post:
+      tags:
+      - Model
+      operationId: getReports
+      description: "Return reports of all choices to admin user"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "operation successful"
+          schema:
+            type: array
+            items: 
+              $ref: '#/definitions/Report'
+        400: 
+          description: "unexpected error retriving reports"
+        401: 
+          description: "member not authorized"
+        404:
+          description: "no choices found to report"
+
+  /getChoice/{choiceID}:
+    get:
+      tags:
+      - Model
+      operationId: getChoice
+      description: "Return Choice"
+      consumes:
+      - "application/jason"
+      produces:
+      - "application/json"
+      parameters:
+      - in: path
+        name: choiceID
+        type: integer
+        required: true
+      responses:
+        200:
+          description: "operation successful"
+        400: 
+          description: "unexpected error retriving choice"
+        
+# Choice can only be deleted if it is over N days old
+  /deleteOldChoice/{choiceId}:
+    post:
+      tags:
+      - Model
+      description: "Delete a given choice"
+      consumes:
+      - "application/jason"
+      produces:
+      - "application/json"
+      parameters:
+      - in: path
+        name: choiceId
+        type: integer
+        required: true
+      responses:
+        200:
+          description: "operation successful"
+        400:
+          description: "unexpected error"
+        401:
+          description: "choice is not old enough"
+        404:
+          description: "choice not found"
+
+  /createTeam:
+  # Team must be created with first member
+    post:
+      tags: 
+      - Team
+      operationId: createTeam
+      description: "Create new team"
+      consumes:
+      - "application/jason"
+      produces:
+      - "application/json"
+      parameters:
+      - in: body
+        name: firstMember
+        schema: 
+          $ref: '#/definitions/Member'
+      responses:
+        200:
+          description: "operation successful"
+        400: 
+          description: "unexpected error"
+
+  /addMember:
+    post:
+      tags:
+      - Team
+      operationId: addMember
+      description: "Add new member to team"
+      consumes:
+      - "application/jason"
+      produces:
+      - "application/json"
+      parameters:
+      - in: body
+        name: newMember
+        schema: 
+          $ref: '#/definitions/Member'
+      responses:
+        200:
+          description: "operation successful"
+        400: 
+          description: "unexpected error"
+
+  /team/{username}:
+    get: 
+      tags:
+      - Team
+      operationId: getMemberByName
+      description: "Get a member from the username"
+      consumes:
+      - "application/jason"
+      produces: 
+      - "application/json"
+      parameters: 
+      - in: path
+        name: username
+        type: string
+        required: true
+      responses:
+        200: 
+          description: Member with the given username
+          schema:
+            $ref: '#/definitions/Member'
+        400: 
+          description: "unexpected error"
+        404:
+          description: "Member with given username not found"
+
+  /createMember/{username}:
+  # Create new member without password, set password as NULL
+    post:
+      tags: 
+      - Member
+      operationId: createMember
+      description: "Create a new member"
+      consumes:
+      - "application/jason"
+      produces:
+      - "application/json"
+      parameters:
+      - in: path
+        name: username
+        type: string
+        required: true
+      responses:
+        200:
+          description: "operation successful"
+        400: 
+          description: "unexpected error"
+
+  /createChoice/{choiceDesc}:
+    post:
+      tags: 
+      - Choice
+      operationId: createChoice
+      description: "Create new choice"
+      consumes:
+      - "application/jason"
+      produces:
+      - "application/json"
+      parameters: 
+      - in: path
+        name: choiceDesc
+        type: string
+        required: true
+      responses:
+        200:
+          description: "operation successful"
+        400: 
+          description: "unexpected error"
+  
+  /completeChoice/{choiceId}:
+    post:
+      tags: 
+      - Choice
+      operationId: completeChoice
+      description: "Complete a choice"
+      consumes:
+      - "application/jason"
+      produces:
+      - "application/json"
+      parameters: 
+      - in: path
+        name: choiceId
+        type: integer
+        required: true
+      responses:
+        200:
+          description: "operation successful"
+        400: 
+          description: "unexpected error"
+
+  /makeReport:
+    post:
+      tags:
+      - Choice
+      operationId: makeReport
+      description: "Creates and returns a report of a choice"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200: 
+          description: "report created successfully"
+          schema: 
+            $ref: '#/definitions/Report'
+        400:
+          description: "unexpected error"
+
+  /createAlternative/{altDesc}:
+    post:
+      tags: 
+      - Alternative
+      operationId: createAlternative
+      description: "Create new alternative"
+      consumes:
+      - "application/jason"
+      produces:
+      - "application/json"
+      parameters: 
+      - in: path
+        name: altDesc
+        type: string
+        required: true
+      responses:
+        200:
+          description: "operation successful"
+        400: 
+          description: "unexpected error"
+
+  /addFeedback:
+    post:
+      tags:
+      - Alternative
+      operationId: addFeedback
+      description: "Add feedback to alternative"
+      consumes:
+      - "application/jason"
+      produces:
+      - "application/json"
+      parameters:
+      - in: body
+        name: feedback
+        schema:
+          $ref: '#/definitions/Feedback'
+      responses:
+        200:
+          description: "operation successful"
+        400: 
+          description: "unexpected error"
+
+  /addApprover:
+    post:
+      tags: 
+      - Alternative
+      operationId: addApprover
+      description: "Add memeber name to Alternatives approver list"
+      consumes:
+      - "application/jason"
+      produces:
+      - "application/json"
+      parameters:
+      # Actual method will extract username from participating member
+      - in: body
+        name: addedMember
+        schema: 
+          $ref: '#/definitions/Member'
+      responses:
+        200:
+          description: "operation successful"
+        400: 
+          description: "unexpected error"
+ 
+  /addDisapprover:
+    post:
+      tags: 
+      - Alternative
+      operationId: addDisapprover
+      description: "Add memeber name to Alternatives approver list"
+      consumes:
+      - "application/jason"
+      produces:
+      - "application/json"
+      parameters:
+      # Actual method will extract username from participating member
+      - in: body
+        name: addedMember
+        schema: 
+          $ref: '#/definitions/Member'
+      responses:
+        200:
+          description: "operation successful"
+        400: 
+          description: "unexpected error"
+
+  /removeApprover:
+    post:
+      tags: 
+      - Alternative
+      operationId: removeApprover
+      description: "Remove member name from Alternatives approver list"
+      consumes:
+      - "application/jason"
+      produces:
+      - "application/json"
+      parameters:
+      # Actual method will extract username from participating member
+      - in: body
+        name: addedMember
+        schema: 
+          $ref: '#/definitions/Member'
+      responses:
+        200:
+          description: "operation successful"
+        400: 
+          description: "unexpected error"
+ 
+  /removeDisapprover:
+    post:
+      tags: 
+      - Alternative
+      operationId: removeDisapprover
+      description: "Remove member name from Alternatives approver list"
+      consumes:
+      - "application/jason"
+      produces:
+      - "application/json"
+      parameters:
+      # Actual method will extract username from participating member
+      - in: body
+        name: addedMember
+        schema: 
+          $ref: '#/definitions/Member'
+      responses:
+        200:
+          description: "operation successful"
+        400: 
+          description: "unexpected error"
+
+  /createFeedback/{description}:
+    post:
+      tags:
+      - Feedback
+      operationId: createFeedback
+      description: "Create new feedback"
+      consumes:
+      - "application/jason"
+      parameters:
+      # Actual method will extract username from participating member
+      - in: body
+        name: author
+        schema:
+          $ref: "#/definitions/Member"
+      - in: path
+        name: description
+        type: string
+        required: true
+      responses:
+        200:
+          description: "operation successful"
+        400: 
+          description: "unexpected error"
+
+# Report constructor, the main usage is in Choice class
+  /createReport/{choiceId}/{isCompleted}:
+    post:
+      tags:
+      - Report
+      operationId: createReport
+      description: "Report constructor"
+      consumes:
+      - "application/jason"
+      produces: 
+      - "application/json"
+      parameters:
+      - in: path
+        name: choiceId
+        type: integer
+        required: true
+      - in: path
+        name: isCompleted
+        type: boolean
+        required: true
+      - in: body
+        name: dateCompleted
+        schema:
+          type: object
+        required: true
+      responses:
+        200:
+          description: "operation successful"
+        400: 
+          description: "unexpected error"
+  
+definitions:
+  ApiResponse:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      type:
+        type: string
+      message:
+        type: string
+  Model:
+    type: object
+    properties:
+      admin:
+        $ref: '#/definitions/Member'
+      team:
+        $ref: '#/definitions/Team'
+  Report:
+    type: object
+    properties:
+      choiceID:
+        type: string
+      completed:
+        type: boolean
+      dateOfCompletion:
+        type: object
+  Choice:
+    type: object
+    description: Provides alternatives to choice
+    properties:
+      id:
+        type: integer
+      description:
+        type: string
+      alternatives:
+        type: array
+        items:
+          $ref: '#/definitions/Alternative'
+      dateOfCreation:
+        type: object
+      dateofCompleion:
+        type: object
+      finalChoice:
+        type: integer
+        format: int32
+  Alternative:
+    type: object
+    description: Provides alternative to choice
+    properties:
+      description: 
+        type: string
+      approvers: 
+        type: array
+        items:
+          type: string
+      disapprovers: 
+        type: array
+        items:
+          type: string
+      feedback: 
+        type: array
+        items:
+          $ref: '#/definitions/Feedback'
+  Member:
+    type: object
+    properties:
+      name:
+        type: string
+      password:
+        type: string
+  Feedback:
+    type: object
+    properties:
+      timestamp:
+        type: integer
+      description:
+        type: string
+      creator:
+        type: string
+  Team:
+    type: object
+    properties: 
+      members: 
+        type: array
+        items:
+          $ref: '#/definitions/Member'
+      choice:
+        $ref: '#/definitions/Choice'
+
+
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+# Added by API Auto Mocking Plugin
+host: virtserver.swaggerhub.com
+basePath: /cs3733TeX/ChoiceAPI/1.0.0
+schemes:
+ - https
+ - http
