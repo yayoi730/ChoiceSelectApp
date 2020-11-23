@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<style>
+	.center {
+		text-align: center;
+	}
+</style>
+
+<body>
+	<div class = "center" >
+	
+	<h1>Choice Application</h1>
+	<br>
+	<h3>Login to existing choice</h3>
+	
+	<form>
+	
+	Choice ID: <input name = "choiceId" value = "" />
+	<br><br>
+	Username: <input name = "username" value = "" />
+	<br>
+	Password (Optional): <input name = "password" value = "" />
+	<br>
+	
+	<br><br><br>
+	<input type = "button" value = "Login" onClick = "loginUser()" />
+	<br>
+	<input type = "button" value = "Create New Choice" onClick = toCreateChoice()/>
+	<br><br>
+	<input type = "button" value = "Login As Administrator" onClick = attemptAsAdmin()/>
+	
+	</form>
+	</div>
+	
+	<script type = "text/javascript">
+	
+	function loginUser() {
+		//consume inputs and check if member exists in database
+		//if not, create new member and store in database
+		//if no password is used, store "" (empty string)
+	}
+	
+	function toCreateChoice() {
+		//redirect to createNewChoicePage.html
+	}
+	
+	function attemptAsAdmin() {
+		//consume inputs
+		//if admin login is correct, redirect to adminPage.html
+		//otherwise, show text error and stay on page
+	}
+	
+	</script>
+
+</body>
+
+</html>
