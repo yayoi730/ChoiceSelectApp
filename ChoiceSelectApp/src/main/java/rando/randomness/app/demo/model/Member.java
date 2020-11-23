@@ -12,5 +12,6 @@ public class Member {
 	}
 	public String getName() {return this.name;}
 	public String getPassword() {return this.password;}
+	
 
 }

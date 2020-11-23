@@ -19,4 +19,8 @@ public class Choice {
 	public String getDescription() {return this.description;}
 	public Timestamp getCreationDate() {return this.creationDate;}
 	
+	public void completeChoice(int choiceNum) { // basically a setter, needs clarification
+		this.finalChoice = choiceNum;
+	}
+	
 }
