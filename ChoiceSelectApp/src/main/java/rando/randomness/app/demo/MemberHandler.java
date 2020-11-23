@@ -1,5 +1,5 @@
 package rando.randomness.app.demo;
 
-public class CreateMemberHandler {
+public class MemberHandler {
 
 }
