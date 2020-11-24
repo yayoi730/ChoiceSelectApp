@@ -33,7 +33,16 @@ public class Alternative {
 	public void addDisapprover(Member m) {
 		this.disapprovers.add(m);
 	}
-
+	public void removeDisapprover(String name) {
+		for(Member m : approvers) {
+			if(m.getName() == name) {
+				this.disapprovers.remove(m);
+			}
+		}
+	}
+	public void addFeedback(Feedback f) {
+		feedback.add(f);
+	}
 	public String getAID() {return this.aID;}
 	public void setAID(String aID) {this.aID = aID;}
 	
