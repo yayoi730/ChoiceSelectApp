@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 public class Alternative {
 	String aID;
-	ArrayList<Member> approvers;
-	ArrayList<Member> disapprovers;
-	ArrayList<Feedback> feedback;
+	ArrayList<Member> approvers = new ArrayList<>();
+	ArrayList<Member> disapprovers = new ArrayList<>();
+	ArrayList<Feedback> feedback = new ArrayList<>();
 	String description;
 	public Alternative(String description) {
 		this.description = description;

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Choice {
-	ArrayList<Alternative> alternatives;
+	ArrayList<Alternative> alternatives = new ArrayList<>();
 	String id;
 	String tID;
 	String description;

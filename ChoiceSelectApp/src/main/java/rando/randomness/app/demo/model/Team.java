@@ -6,7 +6,7 @@ import java.util.Iterator;
 
 public class Team {
 	String tID;
-	ArrayList<Member> members;
+	ArrayList<Member> members = new ArrayList<>();
 	Choice choice;
 	public Team(ArrayList<Member> members,Choice choice) {
 		this.members = members;
