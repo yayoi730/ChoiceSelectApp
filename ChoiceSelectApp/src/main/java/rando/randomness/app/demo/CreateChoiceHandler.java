@@ -28,7 +28,7 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, 
 	@Override
 	public CreateChoiceResponse handleRequest(CreateChoiceRequest req, Context context) {
 		logger = context.getLogger();
-		logger.log("Loading Java Lambda handler of ChoiceHandler");
+		logger.log("Loading Java Lambda handler of CreateChoiceHandler");
 		logger.log(req.toString());
 		
 		ChoiceDAO dao =  new ChoiceDAO();
@@ -56,7 +56,7 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, 
 			Choice newChoice = new Choice(req.getID(), req.getDescription(), req.getCreationDate());
 			try {
 				dao.addChoice(newChoice , req.getID());
-				response = new CreateChoiceResponse("New Choice Created");  // success
+				response = new CreateChoiceResponse("operation successful");  // success
 			} catch (Exception e) {
 				response = new CreateChoiceResponse("",400, failMessage);  // success
 			}

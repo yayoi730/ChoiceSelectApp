@@ -25,7 +25,7 @@ LambdaLogger logger;
 	@Override
 	public CreateMemberResponse handleRequest(CreateMemberRequest req, Context context) {
 		logger = context.getLogger();
-		logger.log("Loading Java Lambda handler of ChoiceHandler");
+		logger.log("Loading Java Lambda handler of CreateMemberHandler");
 		logger.log(req.toString());
 		
 		ChoiceDAO dao =  new ChoiceDAO();
@@ -36,7 +36,7 @@ LambdaLogger logger;
 		Member loadedMember = null;
 		
 		try {
-			loadedMember = loadMemberFromRDS(req.getTID(), req.getName(), req.getMID());
+			loadedMember = loadMemberFromRDS(req.getTID(), req.getName());
 			loaded = true;
 		} 
 		catch (Exception e) {
@@ -50,29 +50,31 @@ LambdaLogger logger;
 			response = new CreateMemberResponse("",400, failMessage);
 		} 
 		else if(loaded == false){
-			Member newMember = new Member(req.getName(), req.getPassword()); 
-			
+			Member newMember = new Member(req.getName(), req.getPassword()); 			
 			try {
 				dao.addMember(newMember, req.tID);
-				response = new CreateMemberResponse("New Member Created");  // success
+				response = new CreateMemberResponse("operation successful");  // success
 			} catch (Exception e) {
 				response = new CreateMemberResponse("",400, failMessage);  // success
 			}
 		}
-		else {response = new CreateMemberResponse("Member Loaded");}
+		else {response = new CreateMemberResponse("Member Already Exist",400, failMessage);}
 
 		return response; 
 	}
 
 
-
-	private Member loadMemberFromRDS(String tID, String name, String mID) {
+	private Member loadMemberFromRDS(String tID, String name) {
 		ChoiceDAO dao =  new ChoiceDAO();
 		try {
 			ArrayList<Member> members =  dao.retrieveMembers(tID);
-			int indexOfMember = members.indexOf(new Member(name));
-			Member ldMember = members.get(indexOfMember);
-			return ldMember;
+			Member possibleMember = new Member(name);
+			for(int m = 0; m < members.size(); m++) {
+				if(members.get(m).equals(possibleMember)) {
+					return members.get(m);
+				}
+			}
+			return null;
 		}
 		catch(Exception e) {
 			return null;
