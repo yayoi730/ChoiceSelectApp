@@ -16,6 +16,8 @@ public class Team implements Iterable<Member>{
 		return members.iterator();
 	}
 	
+
 	public String getTID() {return this.tID;}
 	public void setTID(String tID) {this.tID = tID;}
+
 }
