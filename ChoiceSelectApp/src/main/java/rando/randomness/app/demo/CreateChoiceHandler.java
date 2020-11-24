@@ -18,7 +18,7 @@ import choice.select.app.http.CreateChoiceResponse;
 import rando.randomness.app.demo.db.ChoiceDAO;
 import rando.randomness.app.demo.model.Choice;
 
-public class ChoiceHandler implements RequestHandler<CreateChoiceRequest, CreateChoiceResponse> {
+public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, CreateChoiceResponse> {
 
 	LambdaLogger logger;
 	
@@ -28,7 +28,7 @@ public class ChoiceHandler implements RequestHandler<CreateChoiceRequest, Create
 	@Override
 	public CreateChoiceResponse handleRequest(CreateChoiceRequest req, Context context) {
 		logger = context.getLogger();
-		logger.log("Loading Java Lambda handler of ChoiceHandler");
+		logger.log("Loading Java Lambda handler of CreateChoiceHandler");
 		logger.log(req.toString());
 		
 		ChoiceDAO dao =  new ChoiceDAO();
@@ -56,7 +56,7 @@ public class ChoiceHandler implements RequestHandler<CreateChoiceRequest, Create
 			Choice newChoice = new Choice(req.getID(), req.getDescription(), req.getCreationDate());
 			try {
 				dao.addChoice(newChoice , req.getID());
-				response = new CreateChoiceResponse("New Choice Created");  // success
+				response = new CreateChoiceResponse("operation successful");  // success
 			} catch (Exception e) {
 				response = new CreateChoiceResponse("",400, failMessage);  // success
 			}
