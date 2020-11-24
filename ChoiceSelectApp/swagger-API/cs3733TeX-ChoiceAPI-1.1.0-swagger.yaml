@@ -2,7 +2,7 @@ swagger: '2.0'
 info:
   description: 
     "Choice WebApp API for creating, commenting, and deciding on a choice and its alternatives"
-  version: 1.0.0
+  version: 1.1.0
   title: ChoiceAPI
   contact:
     name: CS3733 Team TeX
@@ -12,6 +12,63 @@ info:
 # basePath: /v2
 
 paths:
+
+  /loginUser/{choiceId}/{username}/{password}:
+    post:
+      operationId: loginUser
+      description: "Check if user exists. If not, create new member, then login to choice"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters: 
+      - in: path
+        name: choiceId
+        type: string
+        required: true
+      - in: path
+        name: username
+        type: string
+        required: true
+      - in: path
+        name: password
+        type: string
+        required: true
+      responses:
+        200:
+          description: "member logged in successfully"
+          schema:
+            $ref: '#/definitions/Member'
+        400:
+          description: "loginUser : unexpected error"
+      
+  # Login but without password
+  /loginUser/{choiceId}/{username}:
+    post:
+      operationId: loginUserWithoutPass
+      description: "Check if user exists. If not, create new member, then login to choice"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters: 
+      - in: path
+        name: choiceId
+        type: string
+        required: true
+      - in: path
+        name: username
+        type: string
+        required: true
+      responses:
+        200:
+          description: "member logged in successfully"
+          schema:
+            $ref: '#/definitions/Member'
+        400:
+          description: "loginUser : unexpected error"
+
+
   /createModel:
     post:
       tags:
@@ -23,9 +80,9 @@ paths:
       parameters: []
       responses:
         200:
-          description: "operation successful"
+          description: "model created successfully"
         400: 
-          description: "unexpected error"
+          description: "createModel : unexpected error"
   /setTeam:
     post: 
       tags:
@@ -150,16 +207,14 @@ paths:
       - "application/jason"
       produces:
       - "application/json"
-      parameters:
-      - in: body
-        name: firstMember
-        schema: 
-          $ref: '#/definitions/Member'
+      parameters: []
       responses:
         200:
-          description: "operation successful"
+          description: "team created"
+          schema:
+            $ref: '#/definitions/Team'
         400: 
-          description: "unexpected error"
+          description: "createTeam : unexpected error"
 
   /addMember:
     post:
@@ -168,7 +223,7 @@ paths:
       operationId: addMember
       description: "Add new member to team"
       consumes:
-      - "application/jason"
+      - "application/json"
       produces:
       - "application/json"
       parameters:
@@ -178,13 +233,15 @@ paths:
           $ref: '#/definitions/Member'
       responses:
         200:
-          description: "operation successful"
+          description: "member added to team"
+          schema:
+            $ref: '#/definitions/Team'
         400: 
-          description: "unexpected error"
+          description: "addMember : unexpected error"
 
-  /team/{username}:
+  /getMemberByName/{username}:
     get: 
-      tags:
+      tags: 
       - Team
       operationId: getMemberByName
       description: "Get a member from the username"
@@ -199,20 +256,20 @@ paths:
         required: true
       responses:
         200: 
-          description: Member with the given username
+          description: "member retrieved successfully"
           schema:
             $ref: '#/definitions/Member'
         400: 
-          description: "unexpected error"
+          description: "getMemberByName : unexpected error"
         404:
-          description: "Member with given username not found"
+          description: "member not found"
 
-  /createMember/{username}:
-  # Create new member without password, set password as NULL
+  /createMember/{username}/{password}:
+  # If no password, set as ""
     post:
       tags: 
       - Member
-      operationId: createMember
+      operationId: createMemberWithPassword
       description: "Create a new member"
       consumes:
       - "application/jason"
@@ -223,11 +280,17 @@ paths:
         name: username
         type: string
         required: true
+      - in: path
+        name: password
+        type: string
+        required: true
       responses:
         200:
-          description: "operation successful"
+          description: "member with password created successfully"
+          schema:
+            $ref: '#/definitions/Member'
         400: 
-          description: "unexpected error"
+          description: "createMemberWithPassword : unexpected error"
 
   /createChoice/{choiceDesc}:
     post:
@@ -236,7 +299,7 @@ paths:
       operationId: createChoice
       description: "Create new choice"
       consumes:
-      - "application/jason"
+      - "application/json"
       produces:
       - "application/json"
       parameters: 
@@ -246,9 +309,43 @@ paths:
         required: true
       responses:
         200:
-          description: "operation successful"
+          description: "new choice created successfully"
+          schema:
+            $ref: '#/definitions/Choice'
         400: 
-          description: "unexpected error"
+          description: "createChoice : unexpected error"
+
+  /addAlt/{aid}/{altDesc}:
+    post:
+      tags:
+      - Choice
+      operationId: addAlt
+      description: "Add an alternative to a given choice"
+      consumes: 
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: path
+        name: aid
+        type: integer
+        required: true
+      - in: path
+        name: altDesc
+        type: string
+        required: true
+      - in: body
+        name: givenChoice
+        schema:
+          $ref: '#/definitions/Choice'
+      responses:
+        200:
+          description: "alternative added successfully"
+          schema:
+            $ref: '#/definitions/Choice'
+        400:
+          description: "addAlt : unexpected error"
+      
   
   /completeChoice/{choiceId}:
     post:
@@ -267,9 +364,11 @@ paths:
         required: true
       responses:
         200:
-          description: "operation successful"
+          description: "choice marked complete"
+          schema:
+            $ref: '#/definitions/Choice'
         400: 
-          description: "unexpected error"
+          description: "completeChoice : unexpected error"
 
   /makeReport:
     post:
@@ -279,7 +378,11 @@ paths:
       description: "Creates and returns a report of a choice"
       produces:
       - "application/json"
-      parameters: []
+      parameters: 
+      - in: body
+        name: choice
+        schema:
+          $ref: '#/definitions/Choice'
       responses:
         200: 
           description: "report created successfully"
@@ -288,7 +391,7 @@ paths:
         400:
           description: "unexpected error"
 
-  /createAlternative/{altDesc}:
+  /createAlternative/{altNum}/{altDesc}:
     post:
       tags: 
       - Alternative
@@ -300,16 +403,22 @@ paths:
       - "application/json"
       parameters: 
       - in: path
+        name: altNum
+        type: string
+        required: true
+      - in: path
         name: altDesc
         type: string
         required: true
       responses:
         200:
-          description: "operation successful"
+          description: "alternative created successfully"
+          schema:
+            $ref: '#/definitions/Alternative'
         400: 
-          description: "unexpected error"
+          description: "createAlternative : unexpected error"
 
-  /addFeedback:
+  /addFeedback/{altId}/{description}:
     post:
       tags:
       - Alternative
@@ -320,15 +429,25 @@ paths:
       produces:
       - "application/json"
       parameters:
+      - in: path
+        name: altId
+        type: string
+        required: true
+      - in: path
+        name: description
+        type: string
+        required: true
       - in: body
         name: feedback
         schema:
           $ref: '#/definitions/Feedback'
       responses:
         200:
-          description: "operation successful"
+          description: "feedback added successfully"
+          schema:
+            $ref: '#/definitions/Feedback'
         400: 
-          description: "unexpected error"
+          description: "addFeedback : unexpected error"
 
   /addApprover:
     post:
@@ -348,9 +467,11 @@ paths:
           $ref: '#/definitions/Member'
       responses:
         200:
-          description: "operation successful"
+          description: "approver added successfully"
+          schema:
+            $ref: '#/definitions/Alternative'
         400: 
-          description: "unexpected error"
+          description: "addApprover : unexpected error"
  
   /addDisapprover:
     post:
@@ -370,9 +491,11 @@ paths:
           $ref: '#/definitions/Member'
       responses:
         200:
-          description: "operation successful"
+          description: "disapprover added successfully"
+          schema:
+            $ref: '#/definitions/Alternative'
         400: 
-          description: "unexpected error"
+          description: "addDisapprover : unexpected error"
 
   /removeApprover:
     post:
@@ -392,9 +515,11 @@ paths:
           $ref: '#/definitions/Member'
       responses:
         200:
-          description: "operation successful"
+          description: "approver removed successfully"
+          schema:
+            $ref: '#/definitions/Alternative'
         400: 
-          description: "unexpected error"
+          description: "Approver : unexpected error"
  
   /removeDisapprover:
     post:
@@ -414,9 +539,11 @@ paths:
           $ref: '#/definitions/Member'
       responses:
         200:
-          description: "operation successful"
+          description: "disapprover removed successfully"
+          schema:
+            $ref: '#/definitions/Alternative'
         400: 
-          description: "unexpected error"
+          description: "removeDisapprover : unexpected error"
 
   /createFeedback/{description}:
     post:
@@ -438,12 +565,14 @@ paths:
         required: true
       responses:
         200:
-          description: "operation successful"
+          description: "feedback created successfully"
+          schema:
+            $ref: "#/definitions/Feedback"
         400: 
-          description: "unexpected error"
+          description: "createFeedback : unexpected error"
 
 # Report constructor, the main usage is in Choice class
-  /createReport/{choiceId}/{isCompleted}:
+  /createReport/{choiceId}:
     post:
       tags:
       - Report
@@ -458,20 +587,13 @@ paths:
         name: choiceId
         type: integer
         required: true
-      - in: path
-        name: isCompleted
-        type: boolean
-        required: true
-      - in: body
-        name: dateCompleted
-        schema:
-          type: object
-        required: true
       responses:
         200:
-          description: "operation successful"
+          description: "report created successfully"
+          schema:
+            $ref: '#/definitions/Report'
         400: 
-          description: "unexpected error"
+          description: "createReport : unexpected error"
   
 definitions:
   ApiResponse:
@@ -484,13 +606,6 @@ definitions:
         type: string
       message:
         type: string
-  Model:
-    type: object
-    properties:
-      admin:
-        $ref: '#/definitions/Member'
-      team:
-        $ref: '#/definitions/Team'
   Report:
     type: object
     properties:
@@ -508,6 +623,8 @@ definitions:
         type: integer
       description:
         type: string
+      teamSize:
+        type: integer
       alternatives:
         type: array
         items:
@@ -523,6 +640,8 @@ definitions:
     type: object
     description: Provides alternative to choice
     properties:
+      aid:
+        type: integer
       description: 
         type: string
       approvers: 
@@ -556,6 +675,8 @@ definitions:
   Team:
     type: object
     properties: 
+      teamSize: 
+        type: integer
       members: 
         type: array
         items:
