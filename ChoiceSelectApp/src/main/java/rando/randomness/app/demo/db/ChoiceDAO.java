@@ -31,12 +31,13 @@ public class ChoiceDAO {
     }
 	
 	//Adds team to the database and returns the ID
-			public String addMember(Member m, String tID) throws Exception
+			public Member addMember(Member m, String tID) throws Exception
 			{
 				try {
-		        	
+		        	Member updatedMember = m;
 		            PreparedStatement ps = conn.prepareStatement("INSERT INTO " + mName + " (MID, name, password, admin, TID) values(?,?,?,?,?);");
 		            String mID = UUID.randomUUID().toString();
+		            updatedMember.setMID(mID);
 		            ps.setString(1,  mID);
 		            ps.setString(2, m.getName());
 		            ps.setString(3, m.getPassword());
@@ -48,17 +49,17 @@ public class ChoiceDAO {
 		            //{
 		            //	addAlternative(a, cID);
 		            //}
-		            return tID;
+		            return updatedMember;
 
 		        } catch (Exception e) {
 		            throw new Exception("Failed to insert team: " + e.getMessage());
 		        }
 			}
 	//Adds team to the database and returns the ID
-		public String addTeam(Team t) throws Exception
+		public Team addTeam(Team t) throws Exception
 		{
 			try {
-	        	
+	        	Team newTeam = t;
 	            PreparedStatement ps = conn.prepareStatement("INSERT INTO " + tName + " (TID) values(?);");
 	            String tID = UUID.randomUUID().toString();
 	            ps.setString(1,  tID);
@@ -66,9 +67,10 @@ public class ChoiceDAO {
 	           
 	            for(Member m: t.getMembers())
 	            {
-	            	addMember(m, tID);
+	            	Member addedMember = addMember(m, tID);
+	            	newTeam.addMember(addedMember.getName(), addedMember.getPassword());
 	            }
-	            return tID;
+	            return newTeam;
 
 	        } catch (Exception e) {
 	            throw new Exception("Failed to insert team: " + e.getMessage());
@@ -382,7 +384,8 @@ public class ChoiceDAO {
 		Integer finalChoice = r.getInt("finalChoice");
 		String tID = r.getString("TID");
 		
-		Choice c = new Choice(cID, description, dateOfCreation);
+		Choice c = new Choice(description, dateOfCreation);
+		c.setID(cID);
 		c.setTID(tID);
 		if(finalChoice != null)
 		{
