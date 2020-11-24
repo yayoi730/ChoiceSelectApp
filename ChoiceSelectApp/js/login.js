@@ -1,6 +1,4 @@
-/*
-
-*/
+//
 
 function handleLoginClick(e) {
 	
@@ -13,7 +11,7 @@ function handleLoginClick(e) {
 	var data = {};
 	data["username"] = form.username.value;
 	data["password"] = form.password.value;
-	data["choiceId"] = fo rm.choiceId.value;
+	data["choiceId"] = form.choiceId.value;
 	
 	//convert data to JSON
 	var js = JSON.stringify(data);
@@ -29,6 +27,7 @@ function handleLoginClick(e) {
 	
 	
 	//switch to interface page
+	location.href = "mainUI.html";
 	
 }
 
@@ -58,5 +57,6 @@ function handleAdminLogin(e) {
 	
 	
 	//switch to admin page
+	location.href = "adminPage.html";
 	
 }
