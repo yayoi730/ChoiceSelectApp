@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+//import edu.wpi.cs.heineman.demo.model.Constant;
 import rando.randomness.app.demo.db.DatabaseUtil;
 import rando.randomness.app.demo.model.Choice;
 import rando.randomness.app.demo.model.Feedback;
@@ -80,7 +81,8 @@ public class ChoiceDAO {
 		try {
         	
             PreparedStatement ps = conn.prepareStatement("INSERT INTO " + cName + " (CID,description,dateOfCreation,dateOfCompletion,finalChoice,TID) values(?,?,?,?,?,?);");
-            String cID = UUID.randomUUID().toString();
+            //String cID = UUID.randomUUID().toString();
+            String cID = tID;
             ps.setString(1,  cID);
             ps.setString(2,  c.getDescription());
             ps.setString(3,  c.getCreationDate().toString());
@@ -183,12 +185,12 @@ public class ChoiceDAO {
 	    
 	}
 
-	//Retrieves all members for the team with the given id
+	//Retrieves all alternatives for the choice with the given id
 			public ArrayList<Alternative> retrieveAlternatives(String cID) throws Exception
 			{
 				 ArrayList<Alternative> allAlternatives = new ArrayList<>();
 			        try {
-			        	PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + mName + " WHERE CID = ?;");
+			        	PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + aName + " WHERE CID = ?;");
 			            ps.setString(1, cID);
 			            ResultSet resultSet = ps.executeQuery();
 
@@ -251,6 +253,117 @@ public class ChoiceDAO {
 	        }
 	    
 	}
+	
+	public boolean deleteTeam(String tID) throws Exception
+	{
+		 try {
+	        	PreparedStatement ps1 = conn.prepareStatement("SELECT * FROM " + tName + " WHERE TID = ?;");
+	        	ps1.setString(1, tID);
+	        	ResultSet resultSet = ps1.executeQuery();
+	        	
+	        	//Delete all alternatives for each choice
+	        	while (resultSet.next())
+	        	{
+	        		Team t = generateTeam(resultSet);
+	        		deleteChoice(t.getTID());
+	        	}
+	        	ps1.close();
+	        	//Delete the team
+	            PreparedStatement ps = conn.prepareStatement("DELETE FROM " + tName + " WHERE TID = ?;");
+	            ps.setString(1, tID);
+	            int numAffected = ps.executeUpdate();
+	            ps.close();
+	            
+	            return (numAffected >= 1);
+
+	        } catch (Exception e) {
+	            throw new Exception("Failed to delete alternative: " + e.getMessage());
+	        }
+	}
+	public boolean deleteMember(String tID) throws Exception
+	{
+		try {
+       	 
+            PreparedStatement ps = conn.prepareStatement("DELETE FROM " + mName + " WHERE TID = ?;");
+            ps.setString(1, tID);
+            int numAffected = ps.executeUpdate();
+            ps.close();
+            
+            return (numAffected >= 1);
+
+        } catch (Exception e) {
+            throw new Exception("Failed to delete feedback: " + e.getMessage());
+        }
+	}
+	
+	public boolean deleteChoice(String tID) throws Exception
+	{
+		 try {
+	        	PreparedStatement ps1 = conn.prepareStatement("SELECT * FROM " + cName + " WHERE TID = ?;");
+	        	ps1.setString(1, tID);
+	        	ResultSet resultSet = ps1.executeQuery();
+	        	
+	        	//Delete all alternatives for each choice
+	        	while (resultSet.next())
+	        	{
+	        		Choice c = generateChoice(resultSet);
+	        		deleteAlternatives(c.getID());
+	        	}
+	        	ps1.close();
+	        	//Delete the choice
+	            PreparedStatement ps = conn.prepareStatement("DELETE FROM " + cName + " WHERE TID = ?;");
+	            ps.setString(1, tID);
+	            int numAffected = ps.executeUpdate();
+	            ps.close();
+	            
+	            return (numAffected >= 1);
+
+	        } catch (Exception e) {
+	            throw new Exception("Failed to delete alternative: " + e.getMessage());
+	        }
+	}
+	//Deletes all alternatives for the choice with the given id
+	public boolean deleteAlternatives(String cID) throws Exception {
+        try {
+        	PreparedStatement ps1 = conn.prepareStatement("SELECT * FROM " + aName + " WHERE CID = ?;");
+        	ps1.setString(1, cID);
+        	ResultSet resultSet = ps1.executeQuery();
+        	
+        	//Delete all feedback for each alternative
+        	while (resultSet.next())
+        	{
+        		Alternative a = generateAlternative(resultSet);
+        		deleteFeedback(a.getAID());
+        	}
+        	ps1.close();
+        	//Delete the alternatives
+            PreparedStatement ps = conn.prepareStatement("DELETE FROM " + aName + " WHERE CID = ?;");
+            ps.setString(1, cID);
+            int numAffected = ps.executeUpdate();
+            ps.close();
+            
+            return (numAffected >= 1);
+
+        } catch (Exception e) {
+            throw new Exception("Failed to delete alternative: " + e.getMessage());
+        }
+    }
+
+	 public boolean deleteFeedback(String aID) throws Exception {
+	        try {
+	        	 
+	            PreparedStatement ps = conn.prepareStatement("DELETE FROM " + fName + " WHERE AID = ?;");
+	            ps.setString(1, aID);
+	            int numAffected = ps.executeUpdate();
+	            ps.close();
+	            
+	            return (numAffected >= 1);
+
+	        } catch (Exception e) {
+	            throw new Exception("Failed to delete feedback: " + e.getMessage());
+	        }
+	    }
+
 	
 	public Choice generateChoice(ResultSet r) throws SQLException
 	{
