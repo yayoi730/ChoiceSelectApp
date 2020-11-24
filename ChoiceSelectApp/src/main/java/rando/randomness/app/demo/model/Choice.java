@@ -14,11 +14,13 @@ public class Choice {
 	Timestamp creationDate;
 	Timestamp completionDate;
 	int finalChoice;
+
 	public Choice(String description, Timestamp creationDate) {
 		this.id = id;
 		this.description = description;
 		this.creationDate = creationDate;
 	}
+	
 	public String getID() {return this.id;}
 	public String getDescription() {return this.description;}
 	public Timestamp getCreationDate() {return this.creationDate;}
