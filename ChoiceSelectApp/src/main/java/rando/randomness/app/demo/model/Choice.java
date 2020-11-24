@@ -6,6 +6,7 @@ import java.util.Iterator;
 public class Choice {
 	Iterator<Alternative> iterator;
 	String id;
+	String tID;
 	String description;
 	Timestamp creationDate;
 	Timestamp completionDate;
@@ -22,5 +23,10 @@ public class Choice {
 	public void completeChoice(int choiceNum) { // basically a setter, needs clarification
 		this.finalChoice = choiceNum;
 	}
+
+	public void setID(String cID) {this.id = cID;}
+	
+	public String getTID() {return this.tID;}
+	public void setTID(String tID) {this.tID = tID;}
 	
 }
