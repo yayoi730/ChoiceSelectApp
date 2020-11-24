@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 public class Alternative {
 	String aID;
-	ArrayList<Member> approvers;
-	ArrayList<Member> disapprovers;
-	ArrayList<Feedback> feedback;
+	ArrayList<Member> approvers = new ArrayList<>();
+	ArrayList<Member> disapprovers = new ArrayList<>();
+	ArrayList<Feedback> feedback = new ArrayList<>();
 	String description;
 	public Alternative(String description) {
 		this.description = description;
@@ -30,6 +30,9 @@ public class Alternative {
 			}
 		}
 	}
+	public ArrayList<Member> getApprovers(){
+		return this.approvers;
+	}
 	public void addDisapprover(Member m) {
 		this.disapprovers.add(m);
 	}
@@ -40,8 +43,14 @@ public class Alternative {
 			}
 		}
 	}
+	public ArrayList<Member> getDispprovers(){
+		return this.disapprovers;
+	}
 	public void addFeedback(Feedback f) {
 		feedback.add(f);
+	}
+	public ArrayList<Feedback> getFeebackList(){
+		return this.feedback;
 	}
 	public String getAID() {return this.aID;}
 	public void setAID(String aID) {this.aID = aID;}
