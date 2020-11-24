@@ -20,6 +20,8 @@ public class Choice {
 	public String getID() {return this.id;}
 	public String getDescription() {return this.description;}
 	public Timestamp getCreationDate() {return this.creationDate;}
+	public Timestamp getCompletionDate() {return this.completionDate;}
+	public void setCompletionDate(Timestamp newTimestamp) {this.completionDate = newTimestamp;}
 	
 	public ArrayList<Alternative> getAlternativeList(){
 		return this.alternatives;

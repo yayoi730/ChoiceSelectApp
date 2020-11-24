@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 public class Alternative {
 	String aID;
-	ArrayList<Member> approvers = new ArrayList<>();
-	ArrayList<Member> disapprovers = new ArrayList<>();
+	ArrayList<String> approvers = new ArrayList<>();
+	ArrayList<String> disapprovers = new ArrayList<>();
 	ArrayList<Feedback> feedback = new ArrayList<>();
 	String description;
 	public Alternative(String description) {
@@ -14,37 +14,37 @@ public class Alternative {
 	}
 	public String getDescription() {return this.description;}
 	
-	public int getNumApprovers(ArrayList<Member> approvers) {
+	public int getNumApprovers(ArrayList<String> approvers) {
 		int i = 0;
-		for(Member m : approvers) {
+		for(String s : approvers) {
 			i++;
 		}
 		return i;
 	}
-	public void addApprover(Member m) {
-		this.approvers.add(m);
+	public void addApprover(String name) {
+		this.approvers.add(name);
 	}
 	public void removeApprover(String name) {
-		for(Member m : approvers) {
-			if(m.getName() == name) {
-				this.approvers.remove(m);
+		for(String s : approvers) {
+			if(s == name) {
+				this.approvers.remove(s);
 			}
 		}
 	}
-	public ArrayList<Member> getApprovers(){
+	public ArrayList<String> getApprovers(){
 		return this.approvers;
 	}
-	public void addDisapprover(Member m) {
-		this.disapprovers.add(m);
+	public void addDisapprover(String name) {
+		this.disapprovers.add(name);
 	}
 	public void removeDisapprover(String name) {
-		for(Member m : approvers) {
-			if(m.getName() == name) {
-				this.disapprovers.remove(m);
+		for(String s : approvers) {
+			if(s == name) {
+				this.disapprovers.remove(s);
 			}
 		}
 	}
-	public ArrayList<Member> getDispprovers(){
+	public ArrayList<String> getDispprovers(){
 		return this.disapprovers;
 	}
 	public void addFeedback(Feedback f) {
