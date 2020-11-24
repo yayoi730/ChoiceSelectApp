@@ -8,8 +8,8 @@ public class Team {
 	String tID;
 	ArrayList<Member> members = new ArrayList<>();
 	Choice choice;
-	public Team(Member m,Choice choice) {
-		this.members = m;
+	public Team(ArrayList<Member> members,Choice choice) {
+		this.members = members;
 		this.choice = choice;
 	}
 	public void addMember(String username, String password) {

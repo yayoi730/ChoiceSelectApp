@@ -27,7 +27,8 @@ public class TestDatabase {
 	    	Choice c = new Choice(id, "This is a description",timestamp);
 	    	ArrayList<Member> newMembers = new ArrayList<>();
 	    	Member m = new Member("Ryan", "pass1");
-	    	Team t = new Team(m, c);
+	    	newMembers.add(m);
+	    	Team t = new Team(newMembers, c);
 	    	String id = UUID.randomUUID().toString(); // no more than 20 because of DB restrictions...
 	    	Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 	    	

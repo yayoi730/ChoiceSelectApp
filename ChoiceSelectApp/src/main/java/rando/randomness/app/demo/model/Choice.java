@@ -25,6 +25,11 @@ public class Choice {
 		return this.alternatives;
 	}
 	
+	public void addAlternative(Alternative a)
+	{
+		this.alternatives.add(a);
+	}
+	
 	public void completeChoice(int choiceNum) { // basically a setter, needs clarification
 		this.finalChoice = choiceNum;
 	}
