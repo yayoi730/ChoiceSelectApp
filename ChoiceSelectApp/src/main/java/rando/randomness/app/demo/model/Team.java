@@ -21,7 +21,9 @@ public class Team {
 	public void createTeam(ArrayList<Member> members, Choice choice ) {
 		Team t = new Team(members, choice);
 	}
-
+	public ArrayList<Member> getMembers(){
+		return this.members;
+	}
 	public String getTID() {return this.tID;}
 	public void setTID(String tID) {this.tID = tID;}
 
