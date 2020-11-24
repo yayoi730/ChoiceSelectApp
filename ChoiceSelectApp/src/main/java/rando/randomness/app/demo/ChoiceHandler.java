@@ -15,7 +15,7 @@ import com.amazonaws.services.s3.model.PutObjectResult;
 
 import choice.select.app.http.CreateChoiceRequest;
 import choice.select.app.http.CreateChoiceResponse;
-
+import rando.randomness.app.demo.db.ChoiceDAO;
 import rando.randomness.app.demo.model.Choice;
 
 public class ChoiceHandler implements RequestHandler<CreateChoiceRequest, CreateChoiceResponse> {
@@ -24,67 +24,25 @@ public class ChoiceHandler implements RequestHandler<CreateChoiceRequest, Create
 	
 	// To access S3 storage
 	private AmazonS3 s3 = null;
-	/** Store into RDS.
-	 * 
-	 * @throws Exception 
-	 */
-	boolean createChoice(String id) throws Exception { 
-		if (logger != null) { logger.log("in createChoice"); }
-		//ChoiceDAO dao = new ChoiceDAO();
-		
-		// check if present
-		//Choice exist = dao.getChoice(id);
-		//Choice constant = new Choice (name, value);
-		//if (exist == null) {
-			//return dao.addConstant(constant);
-		//} else {
-			return false;
-		//}
-	}
-	
-	/** Create S3 bucket
-	 * 
-	 * @throws Exception 
-	 */
-	boolean createSystemConstant(String name, double value) throws Exception {
-		if (logger != null) { logger.log("in createSystemConstant"); }
-		
-		if (s3 == null) {
-			logger.log("attach to S3 request");
-			s3 = AmazonS3ClientBuilder.standard().withRegion(Regions.US_EAST_1).build();
-			logger.log("attach to S3 succeed");
-		}
 
-		//String folder = BucketManager.getConstantsFolder() + "/";
-		
-		byte[] contents = ("" + value).getBytes();
-		ByteArrayInputStream bais = new ByteArrayInputStream(contents);
-		ObjectMetadata omd = new ObjectMetadata();
-		omd.setContentLength(contents.length);
-		
-		// makes the object publicly visible
-		//PutObjectResult res = s3.putObject(new PutObjectRequest(BucketManager.bucket, folder + name, bais, omd)
-		//		.withCannedAcl(CannedAccessControlList.PublicRead));
-		
-		// if we ever get here, then whole thing was stored
-		return true;
-	}
 	@Override
 	public CreateChoiceResponse handleRequest(CreateChoiceRequest req, Context context) {
 		logger = context.getLogger();
 		logger.log("Loading Java Lambda handler of ChoiceHandler");
 		logger.log(req.toString());
-
+		
+		ChoiceDAO dao =  new ChoiceDAO();
+		
 		boolean fail = false;
 		boolean loaded = true;
 		String failMessage = "";
 		Choice loadedChoice = null;
 		
 		try {
-			loadedChoice = loadChoice(req.getID());
+			loadedChoice = loadChoiceFromRDS(req.getID());
+			loaded = true;
 		} 
 		catch (Exception e) {
-			req.getID();
 			loaded = false;
 		}
 		
@@ -95,32 +53,25 @@ public class ChoiceHandler implements RequestHandler<CreateChoiceRequest, Create
 			response = new CreateChoiceResponse("",400, failMessage);
 		} 
 		else if(loaded == false){
-			response = new CreateChoiceResponse("New Choice Created");  // success
+			Choice newChoice = new Choice(req.getID(), req.getDescription(), req.getCreationDate());
+			try {
+				dao.addChoice(newChoice , req.getID());
+				response = new CreateChoiceResponse("New Choice Created");  // success
+			} catch (Exception e) {
+				response = new CreateChoiceResponse("",400, failMessage);  // success
+			}
 		}
 		else {response = new CreateChoiceResponse("Choice Loaded");}
 
 		return response; 
 	}
 
-	private Choice loadChoice(String id) {
+
+	private Choice loadChoiceFromRDS(String id) throws Exception {
+		ChoiceDAO dao =  new ChoiceDAO();
 		Choice ldChoice = null;
-		try {
-			ldChoice = loadChoiceFromRDS(id);
-			return ldChoice;
-		} 
-		catch (Exception e) {
-			return getChoiceFromBucket(id);
-		}
-	}
-
-	private Choice getChoiceFromBucket(String id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	private Choice loadChoiceFromRDS(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		ldChoice = dao.retrieveChoice(id);
+		return ldChoice;
 	}
 
 

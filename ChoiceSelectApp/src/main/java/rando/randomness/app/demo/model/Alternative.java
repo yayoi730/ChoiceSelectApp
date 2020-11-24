@@ -3,14 +3,11 @@ package rando.randomness.app.demo.model;
 import java.util.ArrayList;
 
 public class Alternative {
-<<<<<<< Updated upstream
+
 	String aID;
-	ArrayList<Member> approvers;
-	ArrayList<Member> disapprovers;
-=======
 	ArrayList<String> approvers;
 	ArrayList<String> disapprovers;
->>>>>>> Stashed changes
+
 	ArrayList<Feedback> feedback;
 	String description;
 	
@@ -29,12 +26,10 @@ public class Alternative {
 	}
 	public String getDescription() {return this.description;}
 	
-<<<<<<< Updated upstream
+
 	public String getAID() {return this.aID;}
 	public void setAID(String aID) {this.aID = aID;}
 	
-
-=======
 	public ArrayList<String> getApprovers() {
 		return this.approvers;
 	}
@@ -44,5 +39,5 @@ public class Alternative {
 	public ArrayList<Feedback> getFeedback() {
 		return this.feedback;
 	}
->>>>>>> Stashed changes
+
 }

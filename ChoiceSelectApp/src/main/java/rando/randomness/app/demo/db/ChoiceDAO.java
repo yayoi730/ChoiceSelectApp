@@ -207,9 +207,9 @@ public class ChoiceDAO {
 			}
 		
 	//Retrieves all members for the team with the given id
-		public List<Member> retrieveMembers(String tID) throws Exception
+		public ArrayList<Member> retrieveMembers(String tID) throws Exception
 		{
-			 List<Member> allMembers = new ArrayList<>();
+			 ArrayList<Member> allMembers = new ArrayList<>();
 		        try {
 		        	PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + mName + " WHERE TID = ?;");
 		            ps.setString(1, tID);
@@ -221,7 +221,7 @@ public class ChoiceDAO {
 		            }
 		            resultSet.close();
 		            
-		            return allMembers;
+		            return  allMembers;
 
 		        } catch (Exception e) {
 		            throw new Exception("Failed in getting feedback: " + e.getMessage());
@@ -277,7 +277,7 @@ public class ChoiceDAO {
 		String tid = r.getString("TID");
 		List<Member> m = retrieveMembers(tid);
 		Choice choice = retrieveChoice(tid);
-		Team t = new Team(m, choice);
+		Team t = new Team((ArrayList<Member>) m, choice);
 		 
 		t.setTID(tid);
 		return t;
