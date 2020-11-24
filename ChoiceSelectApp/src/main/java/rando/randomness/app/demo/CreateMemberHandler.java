@@ -16,7 +16,7 @@ import rando.randomness.app.demo.db.ChoiceDAO;
 import rando.randomness.app.demo.model.Choice;
 import rando.randomness.app.demo.model.Member;
 
-public class MemberHandler implements RequestHandler<CreateMemberRequest, CreateMemberResponse> {
+public class CreateMemberHandler implements RequestHandler<CreateMemberRequest, CreateMemberResponse> {
 LambdaLogger logger;
 	
 	// To access S3 storage
@@ -70,7 +70,7 @@ LambdaLogger logger;
 		ChoiceDAO dao =  new ChoiceDAO();
 		try {
 			ArrayList<Member> members =  dao.retrieveMembers(tID);
-			int indexOfMember = members.indexOf(new Member(name, tID, mID));
+			int indexOfMember = members.indexOf(new Member(name));
 			Member ldMember = members.get(indexOfMember);
 			return ldMember;
 		}

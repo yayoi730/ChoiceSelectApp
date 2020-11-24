@@ -18,7 +18,7 @@ import choice.select.app.http.CreateChoiceResponse;
 import rando.randomness.app.demo.db.ChoiceDAO;
 import rando.randomness.app.demo.model.Choice;
 
-public class ChoiceHandler implements RequestHandler<CreateChoiceRequest, CreateChoiceResponse> {
+public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, CreateChoiceResponse> {
 
 	LambdaLogger logger;
 	
