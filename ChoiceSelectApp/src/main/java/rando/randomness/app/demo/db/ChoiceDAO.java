@@ -184,9 +184,9 @@ public class ChoiceDAO {
 	}
 
 	//Retrieves all members for the team with the given id
-			public List<Alternative> retrieveAlternatives(String cID) throws Exception
+			public ArrayList<Alternative> retrieveAlternatives(String cID) throws Exception
 			{
-				 List<Alternative> allAlternatives = new ArrayList<>();
+				 ArrayList<Alternative> allAlternatives = new ArrayList<>();
 			        try {
 			        	PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + mName + " WHERE CID = ?;");
 			            ps.setString(1, cID);
@@ -230,9 +230,9 @@ public class ChoiceDAO {
 		}
 	
 	//Retrieves all feedback for the alternative with the given id
-	public List<Feedback> retrieveFeedback(String aID) throws Exception
+	public ArrayList<Feedback> retrieveFeedback(String aID) throws Exception
 	{
-		 List<Feedback> allFeedback = new ArrayList<>();
+		 ArrayList<Feedback> allFeedback = new ArrayList<>();
 	        try {
 	        	PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + fName + " WHERE AID = ?;");
 	            ps.setString(1, aID);
@@ -275,7 +275,7 @@ public class ChoiceDAO {
 	{
 		Timestamp ti = Timestamp.valueOf(r.getString("timestamp"));
 		String tid = r.getString("TID");
-		List<Member> m = retrieveMembers(tid);
+		ArrayList<Member> m = retrieveMembers(tid);
 		Choice choice = retrieveChoice(tid);
 		Team t = new Team((ArrayList<Member>) m, choice);
 		 

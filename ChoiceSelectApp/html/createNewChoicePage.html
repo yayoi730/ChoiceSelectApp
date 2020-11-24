@@ -1,5 +1,13 @@
 <!DOCTYPE html>
 <html>
+<head>
+
+<script type='text/javascript' src='../js/login.js'></script>
+<script type='text/javascript' src='../js/createChoice.js'></script>
+<script type='text/javascript' src='../js/api.js'></script>
+
+
+</head>
 
 <style>
 	.center {
@@ -33,33 +41,16 @@
 	<br>
 	Alternative #5: <input name = "alt5" value = "" />
 
+
 	
 	<br><br><br>
-	<input type = button value = "Create Choice" onClick = createChoice() />
+	<input type = button value = "Create Choice" onClick = "JavaScript:handleCreateChoiceClick(this)" />
 	<br>
 	<input type = button value = "Back" onClick = "location.href='userLogin.html'" />
 	
 	</form>
 	</div>
 	
-	<script type="text/javascript">
-	
-	function createChoice() {
-		//consume user and password to create new team
-		//consume descriptions and create choice
-		//add choice to team
-		
-		//redirect to main UI after making sure all info was entered
-		
-		//location.href = 'mainUI.html'
-	}
-	
-	function backToLogin() {
-		//redirect to userLogin.html
-	}
-	
-	</script>
-
 </body>
 
 </html>

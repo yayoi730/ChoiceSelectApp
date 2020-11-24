@@ -1,5 +1,13 @@
 <!DOCTYPE html>
 <html>
+<head>
+
+<script type='text/javascript' src='../js/login.js'></script>
+<script type='text/javascript' src='../js/createChoice.js'></script>
+<script type='text/javascript' src='../js/api.js'></script>
+
+
+</head>
 
 <style>
 	.center {
@@ -24,30 +32,15 @@
 	<br>
 	
 	<br><br><br>
-	<input type = "button" value = "Login" onClick = "loginUser()" />
+	<input type = "button" value = "Login" onClick = "JavaScript:handleLoginClick(this)" />
 	<br>
 	<input type = "button" value = "Create New Choice" onClick = "location.href = 'createNewChoicePage.html'" />
 	<br><br>
-	<input type = "button" value = "Login As Administrator" onClick = attemptAsAdmin()/>
+	<input type = "button" value = "Login As Administrator" onClick = "JavaScript:handleAdminLoginClick(this)" />
 	
 	</form>
 	</div>
 	
-	<script type = "text/javascript">
-	
-	function loginUser() {
-		//consume inputs and check if member exists in database
-		//if not, create new member and store in database
-		//if no password is used, store "" (empty string)
-	}
-	
-	function attemptAsAdmin() {
-		//consume inputs
-		//if admin login is correct, redirect to adminPage.html
-		//otherwise, show text error and stay on page
-	}
-	
-	</script>
 
 </body>
 
