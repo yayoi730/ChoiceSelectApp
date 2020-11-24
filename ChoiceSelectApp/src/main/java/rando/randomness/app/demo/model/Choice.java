@@ -31,6 +31,11 @@ public class Choice {
 	public void setFinalChoice(int choiceNum) {this.finalChoice = choiceNum;}
 	public int getFinalChoice(int choiceNum) {return choiceNum;}
 	
+	public void addAlternative(Alternative a)
+	{
+		this.alternatives.add(a);
+	}
+	
 	public void completeChoice(int choiceNum) { // basically a setter, needs clarification
 		this.finalChoice = choiceNum;
 		this.completionDate = new Timestamp(System.currentTimeMillis());

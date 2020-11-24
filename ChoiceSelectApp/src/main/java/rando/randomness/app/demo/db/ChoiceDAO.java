@@ -64,10 +64,10 @@ public class ChoiceDAO {
 	            ps.setString(1,  tID);
 	            ps.execute();
 	           
-	            //for(Alternative a: c.getAlternatives())
-	            //{
-	            //	addAlternative(a, cID);
-	            //}
+	            for(Member m: t.getMembers())
+	            {
+	            	addMember(m, tID);
+	            }
 	            return tID;
 
 	        } catch (Exception e) {
@@ -76,13 +76,15 @@ public class ChoiceDAO {
 		}
 	
 	//Adds Choice to the database and returns the ID
-	public String addChoice(Choice c, String tID) throws Exception
+	public Choice addChoice(Choice c, String tID) throws Exception
 	{
 		try {
         	
+			Choice updatedChoice = c;
             PreparedStatement ps = conn.prepareStatement("INSERT INTO " + cName + " (CID,description,dateOfCreation,dateOfCompletion,finalChoice,TID) values(?,?,?,?,?,?);");
             //String cID = UUID.randomUUID().toString();
             String cID = tID;
+            updatedChoice.setID(cID);
             ps.setString(1,  cID);
             ps.setString(2,  c.getDescription());
             ps.setString(3,  c.getCreationDate().toString());
@@ -90,11 +92,11 @@ public class ChoiceDAO {
             ps.setInt(5, (Integer) null);
             ps.setString(6, tID);
             ps.execute();
-            //for(Alternative a: c.getAlternatives())
-            //{
-            //	addAlternative(a, cID);
-            //}
-            return cID;
+            for(Alternative a: c.getAlternativeList())
+            {
+            	updatedChoice.addAlternative(addAlternative(a, cID));
+            }
+            return updatedChoice;
 
         } catch (Exception e) {
             throw new Exception("Failed to insert choice: " + e.getMessage());
@@ -102,17 +104,22 @@ public class ChoiceDAO {
 	}
 	
 	//Adds given alternative to the database (Does not add any feedback attached to it yet)
-	public String addAlternative(Alternative a, String cID) throws Exception
+	public Alternative addAlternative(Alternative a, String cID) throws Exception
 	{
 		try {
-        	
+        	Alternative newAlternative = a;
             PreparedStatement ps = conn.prepareStatement("INSERT INTO " + aName + " (AID,CID,description) values(?,?,?);");
             String aID = UUID.randomUUID().toString();
+            newAlternative.setAID(aID);
             ps.setString(1,  aID);
             ps.setString(2,  cID);
             ps.setString(3,  a.getDescription());
+            for(Feedback f: a.getFeebackList())
+            {
+            	newAlternative.addFeedback(addFeedback(f, aID, f.getCreator()));
+            }
             ps.execute();
-            return aID;
+            return newAlternative;
 
         } catch (Exception e) {
             throw new Exception("Failed to insert alternative: " + e.getMessage());
@@ -121,19 +128,20 @@ public class ChoiceDAO {
 	
 	//Adds given feedback to the database
 	//Requires the id of the alternative it belongs to
-	public String addFeedback(Feedback f, String aID, String mID) throws Exception
+	public Feedback addFeedback(Feedback f, String aID, String creator) throws Exception
 	{
 		try {
-            	
+            Feedback newFeedback = f;
             PreparedStatement ps = conn.prepareStatement("INSERT INTO " + fName + " (FID,AID,timestamp,description,MID) values(?,?,?,?,?);");
             String fID = UUID.randomUUID().toString();
+            newFeedback.setFID(fID);
             ps.setString(1,  fID);
             ps.setString(2,  aID);
             ps.setString(3,  f.getTimestamp().toString());
             ps.setString(4, f.getDescription());
-            ps.setString(5, mID);
+            ps.setString(5, creator);
             ps.execute();
-            return fID;
+            return newFeedback;
 
         } catch (Exception e) {
             throw new Exception("Failed to insert feedback: " + e.getMessage());
@@ -376,6 +384,10 @@ public class ChoiceDAO {
 		
 		Choice c = new Choice(cID, description, dateOfCreation);
 		c.setTID(tID);
+		if(finalChoice != null)
+		{
+			c.completeChoice(finalChoice);
+		}
 		
 		 //for(Alternative a: c.getAlternatives())
         //{
@@ -421,10 +433,20 @@ public class ChoiceDAO {
 	public Alternative generateAlternative(ResultSet r) throws SQLException
 	{
 		String desc = r.getString("description");
+		String aID = r.getString("AID");
 		Alternative a = new Alternative(desc);
 		//Add approvers
 		//Add disapprovers
-		//Add feedback
+		try {
+			ArrayList<Feedback> f = retrieveFeedback(aID);
+			for(Feedback element: f)
+			{
+				a.addFeedback(element);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
 		a.setAID(r.getString("AID"));
 		
 		return a;
