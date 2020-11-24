@@ -2,12 +2,10 @@ package choice.select.app.http;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Iterator;
-
 import rando.randomness.app.demo.model.Alternative;
 
 public class CreateChoiceRequest {
-	ArrayList <Alternative> alternatives;
+	ArrayList<Alternative> alternatives;
 	String id;
 	String description;
 	Timestamp creationDate;

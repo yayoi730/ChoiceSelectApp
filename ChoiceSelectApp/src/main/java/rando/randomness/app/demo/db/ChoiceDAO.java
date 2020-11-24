@@ -221,7 +221,7 @@ public class ChoiceDAO {
 		            }
 		            resultSet.close();
 		            
-		            return allMembers;
+		            return  allMembers;
 
 		        } catch (Exception e) {
 		            throw new Exception("Failed in getting feedback: " + e.getMessage());
@@ -277,7 +277,7 @@ public class ChoiceDAO {
 		String tid = r.getString("TID");
 		ArrayList<Member> m = retrieveMembers(tid);
 		Choice choice = retrieveChoice(tid);
-		Team t = new Team(m, choice);
+		Team t = new Team((ArrayList<Member>) m, choice);
 		 
 		t.setTID(tid);
 		return t;

@@ -1,3 +1,4 @@
+
 package rando.randomness.app.demo.model;
 
 import java.util.ArrayList;
@@ -54,7 +55,5 @@ public class Alternative {
 	}
 	public String getAID() {return this.aID;}
 	public void setAID(String aID) {this.aID = aID;}
-	
-
 
 }
