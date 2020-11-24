@@ -64,10 +64,10 @@ public class ChoiceDAO {
 	            ps.setString(1,  tID);
 	            ps.execute();
 	           
-	            //for(Alternative a: c.getAlternatives())
-	            //{
-	            //	addAlternative(a, cID);
-	            //}
+	            for(Member m: t.getMembers())
+	            {
+	            	addMember(m, tID);
+	            }
 	            return tID;
 
 	        } catch (Exception e) {
@@ -90,10 +90,10 @@ public class ChoiceDAO {
             ps.setInt(5, (Integer) null);
             ps.setString(6, tID);
             ps.execute();
-            //for(Alternative a: c.getAlternatives())
-            //{
-            //	addAlternative(a, cID);
-            //}
+            for(Alternative a: c.getAlternativeList())
+            {
+            	addAlternative(a, cID);
+            }
             return cID;
 
         } catch (Exception e) {
@@ -376,6 +376,11 @@ public class ChoiceDAO {
 		
 		Choice c = new Choice(cID, description, dateOfCreation);
 		c.setTID(tID);
+		c.s
+		if(finalChoice != null)
+		{
+			c.completeChoice(finalChoice);
+		}
 		
 		 //for(Alternative a: c.getAlternatives())
         //{
@@ -421,10 +426,20 @@ public class ChoiceDAO {
 	public Alternative generateAlternative(ResultSet r) throws SQLException
 	{
 		String desc = r.getString("description");
+		String aID = r.getString("AID");
 		Alternative a = new Alternative(desc);
 		//Add approvers
 		//Add disapprovers
-		//Add feedback
+		try {
+			ArrayList<Feedback> f = retrieveFeedback(aID);
+			for(Feedback element: f)
+			{
+				a.addFeedback(element);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
 		a.setAID(r.getString("AID"));
 		
 		return a;
