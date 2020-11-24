@@ -14,7 +14,7 @@ public class Choice {
 	Timestamp creationDate;
 	Timestamp completionDate;
 	int finalChoice;
-	public Choice(String id, String description, Timestamp creationDate) {
+	public Choice(String description, Timestamp creationDate) {
 		this.id = id;
 		this.description = description;
 		this.creationDate = creationDate;
