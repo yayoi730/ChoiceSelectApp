@@ -27,16 +27,19 @@ public class Choice {
 	public Timestamp getCompletionDate() {return this.completionDate;}
 	public void setCompletionDate(Timestamp newTimestamp) {this.completionDate = newTimestamp;}
 	
-	public ArrayList<Alternative> getAlternativeList(){
-		return this.alternatives;
+	public ArrayList<Alternative> getAlternativeList(){ return this.alternatives; }
+	public void addAlternative(Alternative a) { this.alternatives.add(a); }
+	public Alternative getAlt(int altNum) {
+		for (int i = 0; i < alternatives.size(); i++) {
+			if (altNum == i+1) {
+				return alternatives.get(i);
+			}
+		}
+		return null;
 	}
+	
 	public void setFinalChoice(int choiceNum) {this.finalChoice = choiceNum;}
 	public int getFinalChoice(int choiceNum) {return choiceNum;}
-	
-	public void addAlternative(Alternative a)
-	{
-		this.alternatives.add(a);
-	}
 	
 	public void completeChoice(int choiceNum) { // basically a setter, needs clarification
 		this.finalChoice = choiceNum;

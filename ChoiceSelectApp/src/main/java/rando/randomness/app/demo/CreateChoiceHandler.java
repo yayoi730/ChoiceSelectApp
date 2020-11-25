@@ -1,5 +1,7 @@
 package rando.randomness.app.demo;
 
+import java.util.ArrayList;
+
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
@@ -7,19 +9,8 @@ import com.amazonaws.services.s3.AmazonS3;
 import choice.select.app.http.CreateChoiceRequest;
 import choice.select.app.http.CreateChoiceResponse;
 import rando.randomness.app.demo.db.ChoiceDAO;
+import rando.randomness.app.demo.model.Alternative;
 import rando.randomness.app.demo.model.Choice;
-import java.util.Scanner;
-
-import com.amazonaws.regions.Regions;
-import com.amazonaws.services.lambda.runtime.Context;
-import com.amazonaws.services.lambda.runtime.LambdaLogger;
-import com.amazonaws.services.lambda.runtime.RequestHandler;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.s3.model.S3Object;
-import com.amazonaws.services.s3.model.S3ObjectInputStream;
-
-
 
 public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, CreateChoiceResponse> {
 
@@ -47,6 +38,7 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, 
 		} 
 		catch (Exception e) {
 			loaded = false;
+			fail = true;
 		}
 		
 		// compute proper response and return. Note that the status code is internal to the HTTP response
@@ -56,9 +48,14 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, 
 			response = new CreateChoiceResponse("",400, failMessage);
 		} 
 		else if(loaded == false){
-			Choice newChoice = new Choice(req.getDescription(), req.getCreationDate());
+			
 			try {
+				Choice newChoice = new Choice(req.getDescription(), req.getCreationDate());
 				dao.addChoice(newChoice , req.getID());
+				ArrayList<Alternative> alts = req.getAlts(); 
+				for(int y = 0; y < alts.size(); y++){
+					dao.addAlternative(alts.get(y), req.getID());
+				}
 				response = new CreateChoiceResponse("operation successful");  // success
 			} catch (Exception e) {
 				response = new CreateChoiceResponse("",400, failMessage);  // success

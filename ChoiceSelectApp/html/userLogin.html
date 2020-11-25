@@ -22,7 +22,7 @@
 	<br>
 	<h3>Login to existing choice</h3>
 	
-	<form>
+	<form name = "loginForm" method = "post">
 	
 	Choice ID: <input name = "choiceId" value = "" />
 	<br><br>
@@ -32,11 +32,11 @@
 	<br>
 	
 	<br><br><br>
-	<input type = "button" value = "Login" onClick = "JavaScript:handleLoginClick(this)" />
+	<input type = "button" value = "Login" onClick = "location.href = 'mainUI.html'" />
 	<br>
 	<input type = "button" value = "Create New Choice" onClick = "location.href = 'createNewChoicePage.html'" />
 	<br><br>
-	<input type = "button" value = "Login As Administrator" onClick = "JavaScript:handleAdminLoginClick(this)" />
+	<input type = "button" value = "Login As Administrator" onClick = "location.href = 'adminPage.html'" />
 	
 	</form>
 	</div>

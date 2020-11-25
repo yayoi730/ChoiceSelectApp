@@ -28,25 +28,30 @@ function initialize() {
 	<h1>title</h1>
 	<h3>header</h3>
 	
-	<form>
+	<form name = "label" method = "get">
 	
-	Choice ID: (connect to database)
+	<label>Choice ID: CID</label>
 	<input type = "button" value = "Mark As Chosen" onClick = />
 	<br>
-	Choice Description: (connect to database)
+	<label>Choice Description: desc</label>
 	<br>
+	</form>	
 	___________________________________________________________________________
 	
-	<br><br>
+
+	<form name = "alts" method = "get">
+	<br>
 	Select an alternative to view:
 	<br>
-	<button>Alt. #1</button>
-	<button>Alt. #2</button>
-	<button>Alt. #3</button>
-	<button>Alt. #4</button>
-	<button>Alt. #5</button>
+	<input type = "button" value = "Alt. #1" onClick = "JavaScript:handleAltClick(1)"/>
+	<input type = "button" value = "Alt. #2" onClick = "JavaScript:handleAltClick(2)"/>
+	<input type = "button" value = "Alt. #3" onClick = "JavaScript:handleAltClick(3)"/>
+	<input type = "button" value = "Alt. #4" onClick = "JavaScript:handleAltClick(4)"/>
+	<input type = "button" value = "Alt. #5" onClick = "JavaScript:handleAltClick(5)"/>
 	<br><br>
+	</form>
 	___________________________________________________________________________
+	
 	
 	<br><br>
 	Description: (connect to database)
@@ -60,7 +65,10 @@ function initialize() {
 	Approvals: (connect to database)
 	<br>
 	Disapprovals: (connect to database)
+	<br>
 	___________________________________________________________________________
+	
+	<form name = "feedbackForm" method = "get">
 	
 	<br><br>
 	Feedback:
@@ -79,27 +87,6 @@ function initialize() {
 	</form>
 	</div>
 	
-	<script type="text/javascript">
-	
-	function addApprover() {
-		//add user's name to approvers list
-	}
-	
-	function addDisapprover() {
-		//add user's name to disapprover
-	}
-	
-	function addFeedback() {
-		//consume input desc.
-		//create and display new feedback
-	}
-	
-	function backToLogin() {
-		//redirect to userLogin.html
-	}
-	
-	</script>
-
 </body>
 
 </html>
