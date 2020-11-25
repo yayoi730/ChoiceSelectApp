@@ -6,18 +6,38 @@ function handleAltClick(altNum) {
 	//display alternative description on page
 	
    var xhr = new XMLHttpRequest();
-   xhr.open("GET", getAlts_url + "/" + altNum, true);
+   xhr.open("GET", getAlt_url + "/" + altNum, true);
    xhr.send();
    
    console.log("sent");
 
-  // This will process results and update HTML as appropriate. 
+  //process results and update html
   xhr.onloadend = function () {
     if (xhr.readyState == XMLHttpRequest.DONE) {
       console.log ("XHR:" + xhr.responseText);
-      processListResponse(xhr.responseText);
+      processResponse(xhr.responseText);
     } else {
-      processListResponse("N/A");
+      processResponse("N/A");
     }
   };
+}
+
+//use as ref to get descriptions from database (GET)
+
+function processResponse(result) {
+  console.log("res:" + result);
+  var js = JSON.parse(result);
+  var altDesc = document.getElementById('altDesc');
+  
+  var output = "";
+  for (var i = 0; i < js.list.length; i++) {
+    var constantJson = js.list[i];
+    console.log(constantJson);
+    
+    var altDesc = constantJson["altDesc"];
+    	output = ;
+  }
+
+  // Update computation result
+  constList.innerHTML = output;
 }

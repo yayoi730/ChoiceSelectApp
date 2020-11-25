@@ -24,24 +24,40 @@
 	
 	<form name = "loginForm" method = "post">
 	
-	Choice ID: <input name = "choiceId" value = "" />
+	Choice ID: <input id = "choiceId" value = "" />
 	<br><br>
-	Username: <input name = "username" value = "" />
+	Username: <input id = "username" value = "" />
 	<br>
-	Password (Optional): <input name = "password" value = "" />
+	Password (Optional): <input id = "password" value = "" />
 	<br>
 	
 	<br><br><br>
-	<input type = "button" value = "Login" onClick = "location.href = 'mainUI.html'" />
+	<input type = "button" value = "Login" onClick = "JavaScript:handleLogin(this)" />
 	<br>
 	<input type = "button" value = "Create New Choice" onClick = "location.href = 'createNewChoicePage.html'" />
 	<br><br>
 	<input type = "button" value = "Login As Administrator" onClick = "location.href = 'adminPage.html'" />
+	<br>
+	***no login required, view only***
 	
 	</form>
 	</div>
-	
 
 </body>
+
+<script type="text/javascript">
+function tryLogin() {
+	var user = document.getElementById("username");
+	var cid = document.getElementById("choiceId");
+	if (user.value == "" || cid.value == "") {
+		alert("Please enter a choice ID and a username");
+	} else {
+		window.location = 'https://s3.us-east-2.amazonaws.com/choice.select.app/html/mainUI.html';
+
+	}
+}
+
+
+</script>
 
 </html>
