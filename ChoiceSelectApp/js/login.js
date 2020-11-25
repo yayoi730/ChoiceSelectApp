@@ -3,6 +3,7 @@ function processLogin(result) {
 }
 
 
+
 function handleLogin(e) {
 	
 	//for the choiceId check if member already exists

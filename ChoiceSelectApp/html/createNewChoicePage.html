@@ -3,6 +3,7 @@
 <head>
 
 <script type='text/javascript' src='../js/alternative.js'></script>
+
 <script type='text/javascript' src='../js/api.js'></script>
 <script type='text/javascript' src='../js/choice.js'></script>
 <script type='text/javascript' src='../js/createChoice.js'></script>
@@ -46,7 +47,9 @@
 
 	
 	<br><br><br>
+
 	<input type = button value = "Create Choice" onClick = "JavaScript:handleCreateChoice(this)" />
+
 	<br>
 	<input type = button value = "Back" onClick = "location.href='userLogin.html'" />
 	
@@ -56,5 +59,21 @@
 </body>
 
 
+function attempt() {
+	var choiceDesc = document.getElementById("choiceDesc");
+	var a1 = document.getElementById("alt1");
+	var a2 = document.getElementById("alt2");
+	var size = document.getElementById("teamSize");
+	
+	if ((choiceDesc.value == "" || a1.value == "") ||
+			(a2.value == "" || size.value == "")) {
+		alert("Please enter a choice description and at least 2 alternatives");
+	} else {
+		window.location = 'mainUI.html';
+	}
+	
+}
+
+</script>
 
 </html>
