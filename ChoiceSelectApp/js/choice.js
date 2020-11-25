@@ -26,7 +26,7 @@ function processResponse(result) {
 	
 	//store element to be changed as a new var
 	var choiceDescLabel = document.getElementById('choiceDesc');
-	var choiceIdLabel = document.getElementById('choiceId')
+	var choiceIdLabel = document.getElementById('choiceId');
 	
 	var desc = js["choiceDesc"];
 	var cid = js["choiceId"];
