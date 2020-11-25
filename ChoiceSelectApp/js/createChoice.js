@@ -23,31 +23,32 @@ function handleCreateChoiceClick(e) {
 	xhrLogin.open("POST", createMember_url + specified, true);
 	xhrLogin.send(jsLogin);
 	
+	//create new team with new Member object
 	
-	var choiceData = {}
-	choiceData["choiceDesc"] = form.choiceDesc.value;
-	choiceData["alt1"] = form.alt1.value;
-	choiceData["alt2"] = form.alt2.value;
-	choiceData["alt3"] = form.alt3.value;
-	choiceData["alt4"] = form.alt4.value;
-	choiceData["alt5"] = form.alt5.value;
+	//How can I retrieve Member object created to add to a Team?
 	
 	//create choice without alternatives
 	var choice = {}
 	choice["choiceDesc"] = form.choiceDesc.value;
+	choice["teamSize"] = form.teamSize.value;
 	console.log("JS:" + JSON.stringify(choice));
 	var xhrChoice = new XMLHttpRequest();
-	xhrLogin.open("POST", createChoice_url + choiceDesc, true);
+	xhrLogin.open("POST", createChoice_url + "/" + choiceDesc, true);
 	xhrLogin.send(jsChoice);
 	
-	//create alternatives
+	//add each alternative 
+	var xhrCreateAlt = new XMLHttpRequest();
+	xhrCreateAlt.open("POST", createAlternative_url + "/" + "1" + "/" + alt1, true);
+	xhrCreateAlt.open("POST", createAlternative_url + "/" + "2" + "/" + alt2, true);
+	xhrCreateAlt.open("POST", createAlternative_url + "/" + "3" + "/" + alt3, true);
+	xhrCreateAlt.open("POST", createAlternative_url + "/" + "4" + "/" + alt4, true);
+	xhrCreateAlt.open("POST", createAlternative_url + "/" + "5" + "/" + alt5, true);
 	
-	
-	//make new team with logged in member
-	//create choice with given description and alternatives
-	//add choice to team
-	
-	
+	//How can I create then retrieve these Alternative objects and then add to a Choice?
+	//The new Choice object is created with an empty set of Alternatives (line 35)
+	//the format is /addAlt/{aid}/{altDesc} for the API, where the Choice object is already known
+
+	//add Choice to Team
 	
 	
 	//redirect to mainUI.html
