@@ -4,19 +4,18 @@
 <head>
 
 <script type='text/javascript' src='../js/alternative.js'></script>
-<script type='text/javascript' src='../js/login.js'></script>
-<script type='text/javascript' src='../js/createChoice.js'></script>
 <script type='text/javascript' src='../js/api.js'></script>
-
-</head>
+<script type='text/javascript' src='../js/choice.js'></script>
+<script type='text/javascript' src='../js/createChoice.js'></script>
+<script type='text/javascript' src='../js/login.js'></script>
 
 <script type="text/javascript">
 function initialize() {
-	
-	//get choice id, choice desc
-	
+	updateChoiceDesc();
 }
 </script>
+
+</head>
 
 <style>
 	.center {
@@ -27,15 +26,15 @@ function initialize() {
 <body>
 	<div class = "center" >
 	
-	<h1>title</h1>
-	<h3>header</h3>
+	<h1>Choice Interface</h1>
+	<h3>Add feedback, approve/disapprove, and choose a choice or alternative</h3>
 	
 	<form name = "label" method = "get">
 	
 	<input id = "markChoice" type = "button" value = "Mark As Chosen" onClick = />
-	<div id="altDesc">Choice ID:</div>
+	<div id="choiceId">Choice ID:</div>
 	<br>
-	<label>Choice Description: desc</label>
+	<div id="choiceDesc">Choice Description:</div>
 	<br>
 	</form>	
 	___________________________________________________________________________

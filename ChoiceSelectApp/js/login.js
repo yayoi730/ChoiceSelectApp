@@ -1,9 +1,5 @@
 function processLogin(result) {
-  // Can grab any DIV or SPAN HTML element and can then manipulate its
-  // contents dynamically via javascript
   console.log("result:" + result);
-
-	//refresh
 }
 
 
@@ -14,45 +10,56 @@ function handleLogin(e) {
 	//then bring user to main interface page
 	
 	//get inputs
-	var form = document.loginForm;
-	var data = {};
-	data["username"] = form.username.value;
-	data["password"] = form.password.value;
-	data["choiceId"] = form.choiceId.value;
-
+	var name = document.getElementById('username').value;
+	var pw = document.getElementById('password').value;
+	var cid = document.getElementById('choiceId').value;
 	
-	//convert data to JSON
-	var js = JSON.stringify(data);
-	console.log("JS:" + js);
-	var xhr = new XMLHttpRequest();
-
-	var specified = "/" + choiceId + "/" + username + "/" + password;
-	xhr.open("POST", login_url + specified, true)
+	//make sure necessary inputs are present
+	if (name == "" || cid == "") {
+		alert("Please enter a username and choice ID");
+	} else {
 	
-	//send to API as JSON
-	xhr.send(js)
-
+		//send out data to login
+		var loginData = {};
+		var js = "";
+		var xhr = new XMLHttpRequest();
+		loginData["username"] = name;
+		loginData["choiceId"] = cid;
+		if (pw != "") {
+			loginData["password"] = pw;
+			js = JSON.stringify(loginData);
+			console.log("JS:" + js);
+			xhr.open("POST", login_url + "/" + cid + "/" + username + "/" + password, true);
+			xhr.send(loginData);
+		} else {
+			js = JSON.stringify(loginData);
+			console.log("JS:" + js);
+			xhr.open("POST", login_url + "/" + cid + "/" + username, true);
+			xhr.send(loginData);
+		}
 	
-	//processs results and handle HTML
-	xhr.onloadend = function () {
-    console.log(xhr);
-    console.log(xhr.request);
-    if (xhr.readyState == XMLHttpRequest.DONE) {
-    	 if (xhr.status == 200) {
-	      console.log ("XHR:" + xhr.responseText);
-	      processLogin(xhr.responseText);
-    	 } else {
-    		 console.log("actual:" + xhr.responseText)
-			  var js = JSON.parse(xhr.responseText);
-			  var err = js["response"];
-			  alert (err);
-    	 }
-    } else {
-      processLogin("N/A");
-    }
-  };
+		
+		//processs results and handle HTML
+		xhr.onloadend = function () {
+	    console.log(xhr);
+	    console.log(xhr.request);
+	    if (xhr.readyState == XMLHttpRequest.DONE) {
+    	 	if (xhr.status == 200) {
+	      	console.log ("XHR:" + xhr.responseText);
+	      	processLogin(xhr.responseText);
+    	 	} else {
+    		 	console.log("actual:" + xhr.responseText);
+			  	var js = JSON.parse(xhr.responseText);
+			  	var err = js["response"];
+			  	alert (err);
+    	 	}
+    	} else {
+      		processLogin("N/A");
+    	}
+ 	 	};
 
-	return true;
+		window.location.href = 'https://s3.us-east-2.amazonaws.com/choice.select.app/html/mainUI.html'
+	}
 }
 
 
