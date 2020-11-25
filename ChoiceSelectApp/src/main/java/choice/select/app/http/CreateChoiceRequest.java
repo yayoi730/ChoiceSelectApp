@@ -9,27 +9,19 @@ public class CreateChoiceRequest {
 	String id;
 	String description;
 	Timestamp creationDate;
-	Timestamp completionDate;
-	int finalChoice;
 	
-	public CreateChoiceRequest() {
-		
-	}
+	public CreateChoiceRequest() {}
 	
-	public CreateChoiceRequest(String id, String description, Timestamp creationDate) {
-		this.id = id;
+	public CreateChoiceRequest(String description) {
 		this.description = description;
-		this.creationDate = creationDate;
 	}
 	
 	public void setID(String id) {this.id = id;}
 	public void setDescription(String d) {this.description = d;}
-	public void setCreationDate(Timestamp t) {this.creationDate = t;}
-	public void setCompletionDate(Timestamp t) {this.completionDate = t;}
+	public Timestamp getCreationDate() {return this.creationDate;}
 	public String getID() {return this.id;}
 	public String getDescription() {return this.description;}
-	public Timestamp getCreationDate() {return this.creationDate;}
-	public Timestamp getCompletionDate() {return this.completionDate;}
+	
 	public boolean addAlternative(Alternative alt) {
 		if(this.alternatives.size() < 5) {
 			alternatives.add(alt);
@@ -37,10 +29,8 @@ public class CreateChoiceRequest {
 		}
 		return false;
 	}
-	public ArrayList<Alternative> getAlts(){
-		return this.alternatives;
-	}
-	public String toString() {
-		return "CreateChoice(" + id + "," + description + "," + creationDate + "," + creationDate.toString() + "," + completionDate.toString() + alternatives.toString() + ")";
-	}
+	
+	public ArrayList<Alternative> getAlts(){return this.alternatives;}
+	
+	public String toString() {return "CreateChoice(" + id + "," + description + "," + alternatives.toString() + ")";}
 }

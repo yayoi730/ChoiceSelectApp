@@ -1,7 +1,9 @@
 package rando.randomness.app.demo.model;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 
 public class Choice {
@@ -12,21 +14,33 @@ public class Choice {
 	Timestamp creationDate;
 	Timestamp completionDate;
 	int finalChoice;
-	public Choice(String id, String description, Timestamp creationDate) {
+
+	public Choice(String description, Timestamp creationDate) {
 		this.id = id;
 		this.description = description;
 		this.creationDate = creationDate;
 	}
+	
 	public String getID() {return this.id;}
 	public String getDescription() {return this.description;}
 	public Timestamp getCreationDate() {return this.creationDate;}
+	public Timestamp getCompletionDate() {return this.completionDate;}
+	public void setCompletionDate(Timestamp newTimestamp) {this.completionDate = newTimestamp;}
 	
 	public ArrayList<Alternative> getAlternativeList(){
 		return this.alternatives;
 	}
+	public void setFinalChoice(int choiceNum) {this.finalChoice = choiceNum;}
+	public int getFinalChoice(int choiceNum) {return choiceNum;}
+	
+	public void addAlternative(Alternative a)
+	{
+		this.alternatives.add(a);
+	}
 	
 	public void completeChoice(int choiceNum) { // basically a setter, needs clarification
 		this.finalChoice = choiceNum;
+		this.completionDate = new Timestamp(System.currentTimeMillis());
 	}
 
 	public void setID(String cID) {this.id = cID;}

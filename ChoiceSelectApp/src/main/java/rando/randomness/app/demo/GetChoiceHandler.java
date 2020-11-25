@@ -44,7 +44,7 @@ public class GetChoiceHandler implements RequestHandler<GetChoiceRequest, GetCho
 		if (fail) {
 			response = new GetChoiceResponse("",400, failMessage);
 		} 
-		else if(loaded == false){response = new GetChoiceResponse("",400, failMessage);  // success
+		else if(loaded == false){response = new GetChoiceResponse("The Choice does not exist",400, failMessage);
 		}
 		else {response = new GetChoiceResponse("operation successful");}
 

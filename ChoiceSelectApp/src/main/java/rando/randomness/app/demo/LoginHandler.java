@@ -1,6 +1,5 @@
 package rando.randomness.app.demo;
 
-
 import java.util.ArrayList;
 
 import com.amazonaws.services.lambda.runtime.Context;
@@ -8,19 +7,20 @@ import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.s3.AmazonS3;
 
-import choice.select.app.http.CreateMemberRequest;
-import choice.select.app.http.CreateMemberResponse;
+import choice.select.app.http.LoginRequest;
+import choice.select.app.http.LoginResponse;
 import rando.randomness.app.demo.db.ChoiceDAO;
 import rando.randomness.app.demo.model.Member;
 
-public class CreateMemberHandler implements RequestHandler<CreateMemberRequest, CreateMemberResponse> {
-LambdaLogger logger;
+public class LoginHandler implements RequestHandler<LoginRequest, LoginResponse> {
+
+	LambdaLogger logger;
 	
 	// To access S3 storage
 	private AmazonS3 s3 = null;
 	
 	@Override
-	public CreateMemberResponse handleRequest(CreateMemberRequest req, Context context) {
+	public LoginResponse handleRequest(LoginRequest req, Context context) {
 		logger = context.getLogger();
 		logger.log("Loading Java Lambda handler of CreateMemberHandler");
 		logger.log(req.toString());
@@ -28,38 +28,35 @@ LambdaLogger logger;
 		ChoiceDAO dao =  new ChoiceDAO();
 		
 		boolean fail = false;
-		boolean loaded = true;
+		boolean login = false;
 		String failMessage = "";
-		Member loadedMember = null;
-		
+		Member loadedMember = null;		
+	
 		try {
 			loadedMember = loadMemberFromRDS(req.getTID(), req.getName());
-			loaded = true;
+			if(loadedMember.getPassword() == req.getPassword())
+			{
+				login = true; 
+			}
 		} 
 		catch (Exception e) {
-			loaded = false;
+			login = false;
 		}
+		
 		
 		// compute proper response and return. Note that the status code is internal to the HTTP response
 		// and has to be processed specifically by the client code.
-		CreateMemberResponse response;
+		LoginResponse response;
 		if (fail) {
-			response = new CreateMemberResponse("",400, failMessage);
+			response = new LoginResponse("",400, failMessage);
 		} 
-		else if(loaded == false){
-			Member newMember = new Member(req.getName(), req.getPassword()); 			
-			try {
-				dao.addMember(newMember, req.tID);
-				response = new CreateMemberResponse("operation successful");  // success
-			} catch (Exception e) {
-				response = new CreateMemberResponse("",400, failMessage);  // success
-			}
+		else if(login){
+			response = new LoginResponse("operation successful"); 
 		}
-		else {response = new CreateMemberResponse("Member Already Exist",400, failMessage);}
+		else {response = new LoginResponse("Member Does Not Exist",400, failMessage);}
 
 		return response; 
 	}
-
 
 	private Member loadMemberFromRDS(String tID, String name) {
 		ChoiceDAO dao =  new ChoiceDAO();
@@ -75,9 +72,7 @@ LambdaLogger logger;
 		}
 		catch(Exception e) {
 			return null;
-		}
-		
+		}		
 	}
-
 
 }
