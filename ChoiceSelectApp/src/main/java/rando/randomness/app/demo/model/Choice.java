@@ -30,11 +30,12 @@ public class Choice {
 	public ArrayList<Alternative> getAlternativeList(){ return this.alternatives; }
 	public void addAlternative(Alternative a) { this.alternatives.add(a); }
 	public Alternative getAlt(int altNum) {
-		for (int i = 0; i < alternative.size(); i++) {
+		for (int i = 0; i < alternatives.size(); i++) {
 			if (altNum == i+1) {
-				return alternative.get(i);
+				return alternatives.get(i);
 			}
 		}
+		return null;
 	}
 	
 	public void setFinalChoice(int choiceNum) {this.finalChoice = choiceNum;}
