@@ -1,6 +1,6 @@
 //
 
-function handleCreateChoiceClick(e) {
+function handleCreateChoice(e) {
 	
 	var form = document.createChoiceForm;
 	var loginData = {}
@@ -31,26 +31,21 @@ function handleCreateChoiceClick(e) {
 	var choice = {}
 	choice["choiceDesc"] = form.choiceDesc.value;
 	choice["teamSize"] = form.teamSize.value;
+	
+	var alts = {}
+	alts["alt1"] = form.alt1.value;
+	alts["alt2"] = form.alt2.value;
+	alts["alt3"] = form.alt3.value;
+	alts["alt4"] = form.alt4.value;
+	alts["alt5"] = form.alt5.value;
+	choice["alts"] = alts;
+	
 	console.log("JS:" + JSON.stringify(choice));
 	var xhrChoice = new XMLHttpRequest();
-	xhrLogin.open("POST", createChoice_url + "/" + choiceDesc, true);
+	xhrLogin.open("POST", createChoice_url + "/" + choiceDesc + "/" + teamSize, true);
 	xhrLogin.send(jsChoice);
 	
-	//add each alternative 
-	var xhrCreateAlt = new XMLHttpRequest();
-	xhrCreateAlt.open("POST", createAlternative_url + "/" + "1" + "/" + alt1, true);
-	xhrCreateAlt.open("POST", createAlternative_url + "/" + "2" + "/" + alt2, true);
-	xhrCreateAlt.open("POST", createAlternative_url + "/" + "3" + "/" + alt3, true);
-	xhrCreateAlt.open("POST", createAlternative_url + "/" + "4" + "/" + alt4, true);
-	xhrCreateAlt.open("POST", createAlternative_url + "/" + "5" + "/" + alt5, true);
-	
-	//How can I create then retrieve these Alternative objects and then add to a Choice?
-	//The new Choice object is created with an empty set of Alternatives (line 35)
-	//the format is /addAlt/{aid}/{altDesc} for the API, where the Choice object is already known
-
 	//add Choice to Team
-	
-	
-	//redirect to mainUI.html
+
 	
 }

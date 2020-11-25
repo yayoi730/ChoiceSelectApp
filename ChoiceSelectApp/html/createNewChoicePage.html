@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-
+<script type='text/javascript' src='../js/alternative.js'></script>
 <script type='text/javascript' src='../js/login.js'></script>
 <script type='text/javascript' src='../js/createChoice.js'></script>
 <script type='text/javascript' src='../js/api.js'></script>
@@ -24,29 +24,29 @@
 	
 	<form name = "createChoiceForm" method = "post">
 	
-	Username: <input name = "username" value = "" />
+	Username: <input id = "username" value = "" />
 	<br>
-	Password (Optional): <input name = "password" value = "" />
+	Password (Optional): <input id = "password" value = "" />
 	<br><br>
 	
-	Choice Description: <input name = "choiceDesc" value = ""/>
+	Choice Description: <input id = "choiceDesc" value = ""/>
 	<br>
-	Enter Team Size: <input name = "teamSize" value = "" />
+	Enter Team Size: <input id = "teamSize" value = "" />
 	<br><br>
-	Alternative #1: <input name = "alt1" value = "" />
+	Alternative #1: <input id = "alt1" value = "" />
 	<br>
-	Alternative #2: <input name = "alt2" value = "" />
+	Alternative #2: <input id = "alt2" value = "" />
 	<br>
-	Alternative #3: <input name = "alt3" value = "" />
+	Alternative #3: <input id = "alt3" value = "" />
 	<br>
-	Alternative #4: <input name = "alt4" value = "" />
+	Alternative #4: <input id = "alt4" value = "" />
 	<br>
-	Alternative #5: <input name = "alt5" value = "" />
+	Alternative #5: <input id = "alt5" value = "" />
 
 
 	
 	<br><br><br>
-	<input type = button value = "Create Choice" onClick = "JavaScript:handleCreateChoiceClick(this)" />
+	<input type = button value = "Create Choice" onClick = "attempt()" />
 	<br>
 	<input type = button value = "Back" onClick = "location.href='userLogin.html'" />
 	
@@ -54,5 +54,23 @@
 	</div>
 	
 </body>
+
+<script>
+function attempt() {
+	var choiceDesc = document.getElementById("choiceDesc");
+	var a1 = document.getElementById("alt1");
+	var a2 = document.getElementById("alt2");
+	var size = document.getElementById("teamSize");
+	
+	if ((choiceDesc.value == "" || a1.value == "") ||
+			(a2.value == "" || size.value == "")) {
+		alert("Please enter a choice description and at least 2 alternatives");
+	} else {
+		window.location = 'mainUI.html';
+	}
+	
+}
+
+</script>
 
 </html>
