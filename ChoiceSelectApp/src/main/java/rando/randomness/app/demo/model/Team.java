@@ -15,6 +15,11 @@ public class Team {
 	public void addMember(String username, String password) {
 		members.add(new Member(username,password));
 	}
+	
+	public Choice getChoice()
+	{
+		return this.choice;
+	}
 	public void addMember(String username) {
 		members.add(new Member(username));
 	}
