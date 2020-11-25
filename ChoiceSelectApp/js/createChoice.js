@@ -62,8 +62,8 @@ function handleCreateChoice(e) {
 		
 		//create choice without alternatives
 		var choice = {}
-		choice["choiceDesc"] = form.choiceDesc.value;
-		choice["teamSize"] = form.teamSize.value;
+		choice["choiceDesc"] = desc;
+		choice["teamSize"] = size;
 		
 		var alts = {}
 		alts["alt1"] = alt1;
