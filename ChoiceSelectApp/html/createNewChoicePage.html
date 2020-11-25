@@ -51,29 +51,11 @@
 	<input type = button value = "Create Choice" onClick = "JavaScript:handleCreateChoice(this)" />
 
 	<br>
-	<input type = button value = "Back" onClick = "location.href='userLogin.html'" />
+	<input type = button value = "Back" onClick = "location.href='https://s3.us-east-2.amazonaws.com/choice.select.app/html/userLogin.html'" />
 	
 	</form>
 	</div>
 	
 </body>
-
-
-function attempt() {
-	var choiceDesc = document.getElementById("choiceDesc");
-	var a1 = document.getElementById("alt1");
-	var a2 = document.getElementById("alt2");
-	var size = document.getElementById("teamSize");
-	
-	if ((choiceDesc.value == "" || a1.value == "") ||
-			(a2.value == "" || size.value == "")) {
-		alert("Please enter a choice description and at least 2 alternatives");
-	} else {
-		window.location = 'mainUI.html';
-	}
-	
-}
-
-</script>
 
 </html>
