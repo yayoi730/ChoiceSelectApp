@@ -30,6 +30,7 @@ public class CreateChoiceRequest {
 		return false;
 	}
 	
+	
 	public ArrayList<Alternative> getAlts(){return this.alternatives;}
 	
 	public String toString() {return "CreateChoice(" + id + "," + description + "," + alternatives.toString() + ")";}
