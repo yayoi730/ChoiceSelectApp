@@ -7,11 +7,11 @@ import java.util.UUID;
 
 //import edu.wpi.cs.heineman.demo.model.Constant;
 import rando.randomness.app.demo.db.DatabaseUtil;
+import rando.randomness.app.demo.model.Alternative;
 import rando.randomness.app.demo.model.Choice;
 import rando.randomness.app.demo.model.Feedback;
 import rando.randomness.app.demo.model.Member;
 import rando.randomness.app.demo.model.Team;
-import rando.randomness.app.demo.model.Alternative;
 public class ChoiceDAO {
 	java.sql.Connection conn;
 	
@@ -178,7 +178,7 @@ public class ChoiceDAO {
 	{
 		 
 	        try {
-	        	PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + mName + " WHERE TID = ?;");
+	        	PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + cName + " WHERE TID = ?;");
 	            ps.setString(1, tID);
 	            ResultSet resultSet = ps.executeQuery();
 
@@ -378,31 +378,40 @@ public class ChoiceDAO {
 	
 	public Choice generateChoice(ResultSet r) throws SQLException
 	{
-		Timestamp dateOfCreation = Timestamp.valueOf(r.getString("dateOfCreation"));
+		//Timestamp dateOfCreation = Timestamp.valueOf(r.getString("dateOfCreation"));
+		
+		String tID = r.getString("TID");
 		String cID = r.getString("CID");
 		String description = r.getString("description");
-		Timestamp dateOfCompletion = Timestamp.valueOf(r.getString("dateOfCompletion"));
-		Integer finalChoice = r.getInt("finalChoice");
-		String tID = r.getString("TID");
+		String dateOfCreation = r.getString("dateOfCreation");
+		Timestamp timestamp = Timestamp.valueOf(dateOfCreation);
+		//Timestamp dateOfCompletion = Timestamp.valueOf(r.getString("dateOfCompletion"));
+		//Integer finalChoice = r.getInt("finalChoice");
 		
-		Choice c = new Choice(description, dateOfCreation);
+		
+		Choice c = new Choice(description, timestamp);
 		c.setID(cID);
 		c.setTID(tID);
-		if(finalChoice != null)
-		{
-			c.completeChoice(finalChoice);
-		}
+		//if(finalChoice != null)
+		//{
+		//	c.completeChoice(finalChoice);
+		//}
 		
-		 //for(Alternative a: c.getAlternatives())
-        //{
-        //	c.setAlternatives(retrieveAlternatives(cID));
-        //}
+		 try {
+			for(Alternative a: retrieveAlternatives(cID))
+			{
+				c.addAlternative(a);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return c;
 	}
 	
 	public Team generateTeam(ResultSet r) throws Exception
 	{
-		Timestamp ti = Timestamp.valueOf(r.getString("timestamp"));
+		
 		String tid = r.getString("TID");
 		ArrayList<Member> m = retrieveMembers(tid);
 		Choice choice = retrieveChoice(tid);
