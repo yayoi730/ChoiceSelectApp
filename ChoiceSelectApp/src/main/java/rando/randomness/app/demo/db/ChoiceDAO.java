@@ -397,10 +397,15 @@ public class ChoiceDAO {
 		//	c.completeChoice(finalChoice);
 		//}
 		
-		 //for(Alternative a: c.getAlternatives())
-        //{
-        //	c.setAlternatives(retrieveAlternatives(cID));
-        //}
+		 try {
+			for(Alternative a: retrieveAlternatives(cID))
+			{
+				c.addAlternative(a);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return c;
 	}
 	
