@@ -2,9 +2,25 @@
 <html>
 <head>
 
-<script type='text/javascript' src='../js/login.js'></script>
-<script type='text/javascript' src='../js/createChoice.js'></script>
+<script type='text/javascript' src='../js/alternative.js'></script>
 <script type='text/javascript' src='../js/api.js'></script>
+<script type='text/javascript' src='../js/choice.js'></script>
+<script type='text/javascript' src='../js/createChoice.js'></script>
+<script type='text/javascript' src='../js/login.js'></script>
+
+<script type="text/javascript">
+function tryLogin() {
+	var user = document.getElementById("username");
+	var cid = document.getElementById("choiceId");
+	if (user.value == "" || cid.value == "") {
+		alert("Please enter a choice ID and a username");
+	} else {
+		window.location = 'https://s3.us-east-2.amazonaws.com/choice.select.app/html/mainUI.html';
+	}
+}
+
+
+</script>
 
 
 </head>
@@ -34,9 +50,11 @@
 	<br><br><br>
 	<input type = "button" value = "Login" onClick = "JavaScript:handleLogin(this)" />
 	<br>
-	<input type = "button" value = "Create New Choice" onClick = "location.href = 'createNewChoicePage.html'" />
+	<input type = "button" value = "Create New Choice" onClick = "location.href = 'https://s3.us-east-2.amazonaws.com/choice.select.app/html/createNewChoicePage.html'" />
 	<br><br>
-	<input type = "button" value = "Login As Administrator" onClick = "location.href = 'adminPage.html'" />
+
+	<input type = "button" value = "Login As Administrator" onClick = "location.href = 'https://s3.us-east-2.amazonaws.com/choice.select.app/html/adminPage.html'" />
+
 	<br>
 	***no login required, view only***
 	
@@ -44,20 +62,5 @@
 	</div>
 
 </body>
-
-<script type="text/javascript">
-function tryLogin() {
-	var user = document.getElementById("username");
-	var cid = document.getElementById("choiceId");
-	if (user.value == "" || cid.value == "") {
-		alert("Please enter a choice ID and a username");
-	} else {
-		window.location = 'https://s3.us-east-2.amazonaws.com/choice.select.app/html/mainUI.html';
-
-	}
-}
-
-
-</script>
 
 </html>

@@ -1,43 +1,34 @@
 //
 
 function handleAltClick(altNum) {
+	//submit getAlt/{altNum} request
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", getAlt_url + "/" + altNum, true);
+	xhr.send();
+	console.log("getAlt req sent");
 	
-	//retrieve alternative with given altNum
-	//display alternative description on page
-	
-   var xhr = new XMLHttpRequest();
-   xhr.open("GET", getAlt_url + "/" + altNum, true);
-   xhr.send();
-   
-   console.log("sent");
-
-  //process results and update html
-  xhr.onloadend = function () {
+	//process and update html
+	xhr.onloadend = function () {
     if (xhr.readyState == XMLHttpRequest.DONE) {
       console.log ("XHR:" + xhr.responseText);
-      processResponse(xhr.responseText);
+      processResponse(xhr.responseText, altNum);
     } else {
-      processResponse("N/A");
+      processResponse("N/A", "0");
     }
   };
 }
 
-//use as ref to get descriptions from database (GET)
 
-function processResponse(result) {
-  console.log("res:" + result);
-  var js = JSON.parse(result);
-  var altDesc = document.getElementById('altDesc');
-  
-  var output = "";
-  for (var i = 0; i < js.list.length; i++) {
-    var constantJson = js.list[i];
-    console.log(constantJson);
-    
-    var altDesc = constantJson["altDesc"];
-    	output = ;
-  }
-
-  // Update computation result
-  constList.innerHTML = output;
+//respond to server and replace 'altDesc' with actual description
+function processResponse(result, altNum) {
+	console.log("result: " + result);
+	
+	//for manipulating an html element
+	var js = JSON.parse(result);
+	
+	//store element to be changed as a new var
+	var altDescLabel = document.getElementById('altDesc');
+	var desc = js["altDesc"];
+	altDescLabel.innerHTML = "<div id = \"altDesc\" value = \"" + desc + "\" />";
 }
+

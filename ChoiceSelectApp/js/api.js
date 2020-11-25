@@ -11,4 +11,5 @@ var createTeam_url = base + "createTeam";			//POST
 
 var getAlt_url = base + "getAlt";					//GET
 
-var getCID_url = base + "getChoiceId";				//GET
+var getChoice_url = base + "getChoice";				//GET
+

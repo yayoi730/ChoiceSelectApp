@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <script type='text/javascript' src='../js/alternative.js'></script>
-<script type='text/javascript' src='../js/login.js'></script>
-<script type='text/javascript' src='../js/createChoice.js'></script>
+
 <script type='text/javascript' src='../js/api.js'></script>
-
-
+<script type='text/javascript' src='../js/choice.js'></script>
+<script type='text/javascript' src='../js/createChoice.js'></script>
+<script type='text/javascript' src='../js/login.js'></script>
 </head>
 
 <style>
@@ -46,7 +47,9 @@
 
 	
 	<br><br><br>
-	<input type = button value = "Create Choice" onClick = "attempt()" />
+
+	<input type = button value = "Create Choice" onClick = "JavaScript:handleCreateChoice(this)" />
+
 	<br>
 	<input type = button value = "Back" onClick = "location.href='userLogin.html'" />
 	
@@ -55,7 +58,7 @@
 	
 </body>
 
-<script>
+
 function attempt() {
 	var choiceDesc = document.getElementById("choiceDesc");
 	var a1 = document.getElementById("alt1");

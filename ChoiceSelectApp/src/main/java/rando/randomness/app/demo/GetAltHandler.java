@@ -30,7 +30,6 @@ public class GetAltHandler implements RequestHandler<GetAltRequest, GetAltRespon
 		
 		ChoiceDAO dao =  new ChoiceDAO();
 		
-		
 		boolean loaded = true;
 		String failMessage = "unexpected error retriving choice";
 		ArrayList<Alternative> loadedAlts = new ArrayList<Alternative>();
@@ -47,7 +46,8 @@ public class GetAltHandler implements RequestHandler<GetAltRequest, GetAltRespon
 		// and has to be processed specifically by the client code.
 		GetAltResponse response;
 		
-		if(loaded == false){response = new GetAltResponse("The Choice does not exist",400, failMessage);
+		if(loaded == false){
+      response = new GetAltResponse("The Alt does not exist",400, failMessage);
 		}
 		else {response = new GetAltResponse("operation successful");}
 
