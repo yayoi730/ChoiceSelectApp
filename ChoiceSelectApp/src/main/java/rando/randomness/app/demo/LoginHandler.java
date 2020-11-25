@@ -31,10 +31,15 @@ public class LoginHandler implements RequestHandler<LoginRequest, LoginResponse>
 		boolean login = false;
 		String failMessage = "";
 		Member loadedMember = null;		
-	
+
 		try {
 			loadedMember = loadMemberFromRDS(req.getTID(), req.getName());
-			if(loadedMember.getPassword() == req.getPassword())
+			if(req.getPassword() == "") {
+				if(loadedMember.getPassword() == null || loadedMember.getPassword() == "") {
+					login = true;
+				}
+			}
+			else if(loadedMember.getPassword() == req.getPassword())
 			{
 				login = true; 
 			}
