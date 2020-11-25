@@ -48,5 +48,24 @@ public class TestDatabase {
 	    	fail ("didn't work:" + e.getMessage());
 	    }
 	}
+	
+	@Test
+	public void testFind() {
+		String tID = "ad43679a-bc82-414e-8e92-e7f6f9034406";
+	    ChoiceDAO cd = new ChoiceDAO();
+	    try {
+	    	Team t = cd.retrieveTeam(tID);
+	    	System.out.println(t.getChoice().getDescription());
+	    	for(Alternative a: t.getChoice().getAlternativeList())
+	    	{
+	    		System.out.println(a.getAID());
+	    		System.out.println(a.getDescription());
+	    	}
+	    	assertTrue(true);
+	    } catch (Exception e) {
+	    	fail ("didn't work:" + e.getMessage());
+	    }
+	}
+	
 
 }
