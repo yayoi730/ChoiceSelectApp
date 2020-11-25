@@ -8,12 +8,9 @@ import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.s3.AmazonS3;
 
-import choice.select.app.http.CreateChoiceRequest;
-import choice.select.app.http.CreateChoiceResponse;
 import choice.select.app.http.CreateMemberRequest;
 import choice.select.app.http.CreateMemberResponse;
 import rando.randomness.app.demo.db.ChoiceDAO;
-import rando.randomness.app.demo.model.Choice;
 import rando.randomness.app.demo.model.Member;
 
 public class CreateMemberHandler implements RequestHandler<CreateMemberRequest, CreateMemberResponse> {

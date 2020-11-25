@@ -41,6 +41,7 @@ public class TestDatabase {
 	    	
 	    	// can delete it
 	    	assertTrue (cd.deleteConstant(c2));
+
 	    } catch (Exception e) {
 	    	fail ("didn't work:" + e.getMessage());
 	    }
