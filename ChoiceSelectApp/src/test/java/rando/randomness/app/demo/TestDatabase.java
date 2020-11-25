@@ -38,7 +38,6 @@ public class TestDatabase {
 	    	
 	    	t = cd.addTeam(t);  
 	    	
-	    	
 	    } catch (Exception e) {
 	    	fail ("didn't work:" + e.getMessage());
 	    }
