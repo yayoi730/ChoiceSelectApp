@@ -64,7 +64,7 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, 
 			response = new CreateChoiceResponse("",400, failMessage);
 		} 
 		else if(loaded == false){
-			Choice newChoice = new Choice(req.getID(), req.getDescription(), req.getCreationDate());
+			Choice newChoice = new Choice(req.getDescription(), req.getCreationDate());
 			try {
 				dao.addChoice(newChoice , req.getID());
 				response = new CreateChoiceResponse("operation successful");  // success
