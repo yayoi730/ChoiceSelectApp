@@ -37,7 +37,7 @@ public class TestDatabase {
 	    	
 	    	
 	    	t = cd.addTeam(t);  
-	    	
+	    	assertTrue(true);
 	    } catch (Exception e) {
 	    	fail ("didn't work:" + e.getMessage());
 	    }

@@ -19,8 +19,8 @@ public class ChoiceDAO {
 	final String aName = "Alternative";
 	final String apName = "APP/DIS";
 	final String fName = "Feedback";
-	final String mName = "Member";
-	final String tName = "Team";// Exact capitalization
+	final String mName = "Members";
+	final String tName = "Teams";// Exact capitalization
 	
 	public ChoiceDAO() {
     	try  {
