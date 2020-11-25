@@ -1,5 +1,13 @@
+function processLogin(result) {
+  // Can grab any DIV or SPAN HTML element and can then manipulate its
+  // contents dynamically via javascript
+  console.log("result:" + result);
 
-function handleLoginClick(e) {
+	//refresh
+}
+
+
+function handleLogin(e) {
 	
 	//for the choiceId check if member already exists
 	//if not, create new member with those credentials
@@ -24,7 +32,6 @@ function handleLoginClick(e) {
 	//send to API as JSON
 	xhr.send(js)
 
-	location.href = "mainUI.html";	
 	
 	//processs results and handle HTML
 	xhr.onloadend = function () {
@@ -33,7 +40,7 @@ function handleLoginClick(e) {
     if (xhr.readyState == XMLHttpRequest.DONE) {
     	 if (xhr.status == 200) {
 	      console.log ("XHR:" + xhr.responseText);
-	      processCreateResponse(xhr.responseText);
+	      processLogin(xhr.responseText);
     	 } else {
     		 console.log("actual:" + xhr.responseText)
 			  var js = JSON.parse(xhr.responseText);
@@ -41,9 +48,11 @@ function handleLoginClick(e) {
 			  alert (err);
     	 }
     } else {
-      processCreateResponse("N/A");
+      processLogin("N/A");
     }
   };
+
+	return true;
 }
 
 
@@ -82,7 +91,7 @@ function handleAdminLogin(e) {
     if (xhr.readyState == XMLHttpRequest.DONE) {
     	 if (xhr.status == 200) {
 	      console.log ("XHR:" + xhr.responseText);
-	      processCreateResponse(xhr.responseText);
+	      processLogin(xhr.responseText);
     	 } else {
     		 console.log("actual:" + xhr.responseText)
 			  var js = JSON.parse(xhr.responseText);
@@ -90,7 +99,7 @@ function handleAdminLogin(e) {
 			  alert (err);
     	 }
     } else {
-      processCreateResponse("N/A");
+      processLogin("N/A");
     }
   };
 }

@@ -9,7 +9,9 @@ import java.util.UUID;
 import org.junit.Test;
 
 import rando.randomness.app.demo.db.ChoiceDAO;
+import rando.randomness.app.demo.model.Alternative;
 import rando.randomness.app.demo.model.Choice;
+import rando.randomness.app.demo.model.Feedback;
 import rando.randomness.app.demo.model.Member;
 import rando.randomness.app.demo.model.Team;
 
@@ -26,6 +28,10 @@ public class TestDatabase {
 	    try {
 	    	Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 	    	Choice c = new Choice("This is a description",timestamp);
+	    	Alternative a1 = new Alternative("This is an alternative");
+	    	Alternative a2 = new Alternative("This is also an alternative");
+	    	c.addAlternative(a1);
+	    	c.addAlternative(a2);
 	    	ArrayList<Member> newMembers = new ArrayList<>();
 	    	Member m1 = new Member("Ryan", "pass1");
 	    	Member m2 = new Member("Erin", "pass2");
@@ -42,5 +48,24 @@ public class TestDatabase {
 	    	fail ("didn't work:" + e.getMessage());
 	    }
 	}
+	
+	@Test
+	public void testFind() {
+		String tID = "ad43679a-bc82-414e-8e92-e7f6f9034406";
+	    ChoiceDAO cd = new ChoiceDAO();
+	    try {
+	    	Team t = cd.retrieveTeam(tID);
+	    	System.out.println(t.getChoice().getDescription());
+	    	for(Alternative a: t.getChoice().getAlternativeList())
+	    	{
+	    		System.out.println(a.getAID());
+	    		System.out.println(a.getDescription());
+	    	}
+	    	assertTrue(true);
+	    } catch (Exception e) {
+	    	fail ("didn't work:" + e.getMessage());
+	    }
+	}
+	
 
 }

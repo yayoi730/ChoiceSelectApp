@@ -3,6 +3,7 @@
 
 <head>
 
+<script type='text/javascript' src='../js/alternative.js'></script>
 <script type='text/javascript' src='../js/login.js'></script>
 <script type='text/javascript' src='../js/createChoice.js'></script>
 <script type='text/javascript' src='../js/api.js'></script>
@@ -11,7 +12,8 @@
 
 <script type="text/javascript">
 function initialize() {
-	//get lists for approvers and disapprovers
+	
+	//get choice id, choice desc
 	
 }
 </script>
@@ -30,8 +32,8 @@ function initialize() {
 	
 	<form name = "label" method = "get">
 	
-	<label>Choice ID: CID</label>
-	<input type = "button" value = "Mark As Chosen" onClick = />
+	<input id = "markChoice" type = "button" value = "Mark As Chosen" onClick = />
+	<div id="altDesc">Choice ID:</div>
 	<br>
 	<label>Choice Description: desc</label>
 	<br>
@@ -54,17 +56,17 @@ function initialize() {
 	
 	
 	<br><br>
-	Description: (connect to database)
-	<input type = "button" value = "Mark As Chosen" onClick = />
+	<input id = "markAlt" type = "button" value = "Mark As Chosen" onClick = />
+	<div id="altDesc">Alternative Description:</div>
 	
-	<br><br>
+	<br>
 	<input type = "button" value = "Like" onClick = />
 	<input type = "button" value = "Dislike" onClick = />
 	<br><br>
 	
-	Approvals: (connect to database)
+	<div id="approversList">Approvers:</div>
 	<br>
-	Disapprovals: (connect to database)
+	<div id="disapproversList">Disapprovers:</div>
 	<br>
 	___________________________________________________________________________
 	
