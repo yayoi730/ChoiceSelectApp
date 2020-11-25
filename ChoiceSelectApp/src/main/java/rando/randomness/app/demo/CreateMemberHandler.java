@@ -14,7 +14,7 @@ import rando.randomness.app.demo.db.ChoiceDAO;
 import rando.randomness.app.demo.model.Member;
 
 public class CreateMemberHandler implements RequestHandler<CreateMemberRequest, CreateMemberResponse> {
-LambdaLogger logger;
+	LambdaLogger logger;
 	
 	// To access S3 storage
 	private AmazonS3 s3 = null;

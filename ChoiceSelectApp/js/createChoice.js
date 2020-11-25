@@ -1,10 +1,12 @@
 
+
 function processLogin(result) {
 	console.log("result: " + result)
 }
 
 //called on by "Create Choice" button
 function handleCreateChoice(e) {
+
 	
 	//get all inputs
 	var name = document.getElementById('username').value;
@@ -110,6 +112,7 @@ function handleCreateChoice(e) {
 	
 		//redirect to main interface page
 		window.location = 'https://s3.us-east-2.amazonaws.com/choice.select.app/html/mainUI.html';
+
 	
 	}
 }
