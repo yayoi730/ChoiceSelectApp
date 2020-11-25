@@ -24,24 +24,20 @@ public class TestDatabase {
 	public void testCreateChoice() {
 	    ChoiceDAO cd = new ChoiceDAO();
 	    try {
-	    	Choice c = new Choice(id, "This is a description",timestamp);
-	    	ArrayList<Member> newMembers = new ArrayList<>();
-	    	Member m = new Member("Ryan", "pass1");
-	    	newMembers.add(m);
-	    	Team t = new Team(newMembers, c);
-	    	String id = UUID.randomUUID().toString(); // no more than 20 because of DB restrictions...
 	    	Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+	    	Choice c = new Choice("This is a description",timestamp);
+	    	ArrayList<Member> newMembers = new ArrayList<>();
+	    	Member m1 = new Member("Ryan", "pass1");
+	    	Member m2 = new Member("Erin", "pass2");
+	    	newMembers.add(m1);
+	    	newMembers.add(m2);
+	    	Team t = new Team(newMembers, c);
 	    	
-	    	c.setID(cd.addChoice(c, id));  
-	    	System.out.println("add constant: " + b);
+	    	String id = UUID.randomUUID().toString(); // no more than 20 because of DB restrictions...
 	    	
-	    	// can retrieve it
-	    	Constant c2 = cd.getConstant(constant.name);
-	    	System.out.println("C2:" + c2.name);
 	    	
-	    	// can delete it
-	    	assertTrue (cd.deleteConstant(c2));
-
+	    	t = cd.addTeam(t);  
+	    	
 	    } catch (Exception e) {
 	    	fail ("didn't work:" + e.getMessage());
 	    }
