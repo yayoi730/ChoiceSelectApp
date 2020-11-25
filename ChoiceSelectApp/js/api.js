@@ -8,3 +8,5 @@ var createMember_url = base + "createMember";		//POST
 var createChoice_url = base + "createChoice";		//POST
 
 var createTeam_url = base + "createTeam";			//POST
+
+var getAlt_url = base + "getAlt";					//GET
