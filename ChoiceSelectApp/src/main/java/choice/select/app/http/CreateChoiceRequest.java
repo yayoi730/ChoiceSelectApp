@@ -5,35 +5,51 @@ import java.util.ArrayList;
 import rando.randomness.app.demo.model.Alternative;
 
 public class CreateChoiceRequest {
-	ArrayList<Alternative> alternatives;
+
 	String id;
 	String description;
-
+	ArrayList<Alternative> alternatives;
+	int teamSize;
 	Timestamp creationDate;
 
-	public CreateChoiceRequest() {}
-	
-	public CreateChoiceRequest(String description) {
-		this.description = description;
-	}
-	
-	public void setID(String id) {this.id = id;}
-	public void setDescription(String d) {this.description = d;}
+	// Must include getters, setters, empty constructor to work with AWS
 
-	public Timestamp getCreationDate() {return this.creationDate;}
+	public String getId() { return id; }
+	public void setId(String newId) { this.id = newId; }
 
-	public String getID() {return this.id;}
-	public String getDescription() {return this.description;}
-	
+	public String getDesc() { return description; }
+	public void setDesc(String newDesc) { this.description = newDesc; }
+
+	public ArrayList<Alternatives> getAlts() { return alternatives; }
+	public void setAlts(ArrayList<Alternative> newAlts) { this.alternatives = newAlts; }
+
+	public int getTeamSize() { return teamSize; }
+	public void setTeamSize(int newSize) { this.teamSize = newSize; }
+
+	public Timestamp getCreationDate() { return creationDate; }
+	public void setCreationDate(Timestamp newDate) { this.creationDate = newDate; }
+
 	public boolean addAlternative(Alternative alt) {
 		if(this.alternatives.size() < 5) {
-			alternatives.add(alt);
+			this.alternatives.add(alt);
 			return true;
 		}
 		return false;
 	}
 	
-	public ArrayList<Alternative> getAlts(){return this.alternatives;}
+	public CreateChoiceRequest() {
+	}
 	
-	public String toString() {return "CreateChoice(" + id + "," + description + "," + alternatives.toString() + ")";}
+	public CreateChoiceRequest(String desc, ArrayList<Alternative> alts, int teamSize) {
+		this.description = desc;
+		this.alternatives = alts;
+		this.teamSize = teamSize;
+	}
+
+	public String toString() {
+		if (alternatives == null) {
+			return "CreateChoice(" + description + "; without alternatives)";
+		}
+		return "CreateChoice(" + description + "; with alternatives)";
+	}
 }

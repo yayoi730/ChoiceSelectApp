@@ -27,7 +27,7 @@ public class LoginHandler implements RequestHandler<LoginRequest, LoginResponse>
 		
 		ChoiceDAO dao =  new ChoiceDAO();
 		
-		boolean fail = false;
+		
 		boolean login = false;
 		String failMessage = "";
 		Member loadedMember = null;		
@@ -52,10 +52,7 @@ public class LoginHandler implements RequestHandler<LoginRequest, LoginResponse>
 		// compute proper response and return. Note that the status code is internal to the HTTP response
 		// and has to be processed specifically by the client code.
 		LoginResponse response;
-		if (fail) {
-			response = new LoginResponse("",400, failMessage);
-		} 
-		else if(login){
+		if(login){
 			response = new LoginResponse("operation successful"); 
 		}
 		else {response = new LoginResponse("Member Does Not Exist",400, failMessage);}
