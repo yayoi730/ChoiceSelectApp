@@ -39,7 +39,7 @@ public class Choice {
 	}
 	
 	public void setFinalChoice(int choiceNum) {this.finalChoice = choiceNum;}
-	public int getFinalChoice(int choiceNum) {return choiceNum;}
+	public int getFinalChoice() {return this.finalChoice;}
 	
 	public void completeChoice(int choiceNum) { // basically a setter, needs clarification
 		this.finalChoice = choiceNum;

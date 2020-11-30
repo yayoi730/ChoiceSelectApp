@@ -13,7 +13,7 @@ public class CreateMemberRequest {
 	public String getPassword() {return this.password;}
 	public void setPassword(String newPass) { password = newPass; }
 	
-	public String getTid() {return this.tID;}
+	public String getTid() {return this.getTid();}
 	public void setTid(String newTid) { tid = newTid; }
 	
 	public CreateMemberRequest() {
@@ -21,20 +21,20 @@ public class CreateMemberRequest {
 	
 	public CreateMemberRequest(String name, String cid) {
 		this.name = name;
-		this.cid = cid;
+		this.tid = cid;
 	}
 	
-	public CreateMemberRequest(String name, String password, String cid) {
+	public CreateMemberRequest(String name, String password, String tid) {
 		this.name = name;
 		this.password = password;
-		this.cid = cid;
+		this.tid = tid;
 	}
 	
 	public String toString() {
 		if (password == null || password == "") {
-			return "CreateMember(" + name + ", " + cid + ")";
+			return "CreateMember(" + name + ", " + tid + ")";
 		}
-		return "CreateMember(" + name + ", "  + password + ", "+ cid + ")";
+		return "CreateMember(" + name + ", "  + password + ", "+ tid + ")";
 	}
 	
 }

@@ -33,7 +33,7 @@ public class LoginHandler implements RequestHandler<LoginRequest, LoginResponse>
 		Member loadedMember = null;		
 
 		try {
-			loadedMember = loadMemberFromRDS(req.getTID(), req.getName());
+			loadedMember = loadMemberFromRDS(req.getCid(), req.getName());
 			if(req.getPassword() == "") {
 				if(loadedMember.getPassword() == null || loadedMember.getPassword() == "") {
 					login = true;

@@ -20,7 +20,7 @@ public class CreateChoiceRequest {
 	public String getDesc() { return description; }
 	public void setDesc(String newDesc) { this.description = newDesc; }
 
-	public ArrayList<Alternatives> getAlts() { return alternatives; }
+	public ArrayList<Alternative> getAlts() { return alternatives; }
 	public void setAlts(ArrayList<Alternative> newAlts) { this.alternatives = newAlts; }
 
 	public int getTeamSize() { return teamSize; }

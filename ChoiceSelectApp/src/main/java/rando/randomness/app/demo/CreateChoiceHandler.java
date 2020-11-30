@@ -33,7 +33,7 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, 
 		Choice loadedChoice = null;
 		
 		try {
-			loadedChoice = loadChoiceFromRDS(req.getID());
+			loadedChoice = loadChoiceFromRDS(req.getId());
 			loaded = true;
 		} 
 		catch (Exception e) {
@@ -50,11 +50,11 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, 
 		else if(loaded == false){
 			
 			try {
-				Choice newChoice = new Choice(req.getDescription(), req.getCreationDate());
-				dao.addChoice(newChoice , req.getID());
+				Choice newChoice = new Choice(req.getDesc(), req.getCreationDate());
+				dao.addChoice(newChoice , req.getId());
 				ArrayList<Alternative> alts = req.getAlts(); 
 				for(int y = 0; y < alts.size(); y++){
-					dao.addAlternative(alts.get(y), req.getID());
+					dao.addAlternative(alts.get(y), req.getId());
 				}
 				response = new CreateChoiceResponse("operation successful");  // success
 			} catch (Exception e) {

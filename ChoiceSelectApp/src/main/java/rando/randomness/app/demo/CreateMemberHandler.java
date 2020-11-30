@@ -33,7 +33,7 @@ public class CreateMemberHandler implements RequestHandler<CreateMemberRequest, 
 		Member loadedMember = null;
 		
 		try {
-			loadedMember = loadMemberFromRDS(req.getTID(), req.getName());
+			loadedMember = loadMemberFromRDS(req.getTid(), req.getName());
 			loaded = true;
 		} 
 		catch (Exception e) {
@@ -49,7 +49,7 @@ public class CreateMemberHandler implements RequestHandler<CreateMemberRequest, 
 		else if(loaded == false){
 			Member newMember = new Member(req.getName(), req.getPassword()); 			
 			try {
-				dao.addMember(newMember, req.tID);
+				dao.addMember(newMember, req.getTid());
 				response = new CreateMemberResponse("operation successful");  // success
 			} catch (Exception e) {
 				response = new CreateMemberResponse("",400, failMessage);  // success

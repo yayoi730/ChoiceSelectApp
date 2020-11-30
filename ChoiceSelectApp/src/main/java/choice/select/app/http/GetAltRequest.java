@@ -16,6 +16,6 @@ public class GetAltRequest {
 	public void setAID(String id) { this.aID = id; }
 	
 	public String toString() {
-		return "GetAlternative(" + aid + ")";
+		return "GetAlternative(" + getAID() + ")";
 	}
 }
