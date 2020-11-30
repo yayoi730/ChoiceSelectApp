@@ -1,5 +1,6 @@
 package rando.randomness.app.demo;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import com.amazonaws.services.lambda.runtime.Context;
@@ -17,21 +18,36 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, 
 
 	LambdaLogger logger;
 	
-	// To access S3 storage
-	private AmazonS3 s3 = null;
+	Choice createChoice(String description, ArrayList<Alternative> alternatives) throws Exception { 
+		if (logger != null) { logger.log("in createConstant"); }
+		ChoiceDAO dao = new ChoiceDAO();
+		Timestamp time = new Timestamp(0);
+		Choice c = new Choice(description, time);
+		for (Alternative a : alternatives) {
+			c.addAlternative(a);
+		}
+	
+		//if (dao.addChoice(c)) {
+	//		return c;
+		//} else {
+			return null;
+		//}
+	}
 
-	@Override
-	public CreateChoiceResponse handleRequest(CreateChoiceRequest req, Context context) {
+	@Override 
+	public CreateChoiceResponse handleRequest(CreateChoiceRequest req, Context context)  {
 		logger = context.getLogger();
-		logger.log("Loading Java Lambda handler of CreateChoiceHandler");
 		logger.log(req.toString());
 
-		String failMessage = "";
-		
-		// compute proper response and return. Note that the status code is internal to the HTTP response
-		// and has to be processed specifically by the client code.
-		CreateChoiceResponse response = null;
-	
+		CreateChoiceResponse response;
+		try {
+			Choice ch = createChoice(req.getDescription(), req.getAlternatives());
+			response = new CreateChoiceResponse(ch);
+		} catch (Exception e) {
+			e.printStackTrace();
+			response = new CreateChoiceResponse(400, e.getMessage());
+		}
+
 		return response;
 	}
 

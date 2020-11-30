@@ -29,7 +29,7 @@ public class LoginHandler implements RequestHandler<LoginRequest, LoginResponse>
 		
 		
 		boolean login = false;
-		String failMessage = "";
+		String failMessage = "Login Failed";
 		Member loadedMember = null;		
 
 		try {
@@ -53,9 +53,9 @@ public class LoginHandler implements RequestHandler<LoginRequest, LoginResponse>
 		// and has to be processed specifically by the client code.
 		LoginResponse response;
 		if(login){
-			response = new LoginResponse("operation successful"); 
+			response = new LoginResponse(loadedMember); 
 		}
-		else {response = new LoginResponse("Member Does Not Exist",400, failMessage);}
+		else {response = new LoginResponse(400, failMessage);}
 
 		return response; 
 	}

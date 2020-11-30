@@ -2,10 +2,12 @@ package choice.select.app.http;
 
 import java.util.ArrayList;
 
+import rando.randomness.app.demo.model.Alternative;
+
 public class CreateChoiceRequest {
 	
 	String description;
-	ArrayList<String> alternatives;
+	ArrayList<Alternative> alternatives;
 	int teamSize;
 
 	public CreateChoiceRequest() {}
@@ -21,10 +23,10 @@ public class CreateChoiceRequest {
 	public void setTeamSize (int size) {this.teamSize = size;}
 
 	
-	public ArrayList<String> getAlternatives() { return alternatives; }
-	public void setAlternatives(ArrayList<String> alts) { this.alternatives = alts; }
+	public ArrayList<Alternative> getAlternatives() { return alternatives; }
+	public void setAlternatives(ArrayList<Alternative> alts) { this.alternatives = alts; }
 	
-	public ArrayList<String> getAlts(){return this.alternatives;}
+	public ArrayList<Alternative> getAlts(){return this.alternatives;}
 	
 	public String toString() {return "CreateChoice(" + description + "," + alternatives.toString() + ")";}
 }

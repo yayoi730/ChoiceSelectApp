@@ -31,33 +31,37 @@ public class GetAltHandler implements RequestHandler<GetAltRequest, GetAltRespon
 		ChoiceDAO dao =  new ChoiceDAO();
 		
 		boolean loaded = true;
-		String failMessage = "unexpected error retriving choice";
-		ArrayList<Alternative> loadedAlts = new ArrayList<Alternative>();
-		
+		String failMessage = "unexpected error retriving alternative";
+	
+		Alternative loadedAlt = null;
+		GetAltResponse response;
+
 		try {
-			loadedAlts = loadAltFromRDS(req.getAID());
-			loaded = true;
+			loadedAlt = loadAlt(req.getCID(), req.getAID());
+			response = new GetAltResponse(loadedAlt);
 		} 
 		catch (Exception e) {
-			loaded = false;
+			response = new GetAltResponse(loadedAlt);		
 		}
 		
-		// compute proper response and return. Note that the status code is internal to the HTTP response
-		// and has to be processed specifically by the client code.
-		GetAltResponse response;
-		
-		if(loaded == false){
-      response = new GetAltResponse("The Alt does not exist",400, failMessage);
-		}
-		else {response = new GetAltResponse("operation successful");}
-
 		return response; 
 	}
 
+	private Alternative loadAlt(String cid, String aid) throws Exception{
+		Alternative a = null;
+		ArrayList<Alternative> loadedAlts = loadAltFromRDS(cid);
+		for(Alternative alt : loadedAlts)
+		{
+			if(alt.getAID() == aid) {
+				a = alt;
+			}
+		}
+		return a;
+	}
 
-	private ArrayList<Alternative> loadAltFromRDS(String id) throws Exception {
+	private ArrayList<Alternative> loadAltFromRDS(String cid) throws Exception {
 		ChoiceDAO dao =  new ChoiceDAO();
-		ArrayList<Alternative> alts = dao.retrieveAlternatives(id);
+		ArrayList<Alternative> alts = dao.retrieveAlternatives(cid);
 		return alts;
 	}
 }

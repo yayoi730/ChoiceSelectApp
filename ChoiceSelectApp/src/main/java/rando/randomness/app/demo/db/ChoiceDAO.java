@@ -391,7 +391,7 @@ public class ChoiceDAO {
 		
 		Choice c = new Choice(description, timestamp);
 		c.setID(cID);
-		c.setTID(tID);
+	
 		//if(finalChoice != null)
 		//{
 		//	c.completeChoice(finalChoice);
