@@ -11,6 +11,7 @@ import choice.select.app.http.CreateChoiceResponse;
 import rando.randomness.app.demo.db.ChoiceDAO;
 import rando.randomness.app.demo.model.Alternative;
 import rando.randomness.app.demo.model.Choice;
+import rando.randomness.app.demo.model.Team;
 
 public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, CreateChoiceResponse> {
 
@@ -24,56 +25,14 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, 
 		logger = context.getLogger();
 		logger.log("Loading Java Lambda handler of CreateChoiceHandler");
 		logger.log(req.toString());
-		
-		ChoiceDAO dao =  new ChoiceDAO();
-		
-		boolean fail = false;
-		boolean loaded = true;
+
 		String failMessage = "";
-		Choice loadedChoice = null;
-		
-		try {
-			loadedChoice = loadChoiceFromRDS(req.getID());
-			loaded = true;
-		} 
-		catch (Exception e) {
-			loaded = false;
-			fail = true;
-		}
 		
 		// compute proper response and return. Note that the status code is internal to the HTTP response
 		// and has to be processed specifically by the client code.
-		CreateChoiceResponse response;
-		if (fail) {
-			response = new CreateChoiceResponse("",400, failMessage);
-		} 
-		else if(loaded == false){
-			
-			try {
-				Choice newChoice = new Choice(req.getDescription(), req.getCreationDate());
-				dao.addChoice(newChoice , req.getID());
-				ArrayList<Alternative> alts = req.getAlts(); 
-				for(int y = 0; y < alts.size(); y++){
-					dao.addAlternative(alts.get(y), req.getID());
-				}
-				response = new CreateChoiceResponse("operation successful");  // success
-			} catch (Exception e) {
-				response = new CreateChoiceResponse("",400, failMessage);  // success
-			}
-		}
-		else {response = new CreateChoiceResponse("Choice Loaded");}
-
-		return response; 
+		CreateChoiceResponse response = null;
+	
+		return response;
 	}
-
-
-	private Choice loadChoiceFromRDS(String id) throws Exception {
-		ChoiceDAO dao =  new ChoiceDAO();
-		Choice ldChoice = null;
-		ldChoice = dao.retrieveChoice(id);
-		return ldChoice;
-	}
-
-
 
 }
