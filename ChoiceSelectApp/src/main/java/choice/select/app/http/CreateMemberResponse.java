@@ -5,6 +5,7 @@ public class CreateMemberResponse {
 	public final int httpCode;
 	public final String error;
 	
+	//For failure
 	public CreateMemberResponse (String s, int code, String errormsg) {
 		this.response = s;
 		this.httpCode = code;
