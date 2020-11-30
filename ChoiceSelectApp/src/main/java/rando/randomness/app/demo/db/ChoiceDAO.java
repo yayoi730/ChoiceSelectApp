@@ -17,7 +17,7 @@ public class ChoiceDAO {
 	
 	final String cName = "Choice";
 	final String aName = "Alternative";
-	final String apName = "APP/DIS";
+	final String apName = "APPDIS";
 	final String fName = "Feedback";
 	final String mName = "Members";
 	final String tName = "Teams";// Exact capitalization
@@ -86,14 +86,30 @@ public class ChoiceDAO {
 		try {
         	
 			
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO " + cName + " (CID,description,dateOfCreation,TID) values(?,?,?,?);");
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO " + cName + " (CID,description,dateOfCreation,dateOfCompletion,finalChoice,TID) values(?,?,?,?,?,?);");
             //String cID = UUID.randomUUID().toString();
             String cID = tID;
             c.setID(cID);
             ps.setString(1,  cID);
             ps.setString(2,  c.getDescription());
             ps.setString(3,  c.getCreationDate().toString());
-            ps.setString(4, tID);
+            if(c.getCompletionDate() == null)
+            {
+            	 ps.setString(4, "NULL");
+            }
+            else
+            {
+            	 ps.setString(4, c.getCompletionDate().toString());
+            }
+            if(c.getFinalChoice() < 0)
+            {
+            	 ps.setInt(5, -1);
+            }
+            else
+            {
+            	ps.setInt(5, c.getFinalChoice());
+            }
+            ps.setString(6, tID);
             ps.execute();
             for(Alternative a: c.getAlternativeList())
             {
@@ -129,7 +145,6 @@ public class ChoiceDAO {
             for(Feedback f: a.getFeebackList())
             {
             	f = addFeedback(f, aID, f.getCreator());
-            	//newAlternative.addFeedback(addFeedback(f, aID, f.getCreator()));
             }
             ps.execute();
             return a;
@@ -145,7 +160,7 @@ public class ChoiceDAO {
 	{
 		try {
            
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO " + fName + " (FID,AID,timestamp,description,MID) values(?,?,?,?,?);");
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO " + fName + " (FID,AID,timestamp,description,name) values(?,?,?,?,?);");
             String fID = UUID.randomUUID().toString();
             f.setFID(fID);
             ps.setString(1,  fID);
@@ -160,6 +175,60 @@ public class ChoiceDAO {
             throw new Exception("Failed to insert feedback: " + e.getMessage());
         }
 	}
+	
+	public void handleAppDisRequest(boolean approval, String aID, String creator) throws Exception
+	{
+		//How to check and update the database based on request to approve/disapprove
+		ArrayList<String> approvers = retrieveApprovers(aID);
+		ArrayList<String> disapprovers = retrieveDisapprovers(aID);
+		//If the request is for approval
+		if(approval == true) {
+			//If they've already approved
+			if(approvers.contains(creator))
+			{
+				//Remove them from approval list
+				deleteAppDis(aID, creator);
+			}
+			//If they've already disapproved
+			else if(disapprovers.contains(creator))
+			{
+				//Remove disapproval and add approval
+				deleteAppDis(aID, creator);
+				addApprover(aID, creator);
+			}
+			//If they haven't approved/disapproved
+			else
+			{
+				//Add approval
+				addApprover(aID, creator);
+			}
+		}
+		//If the request is for disapproval
+		else
+		{
+			//If they've already disapproved
+			if(disapprovers.contains(creator))
+			{
+				//Remove them from disapproval list
+				deleteAppDis(aID, creator);
+			}
+			//If they've already approved
+			else if(approvers.contains(creator))
+			{
+				//Remove approval and add disapproval
+				deleteAppDis(aID, creator);
+				addDisapprover(aID, creator);
+			}
+			//If they haven't approved/disapproved
+			else
+			{
+				//Add disapproval
+				addDisapprover(aID, creator);
+			}
+		}
+	}
+	
+
 	
 	
 	private void addApprover(String aID, String creator)
@@ -333,7 +402,6 @@ public class ChoiceDAO {
         }
 		
 	}
-	
 	public ArrayList<String> retrieveDisapprovers(String aID) throws Exception
 	{
 		ArrayList<String> allDisapprovers = new ArrayList<>();
@@ -473,6 +541,7 @@ public class ChoiceDAO {
 		 try {
 	            PreparedStatement ps = conn.prepareStatement("DELETE FROM " + apName + " WHERE AID = ? AND memberName = ?;");
 	            ps.setString(1, aID);
+	            ps.setString(2, memberName);
 	            int numAffected = ps.executeUpdate();
 	            ps.close();
 	            
@@ -506,7 +575,9 @@ public class ChoiceDAO {
 		String cID = r.getString("CID");
 		String description = r.getString("description");
 		Timestamp dateOfCreation = Timestamp.valueOf(r.getString("dateOfCreation"));
-		Timestamp dateOfCompletion = Timestamp.valueOf(r.getString("dateOfCompletion"));
+		String dOC= r.getString("dateOfCompletion");
+	
+		
 		Integer finalChoice = r.getInt("finalChoice");
 		
 		
@@ -514,7 +585,16 @@ public class ChoiceDAO {
 		c.setID(cID);
 		c.setTID(tID);
 		c.setFinalChoice(finalChoice);
-		c.setCompletionDate(dateOfCompletion);
+		if(dOC.equals("NULL"))
+		{
+			c.setCompletionDate(null);
+		}
+		else
+		{
+			Timestamp dateOfCompletion = Timestamp.valueOf(r.getString("dateOfCompletion"));
+			c.setCompletionDate(dateOfCompletion);
+		}
+		
 		
 		 try {
 			for(Alternative a: retrieveAlternatives(cID))
