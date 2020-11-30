@@ -1,55 +1,32 @@
 package choice.select.app.http;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import rando.randomness.app.demo.model.Alternative;
 
 public class CreateChoiceRequest {
 
-	String id;
+	
 	String description;
-	ArrayList<Alternative> alternatives;
+	ArrayList<String> alternatives;
 	int teamSize;
-	Timestamp creationDate;
 
-	// Must include getters, setters, empty constructor to work with AWS
-
-	public String getId() { return id; }
-	public void setId(String newId) { this.id = newId; }
-
-	public String getDesc() { return description; }
-	public void setDesc(String newDesc) { this.description = newDesc; }
-
-	public ArrayList<Alternative> getAlts() { return alternatives; }
-	public void setAlts(ArrayList<Alternative> newAlts) { this.alternatives = newAlts; }
-
-	public int getTeamSize() { return teamSize; }
-	public void setTeamSize(int newSize) { this.teamSize = newSize; }
-
-	public Timestamp getCreationDate() { return creationDate; }
-	public void setCreationDate(Timestamp newDate) { this.creationDate = newDate; }
-
-	public boolean addAlternative(Alternative alt) {
-		if(this.alternatives.size() < 5) {
-			this.alternatives.add(alt);
-			return true;
-		}
-		return false;
+	public CreateChoiceRequest() {}
+	
+	public CreateChoiceRequest(String description) {
+		this.description = description;
 	}
 	
-	public CreateChoiceRequest() {
-	}
+	public void setDescription(String d) {this.description = d;}
+	public String getDescription() {return this.description;}
 	
-	public CreateChoiceRequest(String desc, ArrayList<Alternative> alts, int teamSize) {
-		this.description = desc;
-		this.alternatives = alts;
-		this.teamSize = teamSize;
-	}
+	public int getTeamSize () {return this.teamSize;}
+	public void setTeamSize (int size) {this.teamSize = size;}
 
-	public String toString() {
-		if (alternatives == null) {
-			return "CreateChoice(" + description + "; without alternatives)";
-		}
-		return "CreateChoice(" + description + "; with alternatives)";
-	}
+	
+	public ArrayList<String> getAlternatives() { return alternatives; }
+	public void setAlternatives(ArrayList<String> alts) { this.alternatives = alts; }
+	
+	public ArrayList<String> getAlts(){return this.alternatives;}
+	
+	public String toString() {return "CreateChoice(" + description + "," + alternatives.toString() + ")";}
+
 }

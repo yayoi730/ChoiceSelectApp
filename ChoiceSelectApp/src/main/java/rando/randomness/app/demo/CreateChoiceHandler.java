@@ -11,6 +11,7 @@ import choice.select.app.http.CreateChoiceResponse;
 import rando.randomness.app.demo.db.ChoiceDAO;
 import rando.randomness.app.demo.model.Alternative;
 import rando.randomness.app.demo.model.Choice;
+import rando.randomness.app.demo.model.Team;
 
 public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, CreateChoiceResponse> {
 
@@ -24,11 +25,7 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, 
 		logger = context.getLogger();
 		logger.log("Loading Java Lambda handler of CreateChoiceHandler");
 		logger.log(req.toString());
-		
-		ChoiceDAO dao =  new ChoiceDAO();
-		
-		boolean fail = false;
-		boolean loaded = true;
+
 		String failMessage = "";
 		Choice loadedChoice = null;
 		
@@ -73,7 +70,5 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, 
 		ldChoice = dao.retrieveChoice(id);
 		return ldChoice;
 	}
-
-
 
 }

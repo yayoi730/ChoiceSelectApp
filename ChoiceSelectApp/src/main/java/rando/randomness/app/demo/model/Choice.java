@@ -16,8 +16,13 @@ public class Choice {
 	int finalChoice;
 
 	public Choice(String description, Timestamp creationDate) {
-		this.id = id;
 		this.description = description;
+		this.creationDate = creationDate;
+	}
+	
+	public Choice(String description, ArrayList<Alternative> alternatives, Timestamp creationDate) {
+		this.description = description;
+		this.alternatives = alternatives;
 		this.creationDate = creationDate;
 	}
 	
