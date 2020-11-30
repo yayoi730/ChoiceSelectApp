@@ -13,6 +13,8 @@ public class CreateTeamRequest {
 	public int getTeamSize() {return teamSize;}
 	public void setTeamSize(int s) {this.teamSize = s;}
 	
+	// Must include getters, setters, empty constructor to work with AWS
+	
 	public CreateTeamRequest() {}
 	
 	public CreateTeamRequest(ArrayList<Member> members,Choice choice, int nm) {
@@ -21,8 +23,11 @@ public class CreateTeamRequest {
 		this.teamSize = nm;
 	}
 
+
 	public ArrayList<Member> getMembers(){return this.members;}
 	public Choice getChoice() {return this.choice;}
-	
-	
+
+	public void setMembers(ArrayList<Member> newMem) { this.members = newMem; }
+	public void setChoice(Choice newChoice) { this.choice = newChoice; }
+
 }

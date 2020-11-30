@@ -27,12 +27,48 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, 
 		logger.log(req.toString());
 
 		String failMessage = "";
+		Choice loadedChoice = null;
+		
+		try {
+			loadedChoice = loadChoiceFromRDS(req.getId());
+			loaded = true;
+		} 
+		catch (Exception e) {
+			loaded = false;
+			fail = true;
+		}
 		
 		// compute proper response and return. Note that the status code is internal to the HTTP response
 		// and has to be processed specifically by the client code.
-		CreateChoiceResponse response = null;
-	
-		return response;
+		CreateChoiceResponse response;
+		if (fail) {
+			response = new CreateChoiceResponse("",400, failMessage);
+		} 
+		else if(loaded == false){
+			
+			try {
+				Choice newChoice = new Choice(req.getDesc(), req.getCreationDate());
+				dao.addChoice(newChoice , req.getId());
+				ArrayList<Alternative> alts = req.getAlts(); 
+				for(int y = 0; y < alts.size(); y++){
+					dao.addAlternative(alts.get(y), req.getId());
+				}
+				response = new CreateChoiceResponse("operation successful");  // success
+			} catch (Exception e) {
+				response = new CreateChoiceResponse("",400, failMessage);  // success
+			}
+		}
+		else {response = new CreateChoiceResponse("Choice Loaded");}
+
+		return response; 
+	}
+
+
+	private Choice loadChoiceFromRDS(String id) throws Exception {
+		ChoiceDAO dao =  new ChoiceDAO();
+		Choice ldChoice = null;
+		ldChoice = dao.retrieveChoice(id);
+		return ldChoice;
 	}
 
 }

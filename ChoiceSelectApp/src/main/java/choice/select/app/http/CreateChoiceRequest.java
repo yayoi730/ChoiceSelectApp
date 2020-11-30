@@ -3,6 +3,7 @@ package choice.select.app.http;
 import java.util.ArrayList;
 
 public class CreateChoiceRequest {
+
 	
 	String description;
 	ArrayList<String> alternatives;
@@ -27,4 +28,5 @@ public class CreateChoiceRequest {
 	public ArrayList<String> getAlts(){return this.alternatives;}
 	
 	public String toString() {return "CreateChoice(" + description + "," + alternatives.toString() + ")";}
+
 }
