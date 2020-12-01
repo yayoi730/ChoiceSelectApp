@@ -61,10 +61,11 @@ public class ChoiceDAO {
 		{
 			try {
 	        	
-	            PreparedStatement ps = conn.prepareStatement("INSERT INTO " + tName + " (TID) values(?);");
+	            PreparedStatement ps = conn.prepareStatement("INSERT INTO " + tName + " (TID,size) values(?,?);");
 	            String tID = UUID.randomUUID().toString();
 	            t.setTID(tID);
 	            ps.setString(1,  tID);
+	            ps.setInt(2, t.getTeamSize());
 	            ps.execute();
 	           
 	            for(Member m: t.getMembers())
@@ -583,7 +584,7 @@ public class ChoiceDAO {
 		
 		Choice c = new Choice(description, dateOfCreation);
 		c.setID(cID);
-		c.setTID(tID);
+		//c.setTid(tID);
 		c.setFinalChoice(finalChoice);
 		if(dOC.equals("NULL"))
 		{
@@ -595,6 +596,7 @@ public class ChoiceDAO {
 			c.setCompletionDate(dateOfCompletion);
 		}
 		
+
 		
 		 try {
 			for(Alternative a: retrieveAlternatives(cID))
@@ -617,6 +619,7 @@ public class ChoiceDAO {
 		Team t = new Team((ArrayList<Member>) m, choice);
 		 
 		t.setTID(tid);
+		t.setTeamSize(r.getInt("size"));
 		return t;
 	}
 	

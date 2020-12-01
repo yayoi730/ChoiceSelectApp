@@ -37,7 +37,10 @@ LambdaLogger logger;
 			Team t = createTeam(c, req.getTeamSize(), req.getMembers());
 			response = new CreateTeamResponse(t);
 		}
-		catch (Exception e) {response = new CreateTeamResponse(400,"");}
+		catch (Exception e) {
+			e.printStackTrace();
+			response = new CreateTeamResponse(400,"");
+		}
 
 		return response; 
 	}
@@ -45,14 +48,14 @@ LambdaLogger logger;
 	Team createTeam(Choice c, int teamSize, ArrayList<Member> m) throws Exception{
 		ChoiceDAO dao = new ChoiceDAO();
 		Team t = new Team(m, c);
-		dao.addTeam(t);
+		t = dao.addTeam(t);
 		return t;
-
 	}
 	
 	Choice createChoice(String description, ArrayList<Alternative> alternatives) throws Exception { 
-		if (logger != null) { logger.log("in createConstant"); }		
-		Choice c = new Choice(description, alternatives, new Timestamp(0));
+		if (logger != null) { logger.log("in createConstant"); }	
+		java.sql.Timestamp ts = new java.sql.Timestamp(System.currentTimeMillis());
+		Choice c = new Choice(description, alternatives, ts);
 		for (Alternative a : alternatives) {
 			c.addAlternative(a);
 		}

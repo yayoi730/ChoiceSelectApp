@@ -2,20 +2,15 @@ package choice.select.app.http;
 
 public class GetAltRequest {
 	String aID;
-	
-	// Must include getters, setters, empty constructor to work with AWS
 
-	public GetAltRequest() {
-	}
+	String cID;
 	
-	public GetAltRequest(String id) {
-		this.aID = id;
-	}
+	public GetAltRequest() {}
+	public GetAltRequest(String aid, String cid) {this.aID = aid; this.cID = cid;}
 	
-	public String getAID() { return aID; }
-	public void setAID(String id) { this.aID = id; }
-	
-	public String toString() {
-		return "GetAlternative(" + getAID() + ")";
-	}
+	public String getAID() {return this.aID;}
+	public void setAID(String id) {this.aID = id;}
+	public String getCID() {return this.cID;}
+	public void setCID(String id) {this.cID = id;}
+
 }
