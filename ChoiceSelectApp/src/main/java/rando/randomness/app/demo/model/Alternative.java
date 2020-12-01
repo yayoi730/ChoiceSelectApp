@@ -10,9 +10,11 @@ public class Alternative {
 	ArrayList<String> disapprovers = new ArrayList<>();
 	ArrayList<Feedback> feedback = new ArrayList<>();
 	String description;
+	
 	public Alternative(String description) {
 		this.description = description;
 	}
+	
 	public String getDescription() {return this.description;}
 	
 	public int getNumApprovers(ArrayList<String> approvers) {

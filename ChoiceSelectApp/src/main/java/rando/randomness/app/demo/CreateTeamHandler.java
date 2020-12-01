@@ -32,9 +32,9 @@ LambdaLogger logger;
 		// compute proper response and return. Note that the status code is internal to the HTTP response
 		// and has to be processed specifically by the client code.
 		CreateTeamResponse response;
-		try {
-			Choice c = createChoice(req.getChoice().getDescription(), req.getChoice().getAlternativeList());
-			Team t = createTeam(c, req.getTeamSize(), req.getMembers());
+		try {			
+			Choice c = createChoice(req.getcDesc(), createAlts(req.getAlts()));
+			Team t = createTeam(c, req.getTeamSize(), new Member(req.getName(),req.getPass()));
 			response = new CreateTeamResponse(t);
 		}
 		catch (Exception e) {
@@ -45,9 +45,9 @@ LambdaLogger logger;
 		return response; 
 	}
 	
-	Team createTeam(Choice c, int teamSize, ArrayList<Member> m) throws Exception{
-		ChoiceDAO dao = new ChoiceDAO();
-		Team t = new Team(m, c);
+	Team createTeam(Choice c, int teamSize, Member m) throws Exception{
+		ChoiceDAO dao = new ChoiceDAO();	
+		Team t = new Team(m, c, teamSize);
 		t = dao.addTeam(t);
 		return t;
 	}
@@ -61,4 +61,14 @@ LambdaLogger logger;
 		}
 		return c;
 	}
+	
+	ArrayList<Alternative> createAlts(ArrayList<String> descs) {
+		ArrayList<Alternative> alts = new ArrayList<Alternative>();
+		for(String s: descs) {
+			alts.add(new Alternative(s));
+		}
+		return alts;
+	}
+	
+
 }
