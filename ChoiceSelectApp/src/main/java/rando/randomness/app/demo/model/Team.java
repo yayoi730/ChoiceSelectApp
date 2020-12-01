@@ -14,9 +14,16 @@ public class Team {
 	public int getTeamSize() {return teamSize;}
 	public void setTeamSize(int s) {this.teamSize = s;}
 	
-	public Team(ArrayList<Member> members,Choice choice) {
+	public Team(ArrayList<Member> members, Choice choice) {
 		this.members = members;
 		this.choice = choice;
+	}
+	public Team (Member member, Choice choice, int teamSize) {
+		ArrayList<Member> mem = new ArrayList<Member>();
+		mem.add(member);
+		this.members = mem;
+		this.choice = choice;
+		this.teamSize = teamSize;
 	}
 	
 	public void addMember(String username, String password) {
