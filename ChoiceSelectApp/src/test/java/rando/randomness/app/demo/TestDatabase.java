@@ -58,7 +58,7 @@ public class TestDatabase {
 	    	newMembers.add(m2);
 	    	newMembers.add(m3);
 	    	Team t = new Team(newMembers, c);
-	    	
+	    	t.setTeamSize(5);
 	    	String id = UUID.randomUUID().toString(); 
 	    	
 	    	//Test adding team
@@ -70,6 +70,7 @@ public class TestDatabase {
 	    	System.out.println(tID);
 	    	//Try retrieving the newly added team
 	    	Team tCopy = cd.retrieveTeam(tID);
+	    	System.out.println("Team Size: " + tCopy.getTeamSize());
 	    	System.out.println(tCopy.getChoice().getDescription());
 	    	for(Alternative a: tCopy.getChoice().getAlternativeList())
 	    	{
