@@ -1,23 +1,11 @@
 
 
-function processLogin(result) {
+function process(result) {
 	console.log("result: " + result);
 	var js = JSON.parse(result);
-	var status = js["statusCode"];
+	var status = js["httpCode"];
 	var response = js["result"];
-	
-	if (status == 200) {
-		console.log("login to new choice successful");
-	}
-	
-	
-}
-
-function processCreate(result) {
-	console.log("result: " + result);
-	var js = JSON.parse(result);
-	var status = js["statusCode"];
-	var response = js["result"];
+	var team = js["team"];
 	
 	if (status == 200) {
 		console.log("create choice success");
@@ -48,6 +36,13 @@ function handleCreateChoice(e) {
 	var alt3 = document.createChoiceForm.alt3.value;
 	var alt4 = document.createChoiceForm.alt4.value;
 	var alt5 = document.createChoiceForm.alt5.value;
+	
+	var data = {}
+	data["name"] = name;
+	data["password"] = pw;
+	data["choiceDesc"] = desc;
+	data["teamSize"] = size;
+	data["alts"] = [alt1, alt2, alt3, alt4, alt5];
 
 	//make sure necessary inputs are present
 	if ((name == "" || desc == "") || (alt1 == "" || alt2 == "") || (size == "" || size == "0")) {
@@ -55,23 +50,13 @@ function handleCreateChoice(e) {
 	} else {
 	
 		//send out data to create new member
-		var loginData = {};
-		var jsLogin = "";
+		var js = "";
 		var xhr = new XMLHttpRequest();
-		loginData["username"] = name;
-		if (pw != "") {
-			loginData["password"] = pw;
-			jsLogin = JSON.stringify(loginData);
-			console.log("JS:" + jsLogin);
-			xhr.open("POST", createMember_url + "/" + username + "/" + password, true);
-			xhr.send(loginData);
-		} else {
-			jsLogin = JSON.stringify(loginData);
-			console.log("JS:" + jsLogin);
-			xhr.open("POST", createMember_url + "/" + username, true);
-			xhr.send(loginData);
-		}
-		
+		jsLogin = JSON.stringify(data);
+		console.log("JS:" + js);
+		xhr.open("POST", createTeam_url + "/" + name + "/" + password + "/" + desc + "/" + size, true);
+		xhr.send(data);
+			
 		//processs results and handle HTML
 		xhr.onloadend = function () {
 	    console.log(xhr);
@@ -79,7 +64,7 @@ function handleCreateChoice(e) {
 	    if (xhr.readyState == XMLHttpRequest.DONE) {
     	 	if (xhr.status == 200) {
 	      	console.log ("XHR:" + xhr.responseText);
-	      	processLogin(xhr.responseText);
+	      	process(xhr.responseText);
     	 	} else {
     		 	console.log("actual:" + xhr.responseText);
 			  	var jsLogin = JSON.parse(xhr.responseText);
@@ -87,47 +72,9 @@ function handleCreateChoice(e) {
 			  	alert (err);
     	 	}
     	} else {
-      		processLogin("N/A");
+      		process("N/A");
     	}
  	 	};
-
-		
-		//create choice without alternatives
-		var choice = {}
-		choice["choiceDesc"] = desc;
-		choice["teamSize"] = size;
-		choice["alts"] = [alt1, alt2, alt3, alt4, alt5];
-		
-		console.log("JS:" + JSON.stringify(choice));
-		var xhrChoice = new XMLHttpRequest();
-		xhrChoice.open("POST", createChoice_url + "/" + choiceDesc + "/" + teamSize, true);
-		//createChoice called with desc and team size in path, list of alts in body
-		xhrChoice.send(choice);
-		
-		//processs results and handle HTML
-		xhrChoice.onloadend = function () {
-	    console.log(xhrChoice);
-	    console.log(xhrChoice.request);
-	    if (xhrChoice.readyState == XMLHttpRequest.DONE) {
-    	 	if (xhrChoice.status == 200) {
-	      	console.log ("XHR:" + xhrChoice.responseText);
-	      	processCreate(xhrChoice.responseText);
-
-			//redirect to main interface page if successful
-			window.location = 'https://s3.us-east-2.amazonaws.com/choice.select.app/html/mainUI.html';
-
-    	 	} else {
-    		 	console.log("actual:" + xhrChoice.responseText);
-			  	var jsChoice = JSON.parse(xhrChoice.responseText);
-			  	var err = jsChoice["response"];
-			  	alert (err);
-    	 	}
-    	} else {
-      		processCreate("N/A");
-    	}
- 	 	};
-	
-		
 	
 	}
 }
