@@ -48,7 +48,7 @@ LambdaLogger logger;
 	Team createTeam(Choice c, int teamSize, ArrayList<Member> m) throws Exception{
 		ChoiceDAO dao = new ChoiceDAO();
 		Team t = new Team(m, c);
-		dao.addTeam(t);
+		t = dao.addTeam(t);
 		return t;
 
 	}
