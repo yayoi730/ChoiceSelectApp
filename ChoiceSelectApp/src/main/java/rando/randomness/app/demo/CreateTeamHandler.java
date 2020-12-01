@@ -54,8 +54,9 @@ LambdaLogger logger;
 	}
 	
 	Choice createChoice(String description, ArrayList<Alternative> alternatives) throws Exception { 
-		if (logger != null) { logger.log("in createConstant"); }		
-		Choice c = new Choice(description, alternatives, new Timestamp(0));
+		if (logger != null) { logger.log("in createConstant"); }	
+		java.sql.Timestamp ts = new java.sql.Timestamp(System.currentTimeMillis());
+		Choice c = new Choice(description, alternatives, ts);
 		for (Alternative a : alternatives) {
 			c.addAlternative(a);
 		}
