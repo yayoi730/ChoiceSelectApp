@@ -7,17 +7,16 @@ function processLogin(result) {
 //called on by "Create Choice" button
 function handleCreateChoice(e) {
 
-	
 	//get all inputs
-	var name = document.getElementById('username').value;
-	var pw = document.getElementById('password').value;
-	var desc = document.getElementById('choiceDesc').value;
-	var size = document.getElementById('teamSize').value;
-	var alt1 = document.getElementById('alt1').value;
-	var alt2 = document.getElementById('alt2').value;
-	var alt3 = document.getElementById('alt3').value;
-	var alt4 = document.getElementById('alt4').value;
-	var alt5 = document.getElementById('alt5').value;
+	var name = document.registerform.username.value;
+	var pw = document.registerform.password.value;
+	var desc = document.createChoiceForm.choiceDesc.value;
+	var size = document.createChoiceForm.teamSize.value;
+	var alt1 = document.createChoiceForm.alt1.value;
+	var alt2 = document.createChoiceForm.alt2.value;
+	var alt3 = document.createChoiceForm.alt3.value;
+	var alt4 = document.createChoiceForm.alt4.value;
+	var alt5 = document.createChoiceForm.alt5.value;
 
 	//make sure necessary inputs are present
 	if ((name == "" || desc == "") || (alt1 == "" || alt2 == "") || (size == "" || size == "0")) {
@@ -66,24 +65,7 @@ function handleCreateChoice(e) {
 		var choice = {}
 		choice["choiceDesc"] = desc;
 		choice["teamSize"] = size;
-		
-		var alts = {}
-		alts["alt1"] = alt1;
-		alts["alt2"] = alt2;
-		
-		//only add alt if there is an input
-		if (alt3 != "") {
-			alts["alt3"] = alt3;
-		}
-		if (alt4 != "") {
-			alts["alt4"] = alt4;
-		}
-		if (alt5 != "") {
-			alts["alt5"] = alt5;
-		}
-		
-		//attach list of alt descriptions to choice
-		choice["alts"] = alts;
+		choice["alternatives"] = [alt1, alt2, alt3, alt4, alt5];
 		
 		console.log("JS:" + JSON.stringify(choice));
 		var xhrChoice = new XMLHttpRequest();

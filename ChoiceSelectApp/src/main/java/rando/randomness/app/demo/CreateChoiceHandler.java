@@ -22,6 +22,10 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, 
 
 	@Override
 	public CreateChoiceResponse handleRequest(CreateChoiceRequest req, Context context) {
+		//initially assume not loaded and operation failed
+		boolean loaded = false;
+		boolean fail = true;
+		
 		logger = context.getLogger();
 		logger.log("Loading Java Lambda handler of CreateChoiceHandler");
 		logger.log(req.toString());
@@ -30,7 +34,7 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, 
 		Choice loadedChoice = null;
 		
 		try {
-			loadedChoice = loadChoiceFromRDS(req.getId());
+			loadedChoice = loadChoiceFromRDS(req.getCid());
 			loaded = true;
 		} 
 		catch (Exception e) {
@@ -42,23 +46,24 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, 
 		// and has to be processed specifically by the client code.
 		CreateChoiceResponse response;
 		if (fail) {
-			response = new CreateChoiceResponse("",400, failMessage);
+			response = new CreateChoiceResponse(400, failMessage);
 		} 
 		else if(loaded == false){
 			
 			try {
+				ChoiceDAO dao =  new ChoiceDAO();
 				Choice newChoice = new Choice(req.getDesc(), req.getCreationDate());
-				dao.addChoice(newChoice , req.getId());
+				dao.addChoice(newChoice , req.getCid());
 				ArrayList<Alternative> alts = req.getAlts(); 
 				for(int y = 0; y < alts.size(); y++){
-					dao.addAlternative(alts.get(y), req.getId());
+					dao.addAlternative(alts.get(y), req.getCid());
 				}
-				response = new CreateChoiceResponse("operation successful");  // success
+				response = new CreateChoiceResponse(newChoice);  // success
 			} catch (Exception e) {
-				response = new CreateChoiceResponse("",400, failMessage);  // success
+				response = new CreateChoiceResponse(400, failMessage);  //is this meant to be for unexpected error?
 			}
 		}
-		else {response = new CreateChoiceResponse("Choice Loaded");}
+		else {response = new CreateChoiceResponse(400, "Choice Loaded");}	//UNSURE ABOUT STATUS CODE
 
 		return response; 
 	}
