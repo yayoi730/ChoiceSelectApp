@@ -17,6 +17,7 @@ function updateChoiceDesc() {
   };
 }
 
+
 //respond to server and replace 'choiceDesc' with actual description
 function processResponse(result) {
 	console.log("result: " + result);
@@ -24,14 +25,16 @@ function processResponse(result) {
 	//for manipulating an html element
 	var js = JSON.parse(result);
 	
-	//store element to be changed as a new var
-	var choiceDescLabel = document.getElementById('choiceDesc');
-	var choiceIdLabel = document.getElementById('choiceId');
+	//elements to be changed
+	var descLabel = document.getElementById('choiceDesc');
+	var idLabel = document.getElementById('choiceId');
 	
+	//retrieve data returned
 	var desc = js["choiceDesc"];
 	var cid = js["choiceId"];
 	
-	choiceDescLabel.innerHTML = "<div id = \"choiceDesc\" value = \"" + desc + "\" />";
-	choiceIdLabel.innerHTML = "<div id = \"choiceId\" value = \"" + cid + "\" />";
+	//change 
+	descLabel.innerHTML = "<div id = \"choiceDesc\" value = \"Choice Description: " + desc + "\" />";
+	idLabel.innerHTML = "<div id = \"choiceId\" value = \"Choice ID: " + cid + "\" />";
 }
 

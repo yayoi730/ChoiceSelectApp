@@ -1,7 +1,37 @@
 
 
 function processLogin(result) {
-	console.log("result: " + result)
+	console.log("result: " + result);
+	var js = JSON.parse(result);
+	var status = js["statusCode"];
+	var response = js["result"];
+	
+	if (status == 200) {
+		console.log("login to new choice successful");
+	}
+	
+	
+}
+
+function processCreate(result) {
+	console.log("result: " + result);
+	var js = JSON.parse(result);
+	var status = js["statusCode"];
+	var response = js["result"];
+	
+	if (status == 200) {
+		console.log("create choice success");
+		
+		// get cid and desc from created choice
+		var createdChoice = js["choice"];
+		var cid = createdChoice["cid"];
+		var desc = createdChoice["description"];
+		
+		//how to give data this to mainUI page??
+		
+	} else {
+		console.log("unexpected error : create new choice")
+	}
 }
 
 //called on by "Create Choice" button
@@ -10,6 +40,7 @@ function handleCreateChoice(e) {
 	//get all inputs
 	var name = document.registerform.username.value;
 	var pw = document.registerform.password.value;
+	
 	var desc = document.createChoiceForm.choiceDesc.value;
 	var size = document.createChoiceForm.teamSize.value;
 	var alt1 = document.createChoiceForm.alt1.value;
@@ -65,7 +96,7 @@ function handleCreateChoice(e) {
 		var choice = {}
 		choice["choiceDesc"] = desc;
 		choice["teamSize"] = size;
-		choice["alternatives"] = [alt1, alt2, alt3, alt4, alt5];
+		choice["alts"] = [alt1, alt2, alt3, alt4, alt5];
 		
 		console.log("JS:" + JSON.stringify(choice));
 		var xhrChoice = new XMLHttpRequest();
@@ -80,7 +111,11 @@ function handleCreateChoice(e) {
 	    if (xhrChoice.readyState == XMLHttpRequest.DONE) {
     	 	if (xhrChoice.status == 200) {
 	      	console.log ("XHR:" + xhrChoice.responseText);
-	      	processLogin(xhrChoice.responseText);
+	      	processCreate(xhrChoice.responseText);
+
+			//redirect to main interface page if successful
+			window.location = 'https://s3.us-east-2.amazonaws.com/choice.select.app/html/mainUI.html';
+
     	 	} else {
     		 	console.log("actual:" + xhrChoice.responseText);
 			  	var jsChoice = JSON.parse(xhrChoice.responseText);
@@ -88,13 +123,11 @@ function handleCreateChoice(e) {
 			  	alert (err);
     	 	}
     	} else {
-      		processLogin("N/A");
+      		processCreate("N/A");
     	}
  	 	};
 	
-		//redirect to main interface page
-		window.location = 'https://s3.us-east-2.amazonaws.com/choice.select.app/html/mainUI.html';
-
+		
 	
 	}
 }

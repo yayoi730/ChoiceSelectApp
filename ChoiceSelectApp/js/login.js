@@ -1,5 +1,17 @@
 function processLogin(result) {
-  console.log("result:" + result);
+	console.log("result:" + result);
+	var js = JSON.parse(result);
+	var status = js["statusCOde"];
+	var response = js["result"];
+	
+	if(status == 200) {
+		console.log("login successful");
+		
+		//get user's name for adding to lists and/or feedback
+		
+	} else {
+		console.log("unexpected error : login");
+	}
 }
 
 
@@ -24,18 +36,22 @@ function handleLogin(e) {
 		var loginData = {};
 		var js = "";
 		var xhr = new XMLHttpRequest();
+		
 		loginData["username"] = name;
 		loginData["choiceId"] = cid;
-		if (pw != "") {
+		
+		if (pw == "" || pw == null) {
+			js = JSON.stringify(loginData);
+			console.log("JS:" + js);
+			var url = login_url + "/" + cid + "/" + username;
+			xhr.open("POST", url, true);
+			xhr.send(loginData);
+		} else {
 			loginData["password"] = pw;
 			js = JSON.stringify(loginData);
 			console.log("JS:" + js);
-			xhr.open("POST", login_url + "/" + cid + "/" + username + "/" + password, true);
-			xhr.send(loginData);
-		} else {
-			js = JSON.stringify(loginData);
-			console.log("JS:" + js);
-			xhr.open("POST", login_url + "/" + cid + "/" + username, true);
+			var url = login_url + "/" + cid + "/" + username + "/" + password;
+			xhr.open("POST", url, true);
 			xhr.send(loginData);
 		}
 	
@@ -48,6 +64,10 @@ function handleLogin(e) {
     	 	if (xhr.status == 200) {
 	      	console.log ("XHR:" + xhr.responseText);
 	      	processLogin(xhr.responseText);
+
+			//redirect to main interface page
+			window.location.href = 'https://s3.us-east-2.amazonaws.com/choice.select.app/html/mainUI.html'
+
     	 	} else {
     		 	console.log("actual:" + xhr.responseText);
 			  	var js = JSON.parse(xhr.responseText);
@@ -59,7 +79,6 @@ function handleLogin(e) {
     	}
  	 	};
 
-		window.location.href = 'https://s3.us-east-2.amazonaws.com/choice.select.app/html/mainUI.html'
 	}
 }
 
@@ -90,7 +109,7 @@ function handleAdminLogin(e) {
 	
 	//switch to admin page
 
-	location.href = "adminPage.html";
+	location.href = "https://s3.us-east-2.amazonaws.com/choice.select.app/html/adminPage.html";
 	
 	//processs results and handle HTML
 	xhr.onloadend = function () {
