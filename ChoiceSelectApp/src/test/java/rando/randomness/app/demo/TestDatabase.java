@@ -30,8 +30,11 @@ public class TestDatabase {
 	    	Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 	    	Choice c = new Choice("Go to office hourse",timestamp);
 	    	Alternative a1 = new Alternative("Alternative A");
+	    	a1.setAltNumber(1);
 	    	Alternative a2 = new Alternative("Alternative B");
+	    	a2.setAltNumber(2);
 	    	Alternative a3 = new Alternative("Alternative C");
+	    	a3.setAltNumber(3);
 	    	
 	    	a1.addApprover("Rodrick");
 	    	a2.addDisapprover("Cameron");
@@ -74,6 +77,7 @@ public class TestDatabase {
 	    	System.out.println(tCopy.getChoice().getDescription());
 	    	for(Alternative a: tCopy.getChoice().getAlternativeList())
 	    	{
+	    		System.out.println("Alt Number: " + a.getAltNumber());
 	    		System.out.println(a.getAID());
 	    		System.out.println(a.getDescription());
 	    		System.out.println("Feedback: ");

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public class Alternative {
 	String aID;
+	int altNumber;
 	ArrayList<String> approvers = new ArrayList<>();
 	ArrayList<String> disapprovers = new ArrayList<>();
 	ArrayList<Feedback> feedback = new ArrayList<>();
@@ -55,5 +56,8 @@ public class Alternative {
 	}
 	public String getAID() {return this.aID;}
 	public void setAID(String aID) {this.aID = aID;}
+	
+	public int getAltNumber(){return this.altNumber;}
+	public void setAltNumber(int number) {this.altNumber = number;}
 
 }

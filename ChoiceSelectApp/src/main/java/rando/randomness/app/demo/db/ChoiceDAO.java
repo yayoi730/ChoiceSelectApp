@@ -128,12 +128,13 @@ public class ChoiceDAO {
 	{
 		try {
         	
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO " + aName + " (AID,CID,description) values(?,?,?);");
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO " + aName + " (AID,CID,description,altNumber) values(?,?,?,?);");
             String aID = UUID.randomUUID().toString();
             a.setAID(aID);
             ps.setString(1,  aID);
             ps.setString(2,  cID);
             ps.setString(3,  a.getDescription());
+            ps.setInt(4, a.getAltNumber());
             
             for(String ap: a.getApprovers())
             {
@@ -232,7 +233,7 @@ public class ChoiceDAO {
 
 	
 	
-	private void addApprover(String aID, String creator)
+	private boolean addApprover(String aID, String creator)
 	{
 		try {
 			PreparedStatement ps = conn.prepareStatement("INSERT INTO " + apName + " (APID,AID,approved,memberName) values(?,?,?,?);");
@@ -243,14 +244,15 @@ public class ChoiceDAO {
 			 ps.setInt(3, approved);
 			 ps.setNString(4, creator);
 			 ps.execute();
-			 return;
+			 return true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
 		}
 	}
 	
-	private void addDisapprover(String aID, String creator)
+	private boolean addDisapprover(String aID, String creator)
 	{
 		try {
 			PreparedStatement ps = conn.prepareStatement("INSERT INTO " + apName + " (APID,AID,approved,memberName) values(?,?,?,?);");
@@ -261,10 +263,11 @@ public class ChoiceDAO {
 			 ps.setInt(3, approved);
 			 ps.setNString(4, creator);
 			 ps.execute();
-			 return;
+			 return true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
 		}
 	}
 	
@@ -672,7 +675,7 @@ public class ChoiceDAO {
 			e.printStackTrace();
 		} 
 		a.setAID(r.getString("AID"));
-		
+		a.setAltNumber(r.getInt("altNumber"));
 		return a;
 	}
 	
