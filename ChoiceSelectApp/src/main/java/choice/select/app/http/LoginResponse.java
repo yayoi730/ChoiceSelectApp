@@ -17,6 +17,7 @@ public class LoginResponse {
 	}
 	
 	// 200 means success
+
 	public LoginResponse (Member m, Team t) {
 		this.member = m;
 		this.team = t;
