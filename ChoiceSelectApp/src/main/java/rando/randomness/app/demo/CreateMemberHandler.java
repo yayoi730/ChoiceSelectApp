@@ -35,6 +35,7 @@ public class CreateMemberHandler implements RequestHandler<CreateMemberRequest, 
 			else {
 				Member nM = createMember(req.getName(),req.getPassword(), req.getTID());
 				response = new CreateMemberResponse(nM);
+
 			}
 		}
 		catch (Exception e) {

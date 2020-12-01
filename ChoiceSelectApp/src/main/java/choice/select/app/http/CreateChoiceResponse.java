@@ -3,6 +3,7 @@ package choice.select.app.http;
 import rando.randomness.app.demo.model.Choice;
 
 public class CreateChoiceResponse {
+
 	public final Choice choice;
 	public final int httpCode;
 	public final String error;

@@ -34,8 +34,10 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, 
 		//}
 	}
 
+
 	@Override 
 	public CreateChoiceResponse handleRequest(CreateChoiceRequest req, Context context)  {
+
 		logger = context.getLogger();
 		logger.log(req.toString());
 
@@ -49,6 +51,7 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, 
 		}
 
 		return response;
+
 	}
 
 }

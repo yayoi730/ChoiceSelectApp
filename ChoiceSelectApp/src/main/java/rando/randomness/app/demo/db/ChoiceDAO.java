@@ -17,7 +17,7 @@ public class ChoiceDAO {
 	
 	final String cName = "Choice";
 	final String aName = "Alternative";
-	final String apName = "APP/DIS";
+	final String apName = "APPDIS";
 	final String fName = "Feedback";
 	final String mName = "Members";
 	final String tName = "Teams";// Exact capitalization
@@ -55,6 +55,7 @@ public class ChoiceDAO {
 		            throw new Exception("Failed to insert team: " + e.getMessage());
 		        }
 			}
+			
 	//Adds team to the database and returns the ID
 		public Team addTeam(Team t) throws Exception
 		{
@@ -85,14 +86,30 @@ public class ChoiceDAO {
 		try {
         	
 			
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO " + cName + " (CID,description,dateOfCreation,TID) values(?,?,?,?);");
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO " + cName + " (CID,description,dateOfCreation,dateOfCompletion,finalChoice,TID) values(?,?,?,?,?,?);");
             //String cID = UUID.randomUUID().toString();
             String cID = tID;
             c.setID(cID);
             ps.setString(1,  cID);
             ps.setString(2,  c.getDescription());
             ps.setString(3,  c.getCreationDate().toString());
-            ps.setString(4, tID);
+            if(c.getCompletionDate() == null)
+            {
+            	 ps.setString(4, "NULL");
+            }
+            else
+            {
+            	 ps.setString(4, c.getCompletionDate().toString());
+            }
+            if(c.getFinalChoice() < 0)
+            {
+            	 ps.setInt(5, -1);
+            }
+            else
+            {
+            	ps.setInt(5, c.getFinalChoice());
+            }
+            ps.setString(6, tID);
             ps.execute();
             for(Alternative a: c.getAlternativeList())
             {
@@ -116,10 +133,18 @@ public class ChoiceDAO {
             ps.setString(1,  aID);
             ps.setString(2,  cID);
             ps.setString(3,  a.getDescription());
+            
+            for(String ap: a.getApprovers())
+            {
+            	addApprover(aID, ap);
+            }
+            for(String di: a.getDispprovers())
+            {
+            	addDisapprover(aID, di);
+            }
             for(Feedback f: a.getFeebackList())
             {
             	f = addFeedback(f, aID, f.getCreator());
-            	//newAlternative.addFeedback(addFeedback(f, aID, f.getCreator()));
             }
             ps.execute();
             return a;
@@ -135,7 +160,7 @@ public class ChoiceDAO {
 	{
 		try {
            
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO " + fName + " (FID,AID,timestamp,description,MID) values(?,?,?,?,?);");
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO " + fName + " (FID,AID,timestamp,description,name) values(?,?,?,?,?);");
             String fID = UUID.randomUUID().toString();
             f.setFID(fID);
             ps.setString(1,  fID);
@@ -149,6 +174,97 @@ public class ChoiceDAO {
         } catch (Exception e) {
             throw new Exception("Failed to insert feedback: " + e.getMessage());
         }
+	}
+	
+	public void handleAppDisRequest(boolean approval, String aID, String creator) throws Exception
+	{
+		//How to check and update the database based on request to approve/disapprove
+		ArrayList<String> approvers = retrieveApprovers(aID);
+		ArrayList<String> disapprovers = retrieveDisapprovers(aID);
+		//If the request is for approval
+		if(approval == true) {
+			//If they've already approved
+			if(approvers.contains(creator))
+			{
+				//Remove them from approval list
+				deleteAppDis(aID, creator);
+			}
+			//If they've already disapproved
+			else if(disapprovers.contains(creator))
+			{
+				//Remove disapproval and add approval
+				deleteAppDis(aID, creator);
+				addApprover(aID, creator);
+			}
+			//If they haven't approved/disapproved
+			else
+			{
+				//Add approval
+				addApprover(aID, creator);
+			}
+		}
+		//If the request is for disapproval
+		else
+		{
+			//If they've already disapproved
+			if(disapprovers.contains(creator))
+			{
+				//Remove them from disapproval list
+				deleteAppDis(aID, creator);
+			}
+			//If they've already approved
+			else if(approvers.contains(creator))
+			{
+				//Remove approval and add disapproval
+				deleteAppDis(aID, creator);
+				addDisapprover(aID, creator);
+			}
+			//If they haven't approved/disapproved
+			else
+			{
+				//Add disapproval
+				addDisapprover(aID, creator);
+			}
+		}
+	}
+	
+
+	
+	
+	private void addApprover(String aID, String creator)
+	{
+		try {
+			PreparedStatement ps = conn.prepareStatement("INSERT INTO " + apName + " (APID,AID,approved,memberName) values(?,?,?,?);");
+			 String apID = UUID.randomUUID().toString();
+			 int approved = 1;
+			 ps.setString(1, apID);
+			 ps.setString(2, aID);
+			 ps.setInt(3, approved);
+			 ps.setNString(4, creator);
+			 ps.execute();
+			 return;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private void addDisapprover(String aID, String creator)
+	{
+		try {
+			PreparedStatement ps = conn.prepareStatement("INSERT INTO " + apName + " (APID,AID,approved,memberName) values(?,?,?,?);");
+			 String apID = UUID.randomUUID().toString();
+			 int approved = 0;
+			 ps.setString(1, apID);
+			 ps.setString(2, aID);
+			 ps.setInt(3, approved);
+			 ps.setNString(4, creator);
+			 ps.execute();
+			 return;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	
@@ -265,6 +381,49 @@ public class ChoiceDAO {
 	    
 	}
 	
+	public ArrayList<String> retrieveApprovers(String aID) throws Exception
+	{
+		ArrayList<String> allApprovers = new ArrayList<>();
+		try {
+        	PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + apName + " WHERE AID = ? AND approved = ?;");
+            ps.setString(1, aID);
+            ps.setInt(2, 1);
+            ResultSet resultSet = ps.executeQuery();
+
+            while (resultSet.next()) {
+            	String member = resultSet.getString("memberName");
+            	allApprovers.add(member);
+            }
+            resultSet.close();
+            return allApprovers;
+
+        } catch (Exception e) {
+            throw new Exception("Failed in getting approvers: " + e.getMessage());
+        }
+		
+	}
+	public ArrayList<String> retrieveDisapprovers(String aID) throws Exception
+	{
+		ArrayList<String> allDisapprovers = new ArrayList<>();
+		try {
+        	PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + apName + " WHERE AID = ? AND approved = ?;");
+            ps.setString(1, aID);
+            ps.setInt(2, 0);
+            ResultSet resultSet = ps.executeQuery();
+
+            while (resultSet.next()) {
+            	String member = resultSet.getString("memberName");
+            	allDisapprovers.add(member);
+            }
+            resultSet.close();
+            return allDisapprovers;
+
+        } catch (Exception e) {
+            throw new Exception("Failed in getting disapprovers: " + e.getMessage());
+        }
+		
+	}
+	
 	public boolean deleteTeam(String tID) throws Exception
 	{
 		 try {
@@ -272,11 +431,12 @@ public class ChoiceDAO {
 	        	ps1.setString(1, tID);
 	        	ResultSet resultSet = ps1.executeQuery();
 	        	
-	        	//Delete all alternatives for each choice
+	        	//Delete choice
 	        	while (resultSet.next())
 	        	{
 	        		Team t = generateTeam(resultSet);
 	        		deleteChoice(t.getTID());
+	        		deleteMembers(t.getTID());
 	        	}
 	        	ps1.close();
 	        	//Delete the team
@@ -291,7 +451,7 @@ public class ChoiceDAO {
 	            throw new Exception("Failed to delete alternative: " + e.getMessage());
 	        }
 	}
-	public boolean deleteMember(String tID) throws Exception
+	public boolean deleteMembers(String tID) throws Exception
 	{
 		try {
        	 
@@ -303,7 +463,7 @@ public class ChoiceDAO {
             return (numAffected >= 1);
 
         } catch (Exception e) {
-            throw new Exception("Failed to delete feedback: " + e.getMessage());
+            throw new Exception("Failed to delete members: " + e.getMessage());
         }
 	}
 	
@@ -345,6 +505,7 @@ public class ChoiceDAO {
         	{
         		Alternative a = generateAlternative(resultSet);
         		deleteFeedback(a.getAID());
+        		deleteAllAppDis(a.getAID());
         	}
         	ps1.close();
         	//Delete the alternatives
@@ -373,29 +534,68 @@ public class ChoiceDAO {
 	        } catch (Exception e) {
 	            throw new Exception("Failed to delete feedback: " + e.getMessage());
 	        }
-	    }
+	 }
+	 //Delete approval/disapproval for the given alternative and member
+	 private boolean deleteAppDis(String aID, String memberName) throws Exception
+	 {
+		 try {
+	            PreparedStatement ps = conn.prepareStatement("DELETE FROM " + apName + " WHERE AID = ? AND memberName = ?;");
+	            ps.setString(1, aID);
+	            ps.setString(2, memberName);
+	            int numAffected = ps.executeUpdate();
+	            ps.close();
+	            
+	            return (numAffected >= 1);
 
+	        } catch (Exception e) {
+	            throw new Exception("Failed to delete approval/disapproval: " + e.getMessage());
+	        }
+	 }
+	//Deletes ALL approval/disapproval for the alternative with the given ID
+	 public boolean deleteAllAppDis(String aID) throws Exception {
+	        try {
+	        	 
+	            PreparedStatement ps = conn.prepareStatement("DELETE FROM " + apName + " WHERE AID = ?;");
+	            ps.setString(1, aID);
+	            int numAffected = ps.executeUpdate();
+	            ps.close();
+	            
+	            return (numAffected >= 1);
+
+	        } catch (Exception e) {
+	            throw new Exception("Failed to delete approval/disapproval: " + e.getMessage());
+	        }
+	    }
 	
-	public Choice generateChoice(ResultSet r) throws SQLException
+	
+	private Choice generateChoice(ResultSet r) throws SQLException
 	{
-		//Timestamp dateOfCreation = Timestamp.valueOf(r.getString("dateOfCreation"));
 		
 		String tID = r.getString("TID");
 		String cID = r.getString("CID");
 		String description = r.getString("description");
-		String dateOfCreation = r.getString("dateOfCreation");
-		Timestamp timestamp = Timestamp.valueOf(dateOfCreation);
-		//Timestamp dateOfCompletion = Timestamp.valueOf(r.getString("dateOfCompletion"));
-		//Integer finalChoice = r.getInt("finalChoice");
-		
-		
-		Choice c = new Choice(description, timestamp);
-		c.setID(cID);
+		Timestamp dateOfCreation = Timestamp.valueOf(r.getString("dateOfCreation"));
+		String dOC= r.getString("dateOfCompletion");
 	
-		//if(finalChoice != null)
-		//{
-		//	c.completeChoice(finalChoice);
-		//}
+		
+		Integer finalChoice = r.getInt("finalChoice");
+		
+		
+		Choice c = new Choice(description, dateOfCreation);
+		c.setID(cID);
+		c.setTID(tID);
+		c.setFinalChoice(finalChoice);
+		if(dOC.equals("NULL"))
+		{
+			c.setCompletionDate(null);
+		}
+		else
+		{
+			Timestamp dateOfCompletion = Timestamp.valueOf(r.getString("dateOfCompletion"));
+			c.setCompletionDate(dateOfCompletion);
+		}
+		
+
 		
 		 try {
 			for(Alternative a: retrieveAlternatives(cID))
@@ -409,7 +609,7 @@ public class ChoiceDAO {
 		return c;
 	}
 	
-	public Team generateTeam(ResultSet r) throws Exception
+	private Team generateTeam(ResultSet r) throws Exception
 	{
 		
 		String tid = r.getString("TID");
@@ -421,7 +621,7 @@ public class ChoiceDAO {
 		return t;
 	}
 	
-	public Feedback generateFeedback(ResultSet r) throws SQLException
+	private Feedback generateFeedback(ResultSet r) throws SQLException
 	{
 		Timestamp t = Timestamp.valueOf(r.getString("timestamp"));
 		String desc = r.getString("description");
@@ -431,7 +631,7 @@ public class ChoiceDAO {
 		return f;
 	}
 	
-	public Member generateMember(ResultSet r) throws SQLException
+	private Member generateMember(ResultSet r) throws SQLException
 	{
 		String pass = r.getString("password");
 		String name = r.getString("name");
@@ -443,15 +643,24 @@ public class ChoiceDAO {
 	}
 	
 	
-	public Alternative generateAlternative(ResultSet r) throws SQLException
+	private Alternative generateAlternative(ResultSet r) throws Exception
 	{
 		String desc = r.getString("description");
 		String aID = r.getString("AID");
 		Alternative a = new Alternative(desc);
-		//Add approvers
-		//Add disapprovers
+		//Add approvers,disapprovers, and feedback
 		try {
+			ArrayList<String> approvers = retrieveApprovers(aID);
+			ArrayList<String> disapprovers = retrieveDisapprovers(aID);
 			ArrayList<Feedback> f = retrieveFeedback(aID);
+			for(String ap: approvers)
+			{
+				a.addApprover(ap);
+			}
+			for(String di: disapprovers)
+			{
+				a.addDisapprover(di);
+			}
 			for(Feedback element: f)
 			{
 				a.addFeedback(element);
@@ -464,5 +673,6 @@ public class ChoiceDAO {
 		
 		return a;
 	}
+	
 }	
 
