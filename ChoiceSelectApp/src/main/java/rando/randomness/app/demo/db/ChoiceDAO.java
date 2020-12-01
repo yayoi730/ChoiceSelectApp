@@ -583,7 +583,7 @@ public class ChoiceDAO {
 		
 		Choice c = new Choice(description, dateOfCreation);
 		c.setID(cID);
-		c.setTID(tID);
+		//c.setTid(tID);
 		c.setFinalChoice(finalChoice);
 		if(dOC.equals("NULL"))
 		{

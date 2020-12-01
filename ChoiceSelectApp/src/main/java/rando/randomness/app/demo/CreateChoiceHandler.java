@@ -43,7 +43,7 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, 
 
 		CreateChoiceResponse response;
 		try {
-			Choice ch = createChoice(req.getDescription(), req.getAlternatives());
+			Choice ch = createChoice(req.getDesc(), req.getAlternatives());
 			response = new CreateChoiceResponse(ch);
 		} catch (Exception e) {
 			e.printStackTrace();

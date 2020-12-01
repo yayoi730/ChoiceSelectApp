@@ -29,11 +29,11 @@ public class CreateMemberHandler implements RequestHandler<CreateMemberRequest, 
 		
 		try {
 			if(req.getPassword() == "" || req.getPassword() == null) {
-				Member nM = createMember(req.getName(),req.getTID());
+				Member nM = createMember(req.getName(),req.getTid());
 				response = new CreateMemberResponse(nM);
 			}
 			else {
-				Member nM = createMember(req.getName(),req.getPassword(), req.getTID());
+				Member nM = createMember(req.getName(),req.getPassword(), req.getTid());
 				response = new CreateMemberResponse(nM);
 
 			}
