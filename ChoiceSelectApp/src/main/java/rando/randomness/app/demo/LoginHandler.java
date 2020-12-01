@@ -11,6 +11,7 @@ import choice.select.app.http.LoginRequest;
 import choice.select.app.http.LoginResponse;
 import rando.randomness.app.demo.db.ChoiceDAO;
 import rando.randomness.app.demo.model.Member;
+import rando.randomness.app.demo.model.Team;
 
 public class LoginHandler implements RequestHandler<LoginRequest, LoginResponse> {
 
@@ -30,13 +31,15 @@ public class LoginHandler implements RequestHandler<LoginRequest, LoginResponse>
 		
 		boolean login = false;
 		String failMessage = "Login Failed";
-		Member loadedMember = null;		
+		Member loadedMember = null;	
+		Team loadedTeam = null;
 
 		try {
 			loadedMember = loadMemberFromRDS(req.getCid(), req.getName());
 			if(req.getPassword() == "") {
 				if(loadedMember.getPassword() == null || loadedMember.getPassword() == "") {
 					login = true;
+					loadedTeam = loadTeamFromRDS(req.getCid());
 				}
 			}
 			else if(loadedMember.getPassword() == req.getPassword())
@@ -53,7 +56,7 @@ public class LoginHandler implements RequestHandler<LoginRequest, LoginResponse>
 		// and has to be processed specifically by the client code.
 		LoginResponse response;
 		if(login){
-			response = new LoginResponse(loadedMember); 
+			response = new LoginResponse(loadedMember, loadedTeam); 
 		}
 		else {response = new LoginResponse(400, failMessage);}
 
@@ -71,6 +74,18 @@ public class LoginHandler implements RequestHandler<LoginRequest, LoginResponse>
 				}
 			}
 			return null;
+		}
+		catch(Exception e) {
+			return null;
+		}		
+	}
+	
+	private Team loadTeamFromRDS(String tID) {
+		ChoiceDAO dao =  new ChoiceDAO();
+		Team t = null;
+		try {
+			t = dao.retrieveTeam(tID);
+			return t;
 		}
 		catch(Exception e) {
 			return null;

@@ -50,7 +50,6 @@ LambdaLogger logger;
 		Team t = new Team(m, c);
 		t = dao.addTeam(t);
 		return t;
-
 	}
 	
 	Choice createChoice(String description, ArrayList<Alternative> alternatives) throws Exception { 
