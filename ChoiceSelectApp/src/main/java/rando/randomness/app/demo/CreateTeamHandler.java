@@ -37,7 +37,10 @@ LambdaLogger logger;
 			Team t = createTeam(c, req.getTeamSize(), req.getMembers());
 			response = new CreateTeamResponse(t);
 		}
-		catch (Exception e) {response = new CreateTeamResponse(400,"");}
+		catch (Exception e) {
+			e.printStackTrace();
+			response = new CreateTeamResponse(400,"");
+		}
 
 		return response; 
 	}

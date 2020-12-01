@@ -595,6 +595,7 @@ public class ChoiceDAO {
 			c.setCompletionDate(dateOfCompletion);
 		}
 		
+
 		
 		 try {
 			for(Alternative a: retrieveAlternatives(cID))
