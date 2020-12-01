@@ -1,5 +1,6 @@
 package rando.randomness.app.demo;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import com.amazonaws.services.lambda.runtime.Context;
@@ -11,69 +12,46 @@ import choice.select.app.http.CreateChoiceResponse;
 import rando.randomness.app.demo.db.ChoiceDAO;
 import rando.randomness.app.demo.model.Alternative;
 import rando.randomness.app.demo.model.Choice;
+import rando.randomness.app.demo.model.Team;
 
 public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest, CreateChoiceResponse> {
 
 	LambdaLogger logger;
 	
-	// To access S3 storage
-	private AmazonS3 s3 = null;
+	Choice createChoice(String description, ArrayList<Alternative> alternatives) throws Exception { 
+		if (logger != null) { logger.log("in createConstant"); }
+		ChoiceDAO dao = new ChoiceDAO();
+		Timestamp time = new Timestamp(0);
+		Choice c = new Choice(description, time);
+		for (Alternative a : alternatives) {
+			c.addAlternative(a);
+		}
+	
+		//if (dao.addChoice(c)) {
+	//		return c;
+		//} else {
+			return null;
+		//}
+	}
 
-	@Override
-	public CreateChoiceResponse handleRequest(CreateChoiceRequest req, Context context) {
+
+	@Override 
+	public CreateChoiceResponse handleRequest(CreateChoiceRequest req, Context context)  {
+
 		logger = context.getLogger();
-		logger.log("Loading Java Lambda handler of CreateChoiceHandler");
 		logger.log(req.toString());
-		
-		ChoiceDAO dao =  new ChoiceDAO();
-		
-		boolean fail = false;
-		boolean loaded = true;
-		String failMessage = "";
-		Choice loadedChoice = null;
-		
-		try {
-			loadedChoice = loadChoiceFromRDS(req.getID());
-			loaded = true;
-		} 
-		catch (Exception e) {
-			loaded = false;
-			fail = true;
-		}
-		
-		// compute proper response and return. Note that the status code is internal to the HTTP response
-		// and has to be processed specifically by the client code.
+
 		CreateChoiceResponse response;
-		if (fail) {
-			response = new CreateChoiceResponse("",400, failMessage);
-		} 
-		else if(loaded == false){
-			
-			try {
-				Choice newChoice = new Choice(req.getDescription(), req.getCreationDate());
-				dao.addChoice(newChoice , req.getID());
-				ArrayList<Alternative> alts = req.getAlts(); 
-				for(int y = 0; y < alts.size(); y++){
-					dao.addAlternative(alts.get(y), req.getID());
-				}
-				response = new CreateChoiceResponse("operation successful");  // success
-			} catch (Exception e) {
-				response = new CreateChoiceResponse("",400, failMessage);  // success
-			}
+		try {
+			Choice ch = createChoice(req.getDesc(), req.getAlternatives());
+			response = new CreateChoiceResponse(ch);
+		} catch (Exception e) {
+			e.printStackTrace();
+			response = new CreateChoiceResponse(400, e.getMessage());
 		}
-		else {response = new CreateChoiceResponse("Choice Loaded");}
 
-		return response; 
+		return response;
+
 	}
-
-
-	private Choice loadChoiceFromRDS(String id) throws Exception {
-		ChoiceDAO dao =  new ChoiceDAO();
-		Choice ldChoice = null;
-		ldChoice = dao.retrieveChoice(id);
-		return ldChoice;
-	}
-
-
 
 }

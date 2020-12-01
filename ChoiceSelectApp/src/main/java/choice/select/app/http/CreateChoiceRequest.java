@@ -2,13 +2,15 @@ package choice.select.app.http;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+
 import rando.randomness.app.demo.model.Alternative;
 
 public class CreateChoiceRequest {
-	ArrayList<Alternative> alternatives;
-	String id;
-	String description;
 
+	String cid;
+	String description;
+	ArrayList<Alternative> alternatives;
+	int teamSize;
 	Timestamp creationDate;
 
 	public CreateChoiceRequest() {}
@@ -17,21 +19,18 @@ public class CreateChoiceRequest {
 		this.description = description;
 	}
 	
-	public void setID(String id) {this.id = id;}
-	public void setDescription(String d) {this.description = d;}
-	public Timestamp getCreationDate() {return this.creationDate;}
-	public String getID() {return this.id;}
-	public String getDescription() {return this.description;}
+	public void setCid(String cid) {this.cid = cid;}
+	public String getCid() {return this.cid;}
 	
-	public boolean addAlternative(Alternative alt) {
-		if(this.alternatives.size() < 5) {
-			alternatives.add(alt);
-			return true;
-		}
-		return false;
-	}
+	public void setDesc(String d) {this.description = d;}
+	public String getDesc() {return this.description;}
 	
-	public ArrayList<Alternative> getAlts(){return this.alternatives;}
+
+	public ArrayList<Alternative> getAlternatives() { return alternatives; }
+	public void setAlternatives(ArrayList<Alternative> alts) { this.alternatives = alts; }
 	
-	public String toString() {return "CreateChoice(" + id + "," + description + "," + alternatives.toString() + ")";}
+	public ArrayList<Alternative> getAlts(){return this.alternatives;} 
+	
+	public String toString() {return "CreateChoice(" + description + "," + alternatives.toString() + ")";}
+
 }

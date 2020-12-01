@@ -25,10 +25,9 @@ public class GetChoiceHandler implements RequestHandler<GetChoiceRequest, GetCho
 		
 		ChoiceDAO dao =  new ChoiceDAO();
 		
-		boolean fail = false;
 		boolean loaded = true;
 		String failMessage = "unexpected error retriving choice";
-		Choice loadedChoice = null;
+		Choice loadedChoice;
 		
 		try {
 			loadedChoice = loadChoiceFromRDS(req.getID());
@@ -36,17 +35,16 @@ public class GetChoiceHandler implements RequestHandler<GetChoiceRequest, GetCho
 		} 
 		catch (Exception e) {
 			loaded = false;
+			loadedChoice = null;
 		}
 		
 		// compute proper response and return. Note that the status code is internal to the HTTP response
 		// and has to be processed specifically by the client code.
 		GetChoiceResponse response;
-		if (fail) {
-			response = new GetChoiceResponse("",400, failMessage);
-		} 
-		else if(loaded == false){response = new GetChoiceResponse("The Choice does not exist",400, failMessage);
+		if(loaded == false){
+			response = new GetChoiceResponse(400, failMessage);
 		}
-		else {response = new GetChoiceResponse("operation successful");}
+		else {response = new GetChoiceResponse(loadedChoice);}
 
 		return response; 
 	}

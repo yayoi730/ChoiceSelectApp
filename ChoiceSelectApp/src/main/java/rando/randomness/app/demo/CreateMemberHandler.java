@@ -1,8 +1,6 @@
 package rando.randomness.app.demo;
 
 
-import java.util.ArrayList;
-
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
@@ -25,59 +23,40 @@ public class CreateMemberHandler implements RequestHandler<CreateMemberRequest, 
 		logger.log("Loading Java Lambda handler of CreateMemberHandler");
 		logger.log(req.toString());
 		
-		ChoiceDAO dao =  new ChoiceDAO();
-		
-		boolean fail = false;
-		boolean loaded = true;
-		String failMessage = "";
-		Member loadedMember = null;
-		
-		try {
-			loadedMember = loadMemberFromRDS(req.getTID(), req.getName());
-			loaded = true;
-		} 
-		catch (Exception e) {
-			loaded = false;
-		}
-		
 		// compute proper response and return. Note that the status code is internal to the HTTP response
 		// and has to be processed specifically by the client code.
 		CreateMemberResponse response;
-		if (fail) {
-			response = new CreateMemberResponse("",400, failMessage);
-		} 
-		else if(loaded == false){
-			Member newMember = new Member(req.getName(), req.getPassword()); 			
-			try {
-				dao.addMember(newMember, req.tID);
-				response = new CreateMemberResponse("operation successful");  // success
-			} catch (Exception e) {
-				response = new CreateMemberResponse("",400, failMessage);  // success
+		
+		try {
+			if(req.getPassword() == "" || req.getPassword() == null) {
+				Member nM = createMember(req.getName(),req.getTid());
+				response = new CreateMemberResponse(nM);
+			}
+			else {
+				Member nM = createMember(req.getName(),req.getPassword(), req.getTid());
+				response = new CreateMemberResponse(nM);
+
 			}
 		}
-		else {response = new CreateMemberResponse("Member Already Exist",400, failMessage);}
+		catch (Exception e) {
+			e.printStackTrace();
+			response = new CreateMemberResponse(400,"Member Creation ERR");
+		}
 
 		return response; 
 	}
-
-
-	private Member loadMemberFromRDS(String tID, String name) {
+	
+	Member createMember(String name, String pass, String tID) throws Exception{
+		Member m = new Member(name, pass);
 		ChoiceDAO dao =  new ChoiceDAO();
-		try {
-			ArrayList<Member> members =  dao.retrieveMembers(tID);
-			Member possibleMember = new Member(name);
-			for(int m = 0; m < members.size(); m++) {
-				if(members.get(m).equals(possibleMember)) {
-					return members.get(m);
-				}
-			}
-			return null;
-		}
-		catch(Exception e) {
-			return null;
-		}
-		
+		dao.addMember(m, tID);
+		return m;
 	}
-
+	Member createMember(String name, String tID) throws Exception{
+		Member m = new Member(name);
+		ChoiceDAO dao =  new ChoiceDAO();
+		dao.addMember(m, tID);
+		return m;
+	}
 
 }
