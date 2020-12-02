@@ -56,9 +56,6 @@ LambdaLogger logger;
 		if (logger != null) { logger.log("in createConstant"); }	
 		java.sql.Timestamp ts = new java.sql.Timestamp(System.currentTimeMillis());
 		Choice c = new Choice(description, alternatives, ts);
-		for (Alternative a : alternatives) {
-			c.addAlternative(a);
-		}
 		return c;
 	}
 	
