@@ -59,7 +59,6 @@ function handleLoginClick(e) {
 		
 		//process results
 		xhr.onloadend = function () {
-			console.log(xhr);
 			console.log(xhr.request);
 			if (xhr.readyState == XMLHttpRequest.DONE) {
 				console.log ("XHR:" + xhr.responseText);

@@ -1,5 +1,5 @@
 package choice.select.app.http;
 
-public class AddApproverResponse {
+public class OpinionResponse {
 
 }
