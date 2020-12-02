@@ -16,15 +16,15 @@ function process(result) {
 		var teamSize = team["maxTeamSize"];		//get team size from team
 		var members = team["members"];			//get members from team
 		var choiceDesc = choice["description"];	//get choice desc from choice
-		var cid = choice["cid"];				//get cid from choice
+		var choiceId = choice["cid"];				//get cid from choice
 		var alts = choice["alternatives"];		//get alts from choice
 		
 		//display values on same page (testing purposes)
-		document.displayForm.cidLabel.value = cid;
-		document.displayForm.descLabel.value = choiceDesc;
-		document.displayForm.sizeLabel.value = teamSize;
-		document.displayForm.usernameLabel.value = members;
-		document.displayForm.altsLabel.value = alts;
+		document.getElementById("cidLabel").value = choiceId;
+		document.getElementById("descLabel").value = choiceDesc;
+		document.getElementById("sizeLabel").value = teamSize;
+		document.getElementById("usernameLabel").value = members;
+		document.getElementById("altsLabel").value = alts;
 	} else {
 		console.log("error creating choice");
 	}
