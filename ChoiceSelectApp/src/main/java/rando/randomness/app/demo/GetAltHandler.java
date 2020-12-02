@@ -37,7 +37,7 @@ public class GetAltHandler implements RequestHandler<GetAltRequest, GetAltRespon
 		GetAltResponse response;
 
 		try {
-			loadedAlt = loadAlt(req.getCID(), req.getAID());
+			loadedAlt = loadAlt(req.getcID(), req.getcID());
 			response = new GetAltResponse(loadedAlt);
 		} 
 		catch (Exception e) {

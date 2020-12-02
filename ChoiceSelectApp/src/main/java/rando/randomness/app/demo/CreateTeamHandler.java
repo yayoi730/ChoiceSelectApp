@@ -17,7 +17,7 @@ import rando.randomness.app.demo.model.Member;
 import rando.randomness.app.demo.model.Team;
 
 public class CreateTeamHandler implements RequestHandler<CreateTeamRequest, CreateTeamResponse>{
-LambdaLogger logger;
+	LambdaLogger logger;
 	
 	// To access S3 storage
 	private AmazonS3 s3 = null;
@@ -25,7 +25,7 @@ LambdaLogger logger;
 	@Override
 	public CreateTeamResponse handleRequest(CreateTeamRequest req, Context context) {
 		logger = context.getLogger();
-		logger.log("Loading Java Lambda handler of CreateMemberHandler");
+		logger.log("Loading Java Lambda handler of CreateTeamHandler");
 		logger.log(req.toString());
 		
 
