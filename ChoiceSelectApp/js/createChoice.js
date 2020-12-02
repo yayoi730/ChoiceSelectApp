@@ -1,33 +1,40 @@
 
 
+//process results from createTeam
 function process(result) {
-	console.log("result: " + result);
+	console.log("result:" + result);
 	var js = JSON.parse(result);
+	
 	var status = js["httpCode"];
 	var response = js["result"];
-	var team = js["team"];
 	
 	if (status == 200) {
 		console.log("create choice success");
 		
-		// get cid and desc from created choice
-		var createdChoice = js["choice"];
-		var cid = createdChoice["cid"];
-		var desc = createdChoice["description"];
+		var team = js["team"];					//get team object from response
+		var choice = team["choice"];			//get choice from team
+		var teamSize = team["maxTeamSize"];		//get team size from team
+		var members = team["members"];			//get members from team
+		var choiceDesc = choice["description"];	//get choice desc from choice
+		var cid = choice["cid"];				//get cid from choice
+		var alts = choice["alternatives"];		//get alts from choice
 		
-		//how to give data this to mainUI page??
-		
+		//display values on same page (testing purposes)
+		document.displayForm.cidLabel.value = cid;
+		document.displayForm.descLabel.value = choiceDesc;
+		document.displayForm.sizeLabel.value = teamSize;
+		document.displayForm.usernameLabel.value = members;
+		document.displayForm.altsLabel.value = alts;
 	} else {
-		console.log("unexpected error : create new choice")
+		console.log("error creating choice");
 	}
 }
 
-//called on by "Create Choice" button
-function handleCreateChoice(e) {
-
+function handleCreateClick(e) {
+	
 	//get all inputs
-	var name = document.registerform.username.value;
-	var pw = document.registerform.password.value;
+	var name = document.getElementById("username").value;
+	var pw = document.getElementById("password").value;
 	
 	var desc = document.createChoiceForm.choiceDesc.value;
 	var size = document.createChoiceForm.teamSize.value;
@@ -46,38 +53,31 @@ function handleCreateChoice(e) {
 
 	//make sure necessary inputs are present
 	if ((name == "" || desc == "") || (alt1 == "" || alt2 == "") || (size == "" || size == "0")) {
-		alert("Please login with a username. To create a choice you must include a description, team size, and at least 2 alternatives.")
-	} else {
-	
-		//send out data to create new member
-		var js = "";
-		var xhr = new XMLHttpRequest();
-		jsLogin = JSON.stringify(data);
-		console.log("JS:" + js);
-		xhr.open("POST", createTeam_url + "/" + name + "/" + password + "/" + desc + "/" + size, true);
-		xhr.send(data);
+		alert("Please login with a username. To create a choice you must include a description, team size, and at least 2 alternatives.");
+		} else {
+			//convert to json format
+			var js = JSON.stringify(data);
+			console.log("JS:" + js);
 			
-		//processs results and handle HTML
-		xhr.onloadend = function () {
-	    console.log(xhr);
-	    console.log(xhr.request);
-	    if (xhr.readyState == XMLHttpRequest.DONE) {
-    	 	if (xhr.status == 200) {
-	      	console.log ("XHR:" + xhr.responseText);
-	      	process(xhr.responseText);
-    	 	} else {
-    		 	console.log("actual:" + xhr.responseText);
-			  	var jsLogin = JSON.parse(xhr.responseText);
-			  	var err = jsLogin["response"];
-			  	alert (err);
-    	 	}
-    	} else {
-      		process("N/A");
-    	}
- 	 	};
+			//send creatTeam request
+			var xhr = new XMLHttpRequest();
+			xhr.open("POST", createTeam_url + "/" + name + "/" + password + "/" + desc + "/" + size, true);
+			xhr.send(data);
+			console.log("create team request sent");
+			
+			//process results
+			xhr.onloadend = function () {
+				console.log(xhr);
+				console.log(xhr.request);
+				if (xhr.readyState == XMLHttpRequest.DONE) {
+					console.log ("XHR:" + xhr.responseText);
+					process(xhr.responseText);
+				} else {
+					process("N/A");
+				}
+			};
+			
+		}
 	
-	}
 }
-
-
 

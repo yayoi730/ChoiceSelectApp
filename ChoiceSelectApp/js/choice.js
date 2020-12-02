@@ -26,12 +26,12 @@ function processResponse(result) {
 	var js = JSON.parse(result);
 	
 	//elements to be changed
-	var descLabel = document.getElementById('choiceDesc');
-	var idLabel = document.getElementById('choiceId');
+	var descLabel = document.choiceLabelForm.choiceDesc;
+	var idLabel = document.choiceLabelForm.choiceId;
 	
 	//retrieve data returned
-	var desc = js["choiceDesc"];
-	var cid = js["choiceId"];
+	var desc = js["description"];
+	var cid = js["cid"];
 	
 	//change 
 	descLabel.innerHTML = "<div id = \"choiceDesc\" value = \"Choice Description: " + desc + "\" />";
