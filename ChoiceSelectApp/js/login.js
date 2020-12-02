@@ -1,7 +1,7 @@
 function processLogin(result) {
 	console.log("result:" + result);
 	var js = JSON.parse(result);
-	var status = js["statusCOde"];
+	var status = js["statusCode"];
 	var response = js["result"];
 	
 	if(status == 200) {

@@ -23,12 +23,12 @@ function handleAltClick(altNum) {
 function processResponse(result, altNum) {
 	console.log("result: " + result);
 	
-	//for manipulating an html element
+	//get alt description from alternative object
 	var js = JSON.parse(result);
+	var desc = js["description"];
 	
-	//store element to be changed as a new var
+	//set label with retrieved alt desc
 	var altDescLabel = document.getElementById('altDesc');
-	var desc = js["altDesc"];
-	altDescLabel.innerHTML = "<div id = \"altDesc\" value = \"" + desc + "\" />";
+	altDescLabel.innerHTML = "<div id = \"altDesc\" value = \"Alternative Description: " + desc + "\" />";
 }
 
