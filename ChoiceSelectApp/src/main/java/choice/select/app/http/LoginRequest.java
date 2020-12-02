@@ -8,7 +8,7 @@ public class LoginRequest {
 	// Must include getters, setters, empty constructor to work with AWS
 	
 	public String getName() {return name;}
-	public void setname(String newName) { this.name = newName; }
+	public void setName(String newName) { this.name = newName; }
 	
 	public String getPassword() {return password;}
 	public void setPassword(String newPass) { this.password = newPass; }

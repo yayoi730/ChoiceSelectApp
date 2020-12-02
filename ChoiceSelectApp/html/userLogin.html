@@ -43,7 +43,7 @@ function tryLogin() {
 	
 	<form name = "loginForm" method = "post">
 	
-	Choice ID: <input id = "choiceId" value = "" />
+	Choice ID: <input id = "cid" value = "" />
 	<br><br>
 	Username: <input id = "username" value = "" />
 	<br>
@@ -53,17 +53,20 @@ function tryLogin() {
 	</form>
 	
 	<br><br><br>
-	<input type = "button" value = "Login" onClick = "JavaScript:handleLogin(this)" />
+	<input type = "button" value = "Login" onClick = "JavaScript:handleLoginClick(this)" />
 	<br>
 	<input type = "button" value = "Create New Choice" onClick = "location.href = 'https://s3.us-east-2.amazonaws.com/choice.select.app/html/createNewChoicePage.html'" />
 	<br><br>
 
-	<input type = "button" value = "Login As Administrator" onClick = "location.href = 'https://s3.us-east-2.amazonaws.com/choice.select.app/html/adminPage.html'" />
-
-	<br>
-	***no login required, view only***
-
 	</div>
+	
+	<form name = "displayForm" method = "get">
+		<p id = "cidLabel">cid</p>
+		<p id = "descLabel">desc</p>
+		<p id = "sizeLabel">size</p>
+		<p id = "usernameLabel">name</p>
+		<p id = "altsLabel">alts</p>
+	</form>
 
 </body>
 

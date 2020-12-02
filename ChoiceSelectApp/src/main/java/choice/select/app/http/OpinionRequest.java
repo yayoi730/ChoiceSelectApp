@@ -1,5 +1,5 @@
 package choice.select.app.http;
 
-public class SetAdminRequest {
+public class OpinionRequest {
 
 }
