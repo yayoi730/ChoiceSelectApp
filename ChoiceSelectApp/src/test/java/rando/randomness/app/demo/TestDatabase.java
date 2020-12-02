@@ -36,7 +36,7 @@ public class TestDatabase {
 	    	Alternative a3 = new Alternative("Alternative C");
 	    	a3.setAltNumber(3);
 	    	
-	    	a1.addApprover("Rodrick");
+	    	//a1.addApprover("Rodrick");
 	    	a2.addDisapprover("Cameron");
 	    	a3.addApprover("Luthor");
 	    	a3.addApprover("Cameron");

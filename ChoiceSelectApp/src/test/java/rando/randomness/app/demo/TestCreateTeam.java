@@ -35,14 +35,14 @@ public class TestCreateTeam {
 		
 		ChoiceDAO dao = new ChoiceDAO();
 		try {
-			dao.addTeam(team);
+			team = dao.addTeam(team);
 		} catch (Exception e) {
 			fail ("add team to dao error: " + e.getMessage());
 		}
 		
 		assertEquals(team.getChoice().getDescription(), "choose one");
 		assertEquals(team.getChoice().getAlt(1).getDescription(), "yes");
-		assertEquals(team.getChoice().getAlt(1).getFeebackList().get(0).getDescription(), "change this");
+		assertEquals(team.getChoice().getAlt(2).getFeebackList().get(0).getDescription(), "change this");
 		
 		ArrayList<String> apps = new ArrayList<String>();
 		apps.add("person");
