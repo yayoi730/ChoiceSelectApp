@@ -64,8 +64,10 @@ LambdaLogger logger;
 	
 	ArrayList<Alternative> createAlts(ArrayList<String> descs) {
 		ArrayList<Alternative> alts = new ArrayList<Alternative>();
-		for(String s: descs) {
-			alts.add(new Alternative(s));
+		for(int i = 0; i < descs.size(); i++) {
+			Alternative a = new Alternative(descs.get(i));
+			a.setAltNumber(i+1);
+			alts.add(a);
 		}
 		return alts;
 	}
