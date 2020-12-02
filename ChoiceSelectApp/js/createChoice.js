@@ -20,11 +20,11 @@ function process(result) {
 		var alts = choice["alternatives"];		//get alts from choice
 		
 		//display values on same page (testing purposes)
-		document.displayForm.cidLabel.value = cid;
-		document.displayForm.descLabel.value = choiceDesc;
-		document.displayForm.sizeLabel.value = teamSize;
-		document.displayForm.usernameLabel.value = members;
-		document.displayForm.altsLabel.value = alts;
+		document.getElementById("cidLabel").value = cid;
+		document.getElementById("descLabel").value = choiceDesc;
+		document.getElementById("sizeLabel").value = teamSize;
+		document.getElementById("usernameLabel").value = members;
+		document.getElementById("altsLabel").value = alts;
 	} else {
 		console.log("error creating choice");
 	}
@@ -47,9 +47,10 @@ function handleCreateClick(e) {
 	var data = {}
 	data["name"] = name;
 	data["password"] = pw;
-	data["choiceDesc"] = desc;
+	data["cDesc"] = desc;
 	data["teamSize"] = size;
-	data["alts"] = [alt1, alt2, alt3, alt4, alt5];
+	data["altDesc"] = [alt1, alt2, alt3, alt4, alt5];
+	
 
 	//make sure necessary inputs are present
 	if ((name == "" || desc == "") || (alt1 == "" || alt2 == "") || (size == "" || size == "0")) {
@@ -59,15 +60,14 @@ function handleCreateClick(e) {
 			var js = JSON.stringify(data);
 			console.log("JS:" + js);
 			
-			//send creatTeam request
+			//send createTeam request
 			var xhr = new XMLHttpRequest();
-			xhr.open("POST", createTeam_url + "/" + name + "/" + password + "/" + desc + "/" + size, true);
-			xhr.send(data);
+			xhr.open("POST", createTeam_url, true);
+			xhr.send(js);
 			console.log("create team request sent");
 			
 			//process results
 			xhr.onloadend = function () {
-				console.log(xhr);
 				console.log(xhr.request);
 				if (xhr.readyState == XMLHttpRequest.DONE) {
 					console.log ("XHR:" + xhr.responseText);

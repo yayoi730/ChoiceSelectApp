@@ -12,6 +12,7 @@ public class Choice {
 	String description;
 	Timestamp creationDate;
 	Timestamp completionDate;
+	boolean completed;
 	int finalChoice;
 
 	public Choice(String description, Timestamp creationDate) {
@@ -28,7 +29,14 @@ public class Choice {
 	public void setID(String cID) {this.cid = cID;}
 	public String getID() {return this.cid;}
 	
+	public void setCompleted(boolean b) {this.completed = b;}
+	public boolean getCompleted() {return this.completed;}
+	
 	public String getDescription() {return this.description;}
+	public void setDescription(String desc) {
+		this.description = desc;
+	}
+	
 	public Timestamp getCreationDate() {return this.creationDate;}
 	
 	public Timestamp getCompletionDate() {return this.completionDate;}
