@@ -6,28 +6,36 @@ function process(result) {
 	var js = JSON.parse(result);
 	
 	var status = js["httpCode"];
-	var response = js["result"];
+	var error = js["error"];
 	
 	if (status == 200) {
 		console.log("create choice success");
 		
 		var team = js["team"];					//get team object from response
 		var choice = team["choice"];			//get choice from team
-		var teamSize = team["maxTeamSize"];		//get team size from team
+		var teamSize = team["teamSize"];		//get team size from team
 		var members = team["members"];			//get members from team
 		var choiceDesc = choice["description"];	//get choice desc from choice
-		var cid = choice["cid"];				//get cid from choice
-		var alts = choice["alternatives"];		//get alts from choice
+		var cid = choice["ID"];					//get cid from choice
+		var alts = choice["alternativeList"];	//get alts from choice
 		
 		//display values on same page (testing purposes)
-		document.getElementById("cidLabel").value = cid;
-		document.getElementById("descLabel").value = choiceDesc;
-		document.getElementById("sizeLabel").value = teamSize;
-		document.getElementById("usernameLabel").value = members;
-		document.getElementById("altsLabel").value = alts;
+		document.getElementById("cidLabel").innerHTML = cid;
+		document.getElementById("descLabel").innerHTML = choiceDesc;
+		document.getElementById("sizeLabel").innerHTML = teamSize;
+		document.getElementById("usernameLabel").innerHTML = JSON.stringify(members);
+		document.getElementById("altsLabel").innerHTML = JSON.stringify(alts);
+		
+		//redirect to main inferface page with cid in query
+		var urlParams = new URLSearchParams();
+		urlParams.set("cid", cid);
+		//window.location.href = "https://s3.us-east-2.amazonaws.com/choice.select.app/html/mainUI.html/?" + urlParams.toString();
+		
 	} else {
+		alert("Error creating new choice; reload page");
 		console.log("error creating choice");
 	}
+	
 }
 
 function handleCreateClick(e) {

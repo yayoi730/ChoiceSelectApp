@@ -9,24 +9,24 @@ function process(result) {
 	var response = js["result"];
 	
 	if (status == 200) {
-		console.log("create choice success");
+		console.log("login success");
 		
-		var team = js["team"];					//get team object from response
-		var choice = team["choice"];			//get choice from team
-		var teamSize = team["maxTeamSize"];		//get team size from team
-		var members = team["members"];			//get members from team
-		var choiceDesc = choice["description"];	//get choice desc from choice
-		var choiceId = choice["cid"];				//get cid from choice
-		var alts = choice["alternatives"];		//get alts from choice
+		var team = js["team"];						//get team object from response
+		var choice = team["choice"];				//get choice from team
+		var teamSize = team["teamSize"];			//get team size from team
+		var members = team["members"];				//get members from team
+		var choiceDesc = choice["description"];		//get choice desc from choice
+		var choiceId = choice["ID"];				//get cid from choice
+		var alts = choice["alternativeList"];		//get alts from choice
 		
 		//display values on same page (testing purposes)
-		document.getElementById("cidLabel").value = choiceId;
-		document.getElementById("descLabel").value = choiceDesc;
-		document.getElementById("sizeLabel").value = teamSize;
-		document.getElementById("usernameLabel").value = members;
-		document.getElementById("altsLabel").value = alts;
+		document.getElementById("cidLabel").innerHTML = choiceId;
+		document.getElementById("descLabel").innerHTML = choiceDesc;
+		document.getElementById("sizeLabel").innerHTML = teamSize;
+		document.getElementById("usernameLabel").innerHTML = members;
+		document.getElementById("altsLabel").innerHTML = alts;
 	} else {
-		console.log("error creating choice");
+		console.log("error loading choice");
 	}
 }
 
@@ -38,7 +38,7 @@ function handleLoginClick(e) {
 	var cid = document.getElementById("cid").value;
 	
 	var data = {}
-	data["choiceId"] = cid; 
+	data["cid"] = cid; 
 	data["name"] = name;
 	data["password"] = pw;
 	
@@ -52,9 +52,9 @@ function handleLoginClick(e) {
 		
 		//send login request
 		var xhr = new XMLHttpRequest();
-		var url = login_url + "/" + cid + "/" + username + "/" + password;
+		var url = login_url;
 		xhr.open("POST", url, true);
-		xhr.send(data);
+		xhr.send(js);
 		console.log("login request sent");
 		
 		//process results

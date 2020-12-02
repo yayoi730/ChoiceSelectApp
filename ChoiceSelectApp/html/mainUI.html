@@ -7,19 +7,8 @@
 <script type='text/javascript' src='../js/api.js'></script>
 <script type='text/javascript' src='../js/approve.js'></script>
 <script type='text/javascript' src='../js/choice.js'></script>
-<script type='text/javascript' src='../js/createChoice.js'></script>
 <script type='text/javascript' src='../js/disapprove.js'></script>
 <script type='text/javascript' src='../js/feedback.js'></script>
-<script type='text/javascript' src='../js/login.js'></script>
-
-<script type="text/javascript">
-function initialize() {
-
-	//update cid and choiceDesc headers
-	updateChoiceDesc();
-
-}
-</script>
 
 </head>
 
@@ -29,7 +18,7 @@ function initialize() {
 	}
 </style>
 
-<body onload = "initialize()">
+<body onload = "JavaScript:'initialize()'">
 	<div class = "center" >
 	
 	<h1>Choice Interface</h1>
@@ -39,10 +28,10 @@ function initialize() {
 	
 	<input id = "markChoice" type = "button" value = "Mark As Chosen" onClick = />
 
-	<div id="choiceId">Choice ID:</div>
+	<div id="cidLabel">Choice ID:</div>
 
 	<br>
-	<div id="choiceDesc">Choice Description:</div>
+	<div id="descLabel">Choice Description:</div>
 	<br>
 	</form>	
 	___________________________________________________________________________
