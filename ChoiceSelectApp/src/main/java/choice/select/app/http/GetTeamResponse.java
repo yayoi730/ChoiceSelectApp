@@ -3,9 +3,9 @@ package choice.select.app.http;
 import rando.randomness.app.demo.model.Team;
 
 public class GetTeamResponse {
-	Team team;
-	int httpCode;
-	String error;
+	public final Team team;
+	public final int httpCode;
+	public final String error;
 	
 	// OK 200
 	public GetTeamResponse(Team t) {
