@@ -30,8 +30,10 @@ public class LoginHandler implements RequestHandler<LoginRequest, LoginResponse>
 		
 		
 		boolean login = false;
+		boolean newUser = false;
 		String failMessage = "Login Failed";
 		Member loadedMember = null;	
+		Member newMember = null;	
 		Team loadedTeam = null;
 
 		try {
@@ -49,6 +51,18 @@ public class LoginHandler implements RequestHandler<LoginRequest, LoginResponse>
 		} 
 		catch (Exception e) {
 			login = false;
+			try {
+				loadedTeam = dao.retrieveTeam(req.getCid());
+				if(loadedTeam.getTeamSize() < loadedTeam.getMembers().size()){
+					newMember = new Member(req.getName(), req.getPassword());
+					dao.addMember(newMember, req.getCid());
+					newUser = true;
+				}
+			}
+			catch (Exception b) {
+				login = false;
+				newUser = false;
+			}
 		}
 		
 		
@@ -57,6 +71,9 @@ public class LoginHandler implements RequestHandler<LoginRequest, LoginResponse>
 		LoginResponse response;
 		if(login){
 			response = new LoginResponse(loadedMember, loadedTeam); 
+		}
+		else if(newUser) {
+			response = new LoginResponse(newMember, loadedTeam);
 		}
 		else {response = new LoginResponse(400, failMessage);}
 
