@@ -29,7 +29,7 @@ function process(result) {
 		//redirect to main inferface page with cid in query
 		var urlParams = new URLSearchParams();
 		urlParams.set("cid", cid);
-		//window.location.href = "https://s3.us-east-2.amazonaws.com/choice.select.app/html/mainUI.html/?" + urlParams.toString();
+		window.location.href = "https://s3.us-east-2.amazonaws.com/choice.select.app/html/mainUI.html"; // + "/?" + urlParams.toString();
 		
 	} else {
 		alert("Error creating new choice; reload page");

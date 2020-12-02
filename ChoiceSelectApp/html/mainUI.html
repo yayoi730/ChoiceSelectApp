@@ -12,13 +12,21 @@
 
 </head>
 
+<Script>
+
+function setup() {
+	initialize();
+}
+
+</Script>
+
 <style>
 	.center {
 		text-align: center;
 	}
 </style>
 
-<body onload = "JavaScript:'initialize()'">
+<body onload = "setup()">
 	<div class = "center" >
 	
 	<h1>Choice Interface</h1>
@@ -29,9 +37,10 @@
 	<input id = "markChoice" type = "button" value = "Mark As Chosen" onClick = />
 
 	<div id="cidLabel">Choice ID:</div>
-
 	<br>
 	<div id="descLabel">Choice Description:</div>
+	<br>
+	<div id="sizeLabel">Max Members:</div>
 	<br>
 	</form>	
 	___________________________________________________________________________
