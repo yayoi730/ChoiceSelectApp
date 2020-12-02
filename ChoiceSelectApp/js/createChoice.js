@@ -47,9 +47,10 @@ function handleCreateClick(e) {
 	var data = {}
 	data["name"] = name;
 	data["password"] = pw;
-	data["choiceDesc"] = desc;
+	data["cDesc"] = desc;
 	data["teamSize"] = size;
-	data["alts"] = [alt1, alt2, alt3, alt4, alt5];
+	data["altDesc"] = [alt1, alt2, alt3, alt4, alt5];
+	
 
 	//make sure necessary inputs are present
 	if ((name == "" || desc == "") || (alt1 == "" || alt2 == "") || (size == "" || size == "0")) {
@@ -61,8 +62,8 @@ function handleCreateClick(e) {
 			
 			//send createTeam request
 			var xhr = new XMLHttpRequest();
-			xhr.open("POST", createTeam_url + "/" + name + "/" + password + "/" + desc + "/" + size, true);
-			xhr.send(data);
+			xhr.open("POST", createTeam_url, true);
+			xhr.send(js);
 			console.log("create team request sent");
 			
 			//process results

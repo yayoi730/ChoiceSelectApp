@@ -77,6 +77,7 @@ public class ChoiceDAO {
 	            return t;
 
 	        } catch (Exception e) {
+	        	e.printStackTrace();
 	            throw new Exception("Failed to insert team: " + e.getMessage());
 	        }
 		}

@@ -6,7 +6,7 @@ var base = "https://cal3lca3ve.execute-api.us-east-2.amazonaws.com/alpha/";
 //member object is user does not exist yet
 var login_url = base + "loginUser";											//POST
 
-//format: createTeam/{name}/{password}/{choiceDesc}/{teamSize}
+//format: createTeam
 //handles creating new alternatives, choice, member, and team objects
 var createTeam_url = base + "createTeam";									//POST
 

@@ -29,39 +29,42 @@ public class TestCreateTeamHandler extends LambdaTest {
     	CreateTeamRequest req = new Gson().fromJson(incoming, CreateTeamRequest.class);
        
         CreateTeamResponse resp = handler.handleRequest(req, createContext("createTeam"));
+        
         Assert.assertEquals(200, resp.httpCode);
     }
 	
 	@Test
 	public void test1() {
-		//creating params for creating a new team
-		Timestamp ts = new Timestamp(0);
-		Member m = new Member("person");
-		Alternative a1 = new Alternative("yes");
-		a1.addApprover("person");
-		Alternative a2 = new Alternative("no");
-		a2.addFeedback(new Feedback(new Timestamp(0), "change this", "person"));
-		ArrayList<Alternative> alts = new ArrayList<Alternative>();
-		alts.add(a1);
-		alts.add(a2);
-		Choice c = new Choice("choose one", alts, ts);
-		Team team = new Team(m, c, 5);
 		
-		ChoiceDAO dao = new ChoiceDAO();
-		try {
-			dao.addTeam(team);
-		} catch (Exception e) {
-			fail ("add team to dao error: " + e.getMessage());
-		}
+		CreateTeamRequest ctr = new CreateTeamRequest();
+		ctr.setName("Liliana");
+		ctr.setPassword("myPass");
+		ctr.setcDesc("some choice");
+		ArrayList<String> altsString = new ArrayList<String>();
+		altsString.add("yes");
+		altsString.add("no");
+		ctr.setAltDesc(altsString);
+		ctr.setTeamSize(7);
 		
-		assertEquals(team.getChoice().getDescription(), "choose one");
-		assertEquals(team.getChoice().getAlt(1).getDescription(), "yes");
-		assertEquals(team.getChoice().getAlt(1).getFeebackList().get(0).getDescription(), "change this");
+		String SAMPLE_INPUT_STRING = new Gson().toJson(ctr);  
+        
+        try {
+        	testSuccessInput(SAMPLE_INPUT_STRING);
+        } catch (IOException ioe) {
+        	Assert.fail("Invalid:" + ioe.getMessage());
+        }
 		
-		ArrayList<String> apps = new ArrayList<String>();
-		apps.add("person");
-		assertEquals(team.getChoice().getAlt(1).getApprovers(), apps);
+	}
+	
+	@Test
+	public void test2() {
+		String s = "{\"name\" : \"team\",\"password\" : \"\",\"cDesc\" : \"a choice\",\"altDesc\" : [\"yes\", \"no\"],\"teamSize\" : 7}";
 		
+		 try {
+	        	testSuccessInput(s);
+	        } catch (IOException ioe) {
+	        	Assert.fail("Invalid:" + ioe.getMessage());
+	        }
 	}
 
 }

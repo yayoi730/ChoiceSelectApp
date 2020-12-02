@@ -33,8 +33,8 @@ LambdaLogger logger;
 		// and has to be processed specifically by the client code.
 		CreateTeamResponse response;
 		try {			
-			Choice c = createChoice(req.getcDesc(), createAlts(req.getAlts()));
-			Team t = createTeam(c, req.getTeamSize(), new Member(req.getName(),req.getPass()));
+			Choice c = createChoice(req.getcDesc(), createAlts(req.getAltDesc()));
+			Team t = createTeam(c, req.getTeamSize(), new Member(req.getName(),req.getPassword()));
 			response = new CreateTeamResponse(t);
 		}
 		catch (Exception e) {
@@ -56,6 +56,9 @@ LambdaLogger logger;
 		if (logger != null) { logger.log("in createConstant"); }	
 		java.sql.Timestamp ts = new java.sql.Timestamp(System.currentTimeMillis());
 		Choice c = new Choice(description, alternatives, ts);
+		if (logger != null) {
+			logger.log("d = " + description);
+		}
 		return c;
 	}
 	

@@ -29,6 +29,10 @@ public class Choice {
 	public String getID() {return this.cid;}
 	
 	public String getDescription() {return this.description;}
+	public void setDescription(String desc) {
+		this.description = desc;
+	}
+	
 	public Timestamp getCreationDate() {return this.creationDate;}
 	
 	public Timestamp getCompletionDate() {return this.completionDate;}
