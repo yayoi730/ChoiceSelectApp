@@ -17,10 +17,6 @@ import rando.randomness.app.demo.model.Team;
 
 public class TestDatabase {
 
-	@Test
-	public void test() {
-		fail("Not yet implemented");
-	}
 	
 	@Test
 	public void testCreateChoice() {
