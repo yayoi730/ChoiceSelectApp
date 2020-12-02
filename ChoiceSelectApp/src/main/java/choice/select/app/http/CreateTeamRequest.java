@@ -43,6 +43,4 @@ public class CreateTeamRequest {
 		this.password = pass;
 	}
 
-	
-
 }
