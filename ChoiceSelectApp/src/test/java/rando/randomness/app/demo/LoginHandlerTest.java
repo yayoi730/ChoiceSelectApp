@@ -11,6 +11,7 @@ import choice.select.app.http.LoginRequest;
 import choice.select.app.http.LoginResponse;
 
 public class LoginHandlerTest extends LambdaTest{
+	
 	void testSuccessInput(String incoming) throws IOException {
 		LoginHandler handler = new LoginHandler();
 		LoginRequest req = new Gson().fromJson(incoming, LoginRequest.class);
