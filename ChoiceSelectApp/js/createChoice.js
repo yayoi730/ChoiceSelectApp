@@ -59,7 +59,7 @@ function handleCreateClick(e) {
 			var js = JSON.stringify(data);
 			console.log("JS:" + js);
 			
-			//send creatTeam request
+			//send createTeam request
 			var xhr = new XMLHttpRequest();
 			xhr.open("POST", createTeam_url + "/" + name + "/" + password + "/" + desc + "/" + size, true);
 			xhr.send(data);

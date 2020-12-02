@@ -1,132 +1,73 @@
-function processLogin(result) {
+
+
+//process results from createTeam
+function process(result) {
 	console.log("result:" + result);
 	var js = JSON.parse(result);
-	var status = js["statusCode"];
+	
+	var status = js["httpCode"];
 	var response = js["result"];
 	
-	if(status == 200) {
-		console.log("login successful");
+	if (status == 200) {
+		console.log("create choice success");
 		
-		//get user's name for adding to lists and/or feedback
+		var team = js["team"];					//get team object from response
+		var choice = team["choice"];			//get choice from team
+		var teamSize = team["maxTeamSize"];		//get team size from team
+		var members = team["members"];			//get members from team
+		var choiceDesc = choice["description"];	//get choice desc from choice
+		var cid = choice["cid"];				//get cid from choice
+		var alts = choice["alternatives"];		//get alts from choice
 		
+		//display values on same page (testing purposes)
+		document.displayForm.cidLabel.value = cid;
+		document.displayForm.descLabel.value = choiceDesc;
+		document.displayForm.sizeLabel.value = teamSize;
+		document.displayForm.usernameLabel.value = members;
+		document.displayForm.altsLabel.value = alts;
 	} else {
-		console.log("unexpected error : login");
+		console.log("error creating choice");
 	}
 }
 
-
-
-function handleLogin(e) {
+function handleLoginClick(e) {
 	
-	//for the choiceId check if member already exists
-	//if not, create new member with those credentials
-	//then bring user to main interface page
+	//get all inputs
+	var name = document.getElementById("username").value;
+	var pw = document.getElementById("password").value;
+	var cid = document.getElementById("cid").value;
 	
-	//get inputs
-	var name = document.getElementById('username').value;
-	var pw = document.getElementById('password').value;
-	var cid = document.getElementById('choiceId').value;
+	var data = {}
+	data["choiceId"] = cid; 
+	data["name"] = name;
+	data["password"] = pw;
 	
 	//make sure necessary inputs are present
 	if (name == "" || cid == "") {
 		alert("Please enter a username and choice ID");
 	} else {
-	
-		//send out data to login
-		var loginData = {};
-		var js = "";
+		//convert to json format
+		var js = JSON.stringify(data);
+		console.log("JS:" + js);
+		
+		//send login request
 		var xhr = new XMLHttpRequest();
+		var url = login_url + "/" + cid + "/" + username + "/" + password;
+		xhr.open("POST", url, true);
+		xhr.send(data);
+		console.log("login request sent");
 		
-		loginData["username"] = name;
-		loginData["choiceId"] = cid;
-		
-		if (pw == "" || pw == null) {
-			js = JSON.stringify(loginData);
-			console.log("JS:" + js);
-			var url = login_url + "/" + cid + "/" + username;
-			xhr.open("POST", url, true);
-			xhr.send(loginData);
-		} else {
-			loginData["password"] = pw;
-			js = JSON.stringify(loginData);
-			console.log("JS:" + js);
-			var url = login_url + "/" + cid + "/" + username + "/" + password;
-			xhr.open("POST", url, true);
-			xhr.send(loginData);
-		}
-	
-		
-		//processs results and handle HTML
+		//process results
 		xhr.onloadend = function () {
-	    console.log(xhr);
-	    console.log(xhr.request);
-	    if (xhr.readyState == XMLHttpRequest.DONE) {
-    	 	if (xhr.status == 200) {
-	      	console.log ("XHR:" + xhr.responseText);
-	      	processLogin(xhr.responseText);
-
-			//redirect to main interface page
-			window.location.href = 'https://s3.us-east-2.amazonaws.com/choice.select.app/html/mainUI.html'
-
-    	 	} else {
-    		 	console.log("actual:" + xhr.responseText);
-			  	var js = JSON.parse(xhr.responseText);
-			  	var err = js["response"];
-			  	alert (err);
-    	 	}
-    	} else {
-      		processLogin("N/A");
-    	}
- 	 	};
-
+			console.log(xhr);
+			console.log(xhr.request);
+			if (xhr.readyState == XMLHttpRequest.DONE) {
+				console.log ("XHR:" + xhr.responseText);
+				process(xhr.responseText);				
+			} else {
+				process("N/A");				
+			}
+		};
 	}
 }
 
-
-
-function handleAdminLogin(e) {
-	
-	//if login matches admin, bring to admin page
-	//otherwise show error message and stay on page
-	
-	//get inputs, disregard choiceId input
-	var form = document.loginForm;
-	var data = {};
-	data["username"] = form.username.value;
-	data["password"] = form.password.value;
-	
-	//convert data to JSON
-	var js = JSON.stringify(data);
-	console.log("JS:" + js);
-	var xhr = new XMLHttpRequest();
-
-	var specified = "/" + username + "/" + password;
-	xhr.open("POST", login_url + specified, true)
-	
-	//send to API as JSON
-	xhr.send(js)
-	
-	
-	//switch to admin page
-
-	location.href = "https://s3.us-east-2.amazonaws.com/choice.select.app/html/adminPage.html";
-	
-	//processs results and handle HTML
-	xhr.onloadend = function () {
-    console.log(xhr);
-    console.log(xhr.request);
-    if (xhr.readyState == XMLHttpRequest.DONE) {
-    	 if (xhr.status == 200) {
-	      console.log ("XHR:" + xhr.responseText);
-	      processLogin(xhr.responseText);
-    	 } else {
-    		 console.log("actual:" + xhr.responseText)
-			  var js = JSON.parse(xhr.responseText);
-			  var err = js["response"];
-			  alert (err);
-    	 }
-    } else {
-      processLogin("N/A");
-    }
-  };
-}
