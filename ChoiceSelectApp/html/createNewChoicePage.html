@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html>
 <head>
 
@@ -55,13 +55,21 @@
 	
 	<br><br><br>
 
-	<input type = button value = "Create Choice" onClick = "JavaScript:handleCreateChoice(this)" />
+	<input type = button value = "Create Choice" onClick = "JavaScript:handleCreateClick(this)" />
 
 	<br>
 	<input type = button value = "Back" onClick = "location.href='https://s3.us-east-2.amazonaws.com/choice.select.app/html/userLogin.html'" />
 	
 	</form>
 	</div>
+	
+	<form name = "displayForm" method = "get">
+		<p id = "cidLabel">cid</p>
+		<p id = "desclabel">desc</p>
+		<p id = "sizeLabel">size</p>
+		<p id = "usernameLabel">name</p>
+		<p id = "altsLabel">alts</p>
+	</form>
 	
 </body>
 
