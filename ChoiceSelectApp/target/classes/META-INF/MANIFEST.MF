@@ -1,6 +1,11 @@
 Manifest-Version: 1.0
+<<<<<<< Updated upstream
 
 Built-By: brend
 Build-Jdk: 14.0.2
+=======
+Built-By: baihu
+Build-Jdk: 1.8.0_231
+>>>>>>> Stashed changes
 Created-By: Maven Integration for Eclipse
 
