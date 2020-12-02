@@ -37,6 +37,7 @@ public class LoginHandler implements RequestHandler<LoginRequest, LoginResponse>
 		Team loadedTeam = null;
 
 		try {
+			
 			loadedMember = loadMemberFromRDS(req.getCid(), req.getName());
 			if(req.getPassword() == "") {
 				if(loadedMember.getPassword() == null || loadedMember.getPassword() == "") {
@@ -53,7 +54,7 @@ public class LoginHandler implements RequestHandler<LoginRequest, LoginResponse>
 			login = false;
 			try {
 				loadedTeam = dao.retrieveTeam(req.getCid());
-				if(loadedTeam.getTeamSize() < loadedTeam.getMembers().size()){
+				if(loadedTeam.getMembers().size() < loadedTeam.getTeamSize()){
 					newMember = new Member(req.getName(), req.getPassword());
 					dao.addMember(newMember, req.getCid());
 					newUser = true;
@@ -86,7 +87,7 @@ public class LoginHandler implements RequestHandler<LoginRequest, LoginResponse>
 			ArrayList<Member> members =  dao.retrieveMembers(tID);
 			Member possibleMember = new Member(name);
 			for(int m = 0; m < members.size(); m++) {
-				if(members.get(m).equals(possibleMember)) {
+				if(members.get(m).getName().equals(possibleMember.getName())) {
 					return members.get(m);
 				}
 			}
