@@ -294,6 +294,25 @@ public class ChoiceDAO {
 		        }
 		    
 		}
+		
+	public ArrayList<Choice> retrieveAllChoices()
+	{
+		ArrayList<Choice> allChoices = new ArrayList<>();
+		try {
+			PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + cName + ";");
+			ResultSet resultSet = ps.executeQuery();
+			while(resultSet.next())
+			{
+				Choice c = generateChoice(resultSet);
+				allChoices.add(c);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return allChoices;
+		
+	}
 	//Retrieves all members for the team with the given id
 	public Choice retrieveChoice(String tID) throws Exception
 	{
