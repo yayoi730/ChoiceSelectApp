@@ -13,7 +13,7 @@ import choice.select.app.http.OpinionResponse;
 public class OpinionHandler implements RequestHandler<OpinionRequest, OpinionResponse>{
 	LambdaLogger logger;
 	private AmazonS3 s3 = null;
-	String errMsg = "Opinion Creation Failed";
+	String errMsg = "Opinion Addition Failed";
 
 	@Override
 	public OpinionResponse handleRequest(OpinionRequest req, Context context) {
