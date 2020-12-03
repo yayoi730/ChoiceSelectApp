@@ -7,22 +7,27 @@ import org.junit.Test;
 
 import com.google.gson.Gson;
 
+import choice.select.app.http.GetAltRequest;
+import choice.select.app.http.GetAltResponse;
 import choice.select.app.http.GetTeamRequest;
 import choice.select.app.http.GetTeamResponse;
 
-public class GetTeamHandlerTest extends LambdaTest {
-	
+public class TestGetAltHandler extends LambdaTest{
 	void testSuccessInput(String incoming) throws IOException {
-    	GetTeamHandler handler = new GetTeamHandler();
-    	GetTeamRequest req = new Gson().fromJson(incoming, GetTeamRequest.class);
-        GetTeamResponse resp = handler.handleRequest(req, createContext("getTeam"));
+    	GetAltHandler handler = new GetAltHandler();
+    	GetAltRequest req = new Gson().fromJson(incoming, GetAltRequest.class);
+        GetAltResponse resp = handler.handleRequest(req, createContext("getAlt"));
         
         Assert.assertEquals(200, resp.httpCode);
     }
 
 	@Test
 	public void test1() {
-		String s = "{\"tid\" : \"37bbb073-4f3d-448c-a440-bcf09af8a948\"}";
+		GetAltRequest gar = new GetAltRequest();
+		gar.setAltNumber(1);
+		gar.setcID("37bbb073-4f3d-448c-a440-bcf09af8a948");
+		
+		String s = new Gson().toJson(gar);
 		
 		try {
 			testSuccessInput(s);
@@ -33,10 +38,11 @@ public class GetTeamHandlerTest extends LambdaTest {
 	
 	@Test
 	public void test2() {
-		GetTeamRequest gtr = new GetTeamRequest();
-		gtr.setTid("37bbb073-4f3d-448c-a440-bcf09af8a948");
+		GetAltRequest gar = new GetAltRequest();
+		gar.setAltNumber(5);
+		gar.setcID("37bbb073-4f3d-448c-a440-bcf09af8a948");
 		
-		String s = new Gson().toJson(gtr);
+		String s = new Gson().toJson(gar);
 
 		try {
 			testSuccessInput(s);
@@ -44,5 +50,4 @@ public class GetTeamHandlerTest extends LambdaTest {
 			Assert.fail("Invalid: " + ioe.getMessage());
 		}
 	}
-
 }

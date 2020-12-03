@@ -37,22 +37,26 @@ public class GetAltHandler implements RequestHandler<GetAltRequest, GetAltRespon
 		GetAltResponse response;
 
 		try {
-			loadedAlt = loadAlt(req.getcID(), req.getcID());
+			loadedAlt = loadAlt(req.getAltNumber(), req.getcID());
+			if(loadedAlt.getDescription().equals(""))
+			{
+				throw new Exception();
+			}
 			response = new GetAltResponse(loadedAlt);
 		} 
 		catch (Exception e) {
-			response = new GetAltResponse(loadedAlt);		
+			response = new GetAltResponse(400, "Could not retrieve alternative");		
 		}
 		
 		return response; 
 	}
 
-	private Alternative loadAlt(String cid, String aid) throws Exception{
+	private Alternative loadAlt(int altNumber, String cid) throws Exception{
 		Alternative a = null;
 		ArrayList<Alternative> loadedAlts = loadAltFromRDS(cid);
 		for(Alternative alt : loadedAlts)
 		{
-			if(alt.getAID() == aid) {
+			if(alt.getAltNumber() == altNumber) {
 				a = alt;
 			}
 		}

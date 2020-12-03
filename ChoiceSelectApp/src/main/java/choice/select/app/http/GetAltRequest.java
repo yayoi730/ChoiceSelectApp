@@ -1,15 +1,15 @@
 package choice.select.app.http;
 
 public class GetAltRequest {
-	String aID;
+	int altNumber;
 
 	String cID;
 	
 	public GetAltRequest() {}
-	public GetAltRequest(String aid, String cid) {this.aID = aid; this.cID = cid;}
+	public GetAltRequest(int altNumber, String cid) {this.altNumber = altNumber; this.cID = cid;}
 	
-	public String getaID() {return this.aID;}
-	public void setaID(String id) {this.aID = id;}
+	public int getAltNumber() {return this.altNumber;}
+	public void setAltNumber(int altNumber) {this.altNumber = altNumber;}
 	public String getcID() {return this.cID;}
 	public void setcID(String id) {this.cID = id;}
 
