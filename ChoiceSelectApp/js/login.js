@@ -1,6 +1,4 @@
 
-
-//process results from createTeam
 function process(result) {
 	console.log("result:" + result);
 	var js = JSON.parse(result);
