@@ -9,13 +9,11 @@ public class OpinionResponse {
 	public final String error;
 	
 	public OpinionResponse(ArrayList<Report> r) {
-		this.reports = r;
 		this.httpCode = 200;
 		this.error = "";
 	}
 	
 	public OpinionResponse(int code, String err) {
-		this.reports = new ArrayList<Report>();
 		this.httpCode = code;
 		this.error = err;
 	}
