@@ -11,9 +11,14 @@ var createTeam_url = base + "createTeam";				//POST
 
 //cid in payload
 //returns Team object
-var getTeam_url = base + "getTeam";						//GET
+var getTeam_url = base + "getTeam";						//POST
+
+//altNumber, cID in payload
+//returns Alternative object
+var getAlt_url = base + "getAlt";						//POST
+
+//wantReports = true
+//returns list of Report objects
+var getReports_url = base + "getReports";				//POST
 
 
-//idk if needed
-var getAlt_url = base + "getAlt";						//GET
-var addApprover_url = base + "addApprover";				//POST

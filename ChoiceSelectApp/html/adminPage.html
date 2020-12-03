@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html>
 
+<head>
+
+<script type='text/javascript' src='../js/getReports.js'></script>
+<script type='text/javascript' src='../js/api.js'></script>
+
+</head>
+
 <style>
 	.center {
 		text-align: center;
@@ -19,7 +26,7 @@
 	
 	<form>
 	
-	<input type = "button" value = "Get Reports" onClick = />
+	<input type = "button" value = "Get Reports" onClick = "JavaScript:'handleGetReports(this)'"/>
 	<br>
 	<input type = "button" value = "Delete" onClick = />
 	<input name = "daysOldInput" value = "Enter number of days" />
@@ -29,9 +36,6 @@
 
 	<br><br>
 	(display reports when Get Reports button clicked)
-	
-	<br><br><br>
-	<input type = "button" value = "Back" onClick = "location.href='userLogin.html'" />
 	
 	</form>
 	</div>

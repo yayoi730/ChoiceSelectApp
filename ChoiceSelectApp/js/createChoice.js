@@ -32,7 +32,8 @@ function process(result) {
 		var urlParams = new URLSearchParams();
 		urlParams.set("tid", cid);
 		urlParams.set("user", firstMem);
-		//window.location.href = "https://s3.us-east-2.amazonaws.com/choice.select.app/html/mainUI.html" + "?" + 
+		urlParams.set("alt", "1");
+		window.location.href = "https://s3.us-east-2.amazonaws.com/choice.select.app/html/mainUI.html" + "?" + urlParams.toString();
 		console.log("query: " + urlParams.toString());
 		
 	} else {

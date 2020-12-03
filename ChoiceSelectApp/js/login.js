@@ -28,9 +28,9 @@ function process(result) {
 		
 		//redirect to main interface page
 		var urlParams = new URLSearchParams();
-		urlParams.set("tid", cid);
+		urlParams.set("tid", choiceId);
 		urlParams.set("user", firstMem);
-		//window.location.href = "https://s3.us-east-2.amazonaws.com/choice.select.app/html/mainUI.html" + "?" + 
+		window.location.href = "https://s3.us-east-2.amazonaws.com/choice.select.app/html/mainUI.html" + "?" + urlParams.toString(); 
 		console.log("query: " + urlParams.toString());
 		
 	} else {
