@@ -5,10 +5,9 @@
 
 <script type='text/javascript' src='../js/alternative.js'></script>
 <script type='text/javascript' src='../js/api.js'></script>
-<script type='text/javascript' src='../js/approve.js'></script>
 <script type='text/javascript' src='../js/choice.js'></script>
-<script type='text/javascript' src='../js/disapprove.js'></script>
 <script type='text/javascript' src='../js/feedback.js'></script>
+<script type='text/javascript' src='../js/opinion.js'></script>
 
 </head>
 
@@ -65,8 +64,8 @@ function setup() {
 	<div id="altDesc">Alternative Description:</div>
 	
 	<br>
-	<input type = "button" value = "Like" onClick = "JavaScript:'handleLikeClick(this)'"/>
-	<input type = "button" value = "Dislike" onClick = "JavaScript:'handleDislikeClick(this)'"/>
+	<input type = "button" value = "Like" onClick = "JavaScript:handleOpinionClick(this, true)"/>
+	<input type = "button" value = "Dislike" onClick = "JavaScript:handleOpinionClick(this, false)"/>
 	<br><br>
 	
 	<div id="approversList">Approvers:</div>
@@ -83,16 +82,19 @@ function setup() {
 	<br><br>
 	
 	<input name = "feedbackInput" value = "" />
-	<input type = "button" value = "Add Feedback" onClick = "handleAddfeebackClick(this)"/>
+	<input type = "button" value = "Add Feedback" onClick = "handleFeedbackClick(this)"/>
 	<br><br>
-	
-	(author, feedback, time stamp)
-	<br><br>
-	
-	<br><br><br>
-	<input type = "button" value = "Back to Login" onClick = "location.href='userLogin.html'" />
 	
 	</form>
+	
+	<form name = "feedbackDisplay">
+	Feedback:
+	<br>
+	</form>
+	
+	<br><br><br>
+	<input type = "button" value = "Back to Login" onClick = "location.href='https://s3.us-east-2.amazonaws.com/choice.select.app/html/userLogin.html'" />
+	
 	</div>
 	
 </body>

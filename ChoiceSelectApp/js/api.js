@@ -21,4 +21,6 @@ var getAlt_url = base + "getAlt";						//POST
 //returns list of Report objects
 var getReports_url = base + "getReports";				//POST
 
-
+//aID, approver, approves in payload
+//returns 
+var createOpinion_url = base + "createOpinion";			//POST

@@ -45,13 +45,30 @@ function processGetAlt(result, altNum) {
 	var status = js["httpCode"];
 	var error = js["error"];
 	
-	//get alt description from result
-	var altObj = js["alt"];
-	var desc = altObj["description"];
-	
-	//set label with retrieved alt desc
-	var altDescLabel = document.getElementById('altDesc');
-	altDescLabel.innerHTML = "Alternative " + altNum + " Description :" + desc;
+	if (status == 200) {
+		//get alt description from result
+		var altObj = js["alt"];
+		var desc = altObj["description"];
+		
+		//set alt description label
+		var altDescLabel = document.getElementById('altDesc');
+		altDescLabel.innerHTML = "Alternative " + altNum + " Description :" + desc;
+		
+		
+		//get alt approvers and disapprovers lists
+		var listAp = altObj["approvers"];
+		var listDisap = altObj["dispprovers"];
+		
+		//set list labels
+		var apLabel = document.getElementById('approversList');
+		var disapLabel = document.getElementById('disapproversList');
+		apLabel.innerHTML = listAp.length + " Approvers: " + listAp.toString();
+		disapLabel.innerHTML = listDisap.length + " Disapprovers: " + listDisap.toString();
+		
+		
+	} else {
+		console.log("getAlt error: " + error);
+	}
 	
 }
 
