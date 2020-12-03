@@ -11,6 +11,9 @@ public class Report {
 		this.completed = completed;
 	}
 	
+	public String toString() {
+		return "Report("+ this.choiceID + ", " +this.creationDate + ", " + this.completed+ ")";
+	}
 	public String getChoiceID() {return this.choiceID;}
 	public String getCreationDate() {return this.creationDate;}
 	public boolean getCompleted() {return this.completed;}

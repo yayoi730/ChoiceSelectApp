@@ -35,6 +35,8 @@ public class CreateReportHandler implements RequestHandler<CreateReportRequest, 
 			response = new CreateReportResponse(400, errMsg);
 		}
 		
+		logger.log(response.toString());
+		
 		return response;
 	}
 	
@@ -42,7 +44,7 @@ public class CreateReportHandler implements RequestHandler<CreateReportRequest, 
 		ArrayList<Report> reports = new ArrayList<Report>();
 		ChoiceDAO dao = new ChoiceDAO();
 		if(wantReports) {
-			ArrayList<Choice> choices = null;//dao.retrieveAllChoices();
+			ArrayList<Choice> choices = dao.retrieveAllChoices();
 			for(Choice c : choices) {
 				reports.add(new Report(c.getID(), c.getCreationDate().toString(), c.getCompleted()));
 			}
