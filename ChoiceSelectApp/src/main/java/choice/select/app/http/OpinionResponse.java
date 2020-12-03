@@ -2,15 +2,16 @@ package choice.select.app.http;
 
 import java.util.ArrayList;
 
+import rando.randomness.app.demo.model.Alternative;
 import rando.randomness.app.demo.model.Report;
 
 public class OpinionResponse {
-	ArrayList<String> approvers;
+	Alternative alt;
 	public final int httpCode;
 	public final String error;
 	
-	public OpinionResponse(ArrayList<String> a) {
-		this.approvers = a;
+	public OpinionResponse(Alternative alt) {
+		this.alt = alt;
 		this.httpCode = 200;
 		this.error = "";
 	}
