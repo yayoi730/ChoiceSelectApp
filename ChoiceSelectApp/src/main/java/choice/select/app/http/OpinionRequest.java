@@ -9,7 +9,7 @@ public class OpinionRequest {
 	
 	public OpinionRequest() {}
 	public OpinionRequest(String prover, boolean approves, String aID ) {
-		this.approver = approver;
+		this.approver = prover;
 		this.approves = approves;
 		this.aID = aID;
 	}
