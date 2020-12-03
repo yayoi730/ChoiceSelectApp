@@ -9,8 +9,6 @@ import com.amazonaws.services.s3.AmazonS3;
 
 import choice.select.app.http.GetAltRequest;
 import choice.select.app.http.GetAltResponse;
-import choice.select.app.http.GetChoiceRequest;
-import choice.select.app.http.GetChoiceResponse;
 import rando.randomness.app.demo.db.ChoiceDAO;
 import rando.randomness.app.demo.model.Alternative;
 import rando.randomness.app.demo.model.Choice;
