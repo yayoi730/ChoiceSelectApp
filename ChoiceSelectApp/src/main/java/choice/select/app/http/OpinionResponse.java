@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import rando.randomness.app.demo.model.Report;
 
 public class OpinionResponse {
+	ArrayList<String> approvers;
 	public final int httpCode;
 	public final String error;
 	
-	public OpinionResponse(ArrayList<Report> r) {
+	public OpinionResponse(ArrayList<String> a) {
+		this.approvers = a;
 		this.httpCode = 200;
 		this.error = "";
 	}

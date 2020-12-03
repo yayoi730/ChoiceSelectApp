@@ -1,5 +1,7 @@
 package rando.randomness.app.demo;
 
+import java.util.ArrayList;
+
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
@@ -8,6 +10,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import choice.select.app.http.CreateReportResponse;
 import choice.select.app.http.OpinionRequest;
 import choice.select.app.http.OpinionResponse;
+import rando.randomness.app.demo.model.Member;
 
 
 public class OpinionHandler implements RequestHandler<OpinionRequest, OpinionResponse>{
@@ -20,6 +23,15 @@ public class OpinionHandler implements RequestHandler<OpinionRequest, OpinionRes
 		logger = context.getLogger();
 		logger.log("Loading Java Lambda handler of OpinionHandler");
 		logger.log(req.toString());
+		ArrayList<String> loadedApprovers = null;
+		try {
+
+			loadedApprovers = retrieveApprovers(req.getAid());
+		}
+		catch(Exception e) {
+			
+		}
+
 		
 		OpinionResponse response;
 		try {
