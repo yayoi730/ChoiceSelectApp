@@ -234,7 +234,7 @@ public class ChoiceDAO {
 
 
 
-	private boolean addApprover(String aID, String creator)
+	public boolean addApprover(String aID, String creator)
 	{
 		try {
 			PreparedStatement ps = conn.prepareStatement("INSERT INTO " + apName + " (APID,AID,approved,memberName) values(?,?,?,?);");
@@ -336,6 +336,25 @@ public class ChoiceDAO {
 
 	}
 
+	public Alternative retrieveAlternative(String aID)
+	{
+		try {
+			PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + aName + " WHERE AID = ?;");
+			ps.setString(1, aID);
+			ResultSet resultSet = ps.executeQuery();
+			
+			while (resultSet.next()) {
+				Alternative a = generateAlternative(resultSet);
+				return a;
+			}
+			resultSet.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 	//Retrieves all alternatives for the choice with the given id
 	public ArrayList<Alternative> retrieveAlternatives(String cID) throws Exception
 	{
@@ -560,7 +579,7 @@ public class ChoiceDAO {
 		}
 	}
 	//Delete approval/disapproval for the given alternative and member
-	private boolean deleteAppDis(String aID, String memberName) throws Exception
+	public boolean deleteAppDis(String aID, String memberName) throws Exception
 	{
 		try {
 			PreparedStatement ps = conn.prepareStatement("DELETE FROM " + apName + " WHERE AID = ? AND memberName = ?;");
@@ -700,4 +719,3 @@ public class ChoiceDAO {
 	}
 
 }	
-
