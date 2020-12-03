@@ -29,33 +29,38 @@ function processResponse(result) {
 
 function initialize() {
 	
-	/*
 	var urlParams = new URLSearchParams(window.location.search);	//grab current url
-	currentId = urlParams.get("cid");								//grab cid from url query
-	console.log("CID retrieved: " + currentId);
-	*/
+	if (urlParams.has("cid")) {
+		currentId = urlParams.get("cid");							//grab cid from url query
+		console.log("CID retrieved: " + currentId);
+		
+		//format data as JSON
+		var data = {};
+		data["cid"] = currentId;
+		var js = JSON.stringify(data);
+		console.log("JS: " + js);	
+		
+		//submit getTeam request
+		var xhr = new XMLHttpRequest();
+		xhr.open("GET", getTeam_url, true)
+		xhr.send(js);
+		console.log("getTeam req sent");
+		
+		//process and update html
+		xhr.onloadend = function () {
+	    	if (xhr.readyState == XMLHttpRequest.DONE) {
+      			console.log ("XHR:" + xhr.responseText);
+      			processResponse(xhr.responseText);
+    		} else {
+	      		processResponse("N/A");
+    		}
+  		};
+
+	} else {
+		alert("No choice specified; go back");
+		console.log("error: no choice ID specified in url")
+	}	
 	
-	//format data as JSON
-	var data = {}
-	data["cid"] = "37bbb073-4f3d-448c-a440-bcf09af8a948"; //currentId;
-	var js = JSON.stringify(data);
-	console.log("JS: " + js);	
-	
-	//submit getTeam request
-	var xhr = new XMLHttpRequest();
-	xhr.open("GET", getTeam_url, true)
-	xhr.send(js);
-	console.log("getChoice req sent");
-	
-	//process and update html
-	xhr.onloadend = function () {
-    if (xhr.readyState == XMLHttpRequest.DONE) {
-      console.log ("XHR:" + xhr.responseText);
-      processResponse(xhr.responseText);
-    } else {
-      processResponse("N/A");
-    }
-  };
 }
 
 

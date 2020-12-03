@@ -1,10 +1,45 @@
-//
 
-function handleAltClick(altNum) {
-	//submit getAlt/{altNum} request
+function processResponse(result, altNum) {
+	console.log("result:" + result);
+	var js = JSON.parse(result);
+	
+	var status = js["httpCode"];
+	var error = js["error"];
+	
+	//get alt description from result
+	var js = JSON.parse(result);
+	var desc = js["description"];
+	
+	//set label with retrieved alt desc
+	var altDescLabel = document.getElementById('altDesc');
+	altDescLabel.innerHTML = desc;
+	
+	//reload page with altNum in query
+	var query = new URLSearchParams(window.location.search);
+	query.set("altNum", altNum);
+	query.set("cid", query.get("cid"));
+	window.location.href = "https://s3.us-east-2.amazonaws.com/choice.select.app/html/mainUI.html" + query.toString();
+	
+}
+
+
+function handleAltClick(e, altNum) {
+	
+	//get value of cid from query
+	var urlParams = new URLSearchParams(window.location.search);
+	currentId = urlParams.get("cid");
+	console.log("CID retrieved: " + currentId);
+	
+	//store payload to be sent
+	var data = {};
+	data["altNumber"] = altNum;
+	data["cid"] = currentId;
+	var js = JSON.stringify(data);
+	
+	//send request
 	var xhr = new XMLHttpRequest();
-	xhr.open("GET", getAlt_url + "/" + altNum, true);
-	xhr.send();
+	xhr.open("GET", getAlt_url, true);
+	xhr.send(js);
 	console.log("getAlt req sent");
 	
 	//process and update html
@@ -18,17 +53,4 @@ function handleAltClick(altNum) {
   };
 }
 
-
-//respond to server and replace 'altDesc' with actual description
-function processResponse(result, altNum) {
-	console.log("result: " + result);
-	
-	//get alt description from alternative object
-	var js = JSON.parse(result);
-	var desc = js["description"];
-	
-	//set label with retrieved alt desc
-	var altDescLabel = document.getElementById('altDesc');
-	altDescLabel.innerHTML = "<div id = \"altDesc\" value = \"Alternative Description: " + desc + "\" />";
-}
 
