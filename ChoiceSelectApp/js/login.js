@@ -13,6 +13,8 @@ function process(result) {
 		var choice = team["choice"];				//get choice from team
 		var teamSize = team["teamSize"];			//get team size from team
 		var members = team["members"];				//get members from team
+
+		var firstMem = members[0].name;				//get name of user
 		var choiceDesc = choice["description"];		//get choice desc from choice
 		var choiceId = choice["ID"];				//get cid from choice
 		var alts = choice["alternativeList"];		//get alts from choice
@@ -23,6 +25,14 @@ function process(result) {
 		document.getElementById("sizeLabel").innerHTML = teamSize;
 		document.getElementById("usernameLabel").innerHTML = members;
 		document.getElementById("altsLabel").innerHTML = alts;
+		
+		//redirect to main interface page
+		var urlParams = new URLSearchParams();
+		urlParams.set("tid", cid);
+		urlParams.set("user", firstMem);
+		//window.location.href = "https://s3.us-east-2.amazonaws.com/choice.select.app/html/mainUI.html" + "?" + 
+		console.log("query: " + urlParams.toString());
+		
 	} else {
 		console.log("error loading choice");
 	}
@@ -50,8 +60,7 @@ function handleLoginClick(e) {
 		
 		//send login request
 		var xhr = new XMLHttpRequest();
-		var url = login_url;
-		xhr.open("POST", url, true);
+		xhr.open("POST", login_url, true);
 		xhr.send(js);
 		console.log("login request sent");
 		

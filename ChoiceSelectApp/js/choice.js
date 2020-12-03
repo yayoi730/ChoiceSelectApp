@@ -30,13 +30,13 @@ function processResponse(result) {
 function initialize() {
 	
 	var urlParams = new URLSearchParams(window.location.search);	//grab current url
-	if (urlParams.has("cid")) {
-		currentId = urlParams.get("cid");							//grab cid from url query
-		console.log("CID retrieved: " + currentId);
+	if (urlParams.has("tid")) {
+		currentId = urlParams.get("tid");							//grab cid from url query
+		console.log("TID retrieved: " + currentId);
 		
 		//format data as JSON
 		var data = {};
-		data["cid"] = currentId;
+		data["tid"] = currentId;
 		var js = JSON.stringify(data);
 		console.log("JS: " + js);	
 		

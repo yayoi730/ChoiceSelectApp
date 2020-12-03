@@ -15,6 +15,8 @@ function process(result) {
 		var choice = team["choice"];			//get choice from team
 		var teamSize = team["teamSize"];		//get team size from team
 		var members = team["members"];			//get members from team
+		
+		var firstMem = members[0].name;			//get name of user
 		var choiceDesc = choice["description"];	//get choice desc from choice
 		var cid = choice["ID"];					//get cid from choice
 		var alts = choice["alternativeList"];	//get alts from choice
@@ -28,8 +30,10 @@ function process(result) {
 		
 		//redirect to main inferface page with cid in query
 		var urlParams = new URLSearchParams();
-		urlParams.set("cid", cid);
-		window.location.href = "https://s3.us-east-2.amazonaws.com/choice.select.app/html/mainUI.html" + "?" + urlParams.toString();
+		urlParams.set("tid", cid);
+		urlParams.set("user", firstMem);
+		//window.location.href = "https://s3.us-east-2.amazonaws.com/choice.select.app/html/mainUI.html" + "?" + 
+		console.log("query: " + urlParams.toString());
 		
 	} else {
 		alert("Error creating new choice; reload page");
