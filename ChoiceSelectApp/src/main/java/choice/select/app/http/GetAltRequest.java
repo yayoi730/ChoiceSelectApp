@@ -12,5 +12,7 @@ public class GetAltRequest {
 	public void setaID(String id) {this.aID = id;}
 	public String getcID() {return this.cID;}
 	public void setcID(String id) {this.cID = id;}
+	
+	
 
 }
