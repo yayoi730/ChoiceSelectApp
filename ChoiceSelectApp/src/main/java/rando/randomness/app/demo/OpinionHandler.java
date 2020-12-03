@@ -26,7 +26,7 @@ public class OpinionHandler implements RequestHandler<OpinionRequest, OpinionRes
 		ArrayList<String> loadedApprovers = null;
 		try {
 
-			loadedApprovers = retrieveApprovers(req.getAid());
+			loadedApprovers = retrieveApprovers(req.getaID());
 		}
 		catch(Exception e) {
 			
