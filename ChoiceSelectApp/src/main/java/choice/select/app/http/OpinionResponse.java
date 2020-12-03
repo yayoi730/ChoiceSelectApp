@@ -6,7 +6,7 @@ import rando.randomness.app.demo.model.Alternative;
 import rando.randomness.app.demo.model.Report;
 
 public class OpinionResponse {
-	Alternative alt;
+	public Alternative alt;
 	public final int httpCode;
 	public final String error;
 	
