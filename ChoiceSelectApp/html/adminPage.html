@@ -12,10 +12,6 @@
 	.center {
 		text-align: center;
 	}
-	tab {
-    display: inline-block;
-    margin-left: 40px;
-    }
 </style>
 
 <body>
@@ -26,17 +22,18 @@
 	
 	<form>
 	
-	<input type = "button" value = "Get Reports" onClick = "JavaScript:handleGetReports(this)"/>
+	<input type = "button" value = "Get Reports" onClick = "JavaScript:handleGetReports(this, false)"/>
 	<br>
+	<input type = "button" value = "Get Report with ID:" onClick = "JavaScript:handleGetReports(this, true)"/>
+	<input id = "idInput" value = "" />
+	<br><br>
 	<input type = "button" value = "Delete" onClick = />
-	<input name = "daysOldInput" value = "Enter number of days" />
+	<input id = "daysOldInput" value = "Enter number of days" />
 	<br><br><br>
-	
+	Reports:
 	</form>
 	
 	<form name = "reportsDisplay">
-	Reports:
-	<br>
 	</form>
 	
 	

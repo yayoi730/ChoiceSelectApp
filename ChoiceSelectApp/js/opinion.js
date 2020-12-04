@@ -10,6 +10,7 @@ function processCreateOpinion(result) {
 	
 	if (status == 200) {
 		//reloading page will update the labels, no need for redundnacy
+		window.location.reload();
 	} else {
 		alert("Like/Dislike could not be processed");
 		console.log("create Opinion unexpected error: " + error);

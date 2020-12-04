@@ -19,16 +19,7 @@ function processGetTeam(result) {
 		document.getElementById("cidLabel").innerHTML = "Choice ID: " + cid;
 		document.getElementById("descLabel").innerHTML = "Choice Description: " + choiceDesc;
 		document.getElementById("sizeLabel").innerHTML = "Max Members: " + teamSize;
-		
-		var query = new URLSearchParams(window.location.search);
-		if(query.has("alt")) {
-			var altNum = query.get("alt");
-			var altList = choice["alternativeList"];
-			var altObject = altList[altNum];
-			var altDescription = altObject["description"];
-			var displayedAltNum = Number(altNum);
-			document.getElementById("altDesc").innerHTML = "Alternative " + displayedAltNum.toString() + " Description: " + altDescription;
-		}
+
 		
 	} else {
 		alert("Error loading choice; retry login");
@@ -77,10 +68,9 @@ function processGetAlt(result, altNum) {
 function initialize() {
 	
 	var urlParams = new URLSearchParams(window.location.search);	//grab current url
-	currentId = urlParams.get("tid");								//grab cid
-	currentAlt = urlParams.get("alt");
-
+	
 	if (urlParams.has("tid")) {
+		currentId = urlParams.get("tid");							//grab cid
 		console.log("TID retrieved: " + currentId);
 		
 		//format data as JSON
@@ -112,6 +102,7 @@ function initialize() {
 	
 	
 	if (urlParams.has("alt")) {
+		currentAlt = urlParams.get("alt");							//grab alt number
 		console.log("ALT retrieved: " + currentAlt);
 		
 		//format data as JSON
