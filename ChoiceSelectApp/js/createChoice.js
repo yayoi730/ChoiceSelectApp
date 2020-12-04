@@ -21,12 +21,14 @@ function process(result) {
 		var cid = choice["ID"];					//get cid from choice
 		var alts = choice["alternativeList"];	//get alts from choice
 		
+		/*
 		//display values on same page (testing purposes)
 		document.getElementById("cidLabel").innerHTML = cid;
 		document.getElementById("descLabel").innerHTML = choiceDesc;
 		document.getElementById("sizeLabel").innerHTML = teamSize;
 		document.getElementById("usernameLabel").innerHTML = JSON.stringify(members);
 		document.getElementById("altsLabel").innerHTML = JSON.stringify(alts);
+		*/
 		
 		//redirect to main inferface page with cid in query
 		var urlParams = new URLSearchParams();

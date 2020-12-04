@@ -1,5 +1,5 @@
 
-function process(result) {
+function process(result, name) {
 	console.log("result:" + result);
 	var js = JSON.parse(result);
 	
@@ -14,22 +14,24 @@ function process(result) {
 		var teamSize = team["teamSize"];			//get team size from team
 		var members = team["members"];				//get members from team
 
-		var firstMem = members[0].name;				//get name of user
 		var choiceDesc = choice["description"];		//get choice desc from choice
 		var choiceId = choice["ID"];				//get cid from choice
 		var alts = choice["alternativeList"];		//get alts from choice
 		
+		/*
 		//display values on same page (testing purposes)
 		document.getElementById("cidLabel").innerHTML = choiceId;
 		document.getElementById("descLabel").innerHTML = choiceDesc;
 		document.getElementById("sizeLabel").innerHTML = teamSize;
 		document.getElementById("usernameLabel").innerHTML = members;
 		document.getElementById("altsLabel").innerHTML = alts;
+		*/
 		
 		//redirect to main interface page
 		var urlParams = new URLSearchParams();
 		urlParams.set("tid", choiceId);
-		urlParams.set("user", firstMem);
+		urlParams.set("user", name);
+		urlParams.set("alt", "1");
 		window.location.href = "https://s3.us-east-2.amazonaws.com/choice.select.app/html/mainUI.html" + "?" + urlParams.toString(); 
 		console.log("query: " + urlParams.toString());
 		
@@ -69,9 +71,9 @@ function handleLoginClick(e) {
 			console.log(xhr.request);
 			if (xhr.readyState == XMLHttpRequest.DONE) {
 				console.log ("XHR:" + xhr.responseText);
-				process(xhr.responseText);				
+				process(xhr.responseText, name);				
 			} else {
-				process("N/A");				
+				process("N/A", name);				
 			}
 		};
 	}

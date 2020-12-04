@@ -35,7 +35,7 @@ function processGetAltOpinion(result, isApproval, currentUser) {
 		//prepare createOpinion request
 		var dataOp = {};
 		dataOp["aID"] = aid;
-		dataOp["approver"] = currentUser;
+		dataOp["prover"] = currentUser;
 		dataOp["approves"] = isApproval;
 		var jsOp = JSON.stringify(dataOp);
 		
