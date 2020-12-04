@@ -39,15 +39,15 @@ public class LoginHandler implements RequestHandler<LoginRequest, LoginResponse>
 		try {
 			
 			loadedMember = loadMemberFromRDS(req.getCid(), req.getName());
+			loadedTeam = loadTeamFromRDS(req.getCid());
 			if(req.getPassword().equals("")) {
 				if(loadedMember.getPassword().equals("")) {
 					login = true;
-					loadedTeam = loadTeamFromRDS(req.getCid());
 				}
 			}
 			else if(loadedMember.getPassword().equals(req.getPassword()))
 			{
-				login = true; 
+				login = true;
 			}
 		} 
 		catch (Exception e) {
