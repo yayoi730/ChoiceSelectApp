@@ -58,6 +58,7 @@ public class LoginHandler implements RequestHandler<LoginRequest, LoginResponse>
 					newMember = new Member(req.getName(), req.getPassword());
 					dao.addMember(newMember, req.getCid());
 					newUser = true;
+					
 				}
 			}
 			catch (Exception b) {
