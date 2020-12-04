@@ -39,13 +39,13 @@ public class LoginHandler implements RequestHandler<LoginRequest, LoginResponse>
 		try {
 			
 			loadedMember = loadMemberFromRDS(req.getCid(), req.getName());
-			if(req.getPassword() == "") {
-				if(loadedMember.getPassword() == null || loadedMember.getPassword() == "") {
+			if(req.getPassword().equals("")) {
+				if(loadedMember.getPassword().equals("")) {
 					login = true;
 					loadedTeam = loadTeamFromRDS(req.getCid());
 				}
 			}
-			else if(loadedMember.getPassword() == req.getPassword())
+			else if(loadedMember.getPassword().equals(req.getPassword()))
 			{
 				login = true; 
 			}
@@ -58,6 +58,7 @@ public class LoginHandler implements RequestHandler<LoginRequest, LoginResponse>
 					newMember = new Member(req.getName(), req.getPassword());
 					dao.addMember(newMember, req.getCid());
 					newUser = true;
+					
 				}
 			}
 			catch (Exception b) {
