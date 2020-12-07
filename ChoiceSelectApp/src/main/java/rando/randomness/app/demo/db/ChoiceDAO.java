@@ -165,7 +165,7 @@ public class ChoiceDAO {
 
 			PreparedStatement ps = conn.prepareStatement("INSERT INTO " + fName + " (FID,AID,timestamp,description,name) values(?,?,?,?,?);");
 			String fID = UUID.randomUUID().toString();
-			f.setFID(fID);
+			f.setfID(fID);
 			ps.setString(1,  fID);
 			ps.setString(2,  aID);
 			ps.setString(3,  f.getTimestamp().toString());
@@ -671,7 +671,7 @@ public class ChoiceDAO {
 		String desc = r.getString("description");
 		String creator = r.getString("name");
 		Feedback f = new Feedback(t, desc, creator);
-		f.setFID(r.getString("FID"));
+		f.setfID(r.getString("FID"));
 		return f;
 	}
 
