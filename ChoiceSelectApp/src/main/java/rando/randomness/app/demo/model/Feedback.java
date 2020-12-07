@@ -10,6 +10,11 @@ public class Feedback {
 	
 	public Feedback() {}
 	
+	public Feedback(String creator, String description) {
+		this.description = description;
+		this.creator = creator;
+	}
+	
 	public Feedback(Timestamp timestamp, String description, String creator) {
 		this.timestamp = timestamp;
 		this.description = description;
