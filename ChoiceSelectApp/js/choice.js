@@ -45,7 +45,6 @@ function processGetAlt(result, altNum) {
 		var altDescLabel = document.getElementById('altDesc');
 		altDescLabel.innerHTML = "Alternative " + altNum + " Description :" + desc;
 		
-		
 		//get alt approvers and disapprovers lists
 		var listAp = altObj["approvers"];
 		var listDisap = altObj["dispprovers"];
@@ -55,6 +54,25 @@ function processGetAlt(result, altNum) {
 		var disapLabel = document.getElementById('disapproversList');
 		apLabel.innerHTML = listAp.length + " Approvers: " + listAp.toString();
 		disapLabel.innerHTML = listDisap.length + " Disapprovers: " + listDisap.toString();
+		
+		//get feedback from alt
+		var listFeedback = altObj["feedbackList"];
+
+		//display feedback
+		for (var i = 0; i < listFeedback.length; i++) {
+			//get feedback of current index
+			var current = listFeedback[i];
+
+			//get each attribute
+			var when = current["timestamp"];
+			var creator = current["creator"];
+			var desc = current["description"];
+
+			//create new <p> for each feeback
+			var fb = document.createElement("p");
+			fb.innerHTML = "Description: " + desc + ", Created by " + creator + " on " + when.toString();
+			document.feedbackDisplay.appendChild(fb);
+		}
 		
 		
 	} else {

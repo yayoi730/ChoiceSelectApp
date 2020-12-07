@@ -39,7 +39,6 @@ function processGetReports(result, findOne) {
 					var completed = current["completed"];
 					
 					//display desired report
-					document.reportsDisplay.empty();			//clear all current reports
 					var singleReport = document.createElement("p");
 					singleReport.innerHTML = "Choice ID: " + cid + ", Creation Date: " + creationDate.toString() + ", Completed: " + completed.toString();
 					document.reportsDisplay.appendChild(singleReport);

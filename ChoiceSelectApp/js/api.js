@@ -22,5 +22,21 @@ var getAlt_url = base + "getAlt";						//POST
 var getReports_url = base + "getReports";				//POST
 
 //aID, approver, approves in payload
-//returns 
+//returns Alternative object
 var createOpinion_url = base + "createOpinion";			//POST
+
+//
+//returns list of Report objects
+var deleteReports_url = base + "";				//POST
+
+//
+//return Team object
+var complete_url = base + "";					//POST
+
+//tid, altNum, name, desc in payload
+//returns Alternative object
+var addFeedback_url = base + "";				//POST
+
+
+
+
