@@ -12,14 +12,20 @@ public class CreateFeedbackResponse {
 			this.alt = nM;
 			this.httpCode = 200;
 			this.error = "";
-		}	
+		}		
+		
+		public CreateFeedbackResponse (int code, String errormsg) {
+			this.alt = null;
+			this.httpCode = code;
+			this.error = errormsg;
+		}
 
 		public String toString() {
 			if(httpCode == 200)
 			{
-				return "MemberResponse(" + alt.getFeebackList() + ")";
+				return "FeedbackResponse(" + alt.getFeebackList() + ")";
 			}
-			else {return "ErrorMemberResponse(" + error + ")";}
+			else {return "ErrorFeedbackResponse(" + error + ")";}
 		}
 
 }
