@@ -1,6 +1,5 @@
 package rando.randomness.app.demo;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import com.amazonaws.services.lambda.runtime.Context;
