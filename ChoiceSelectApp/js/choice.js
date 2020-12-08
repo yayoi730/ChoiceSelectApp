@@ -32,17 +32,23 @@ function processGetTeam(result) {
 			}
 		}
 		
-		/*
+		
 		//hide buttons if choice is finalized
-		if () {
+		if (choice["finalChoice"] != -1) {
 			document.getElementById('feedbackButton').style.display = "none";
 			document.getElementById('feedbackInput').style.display = "none";
 			document.getElementById('likeButton').style.display = "none";
 			document.getElementById('dislikeButton').style.display = "none";
 			document.getElementById('markAlt').style.display = "none";
 			document.getElementById('markChoice').style.display = "none";
+			
+			//dislpay choice is complete
+			var completionMsg = document.createElement("p");
+			completionMsg.innerHTML = "Choice was completed on" + choice["completionDate"].toString() 
+				+ "<br>No more changes can be made.";
+			document.choiceLabelForm.append(completionMsg);
 		}
-		*/
+		
 		
 	} else {
 		alert("Error loading choice; retry login");

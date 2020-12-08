@@ -22,7 +22,7 @@ function handleDeleteReports (e) {
 	if (confirm("Are you sure you want to delete the old reports?")) {
 		
 		var data = {};
-		data[""] = document.getElementById("daysOldInput");
+		data["daysOld"] = document.getElementById("daysOldInput");
 		
 		var js = JSON.stringify(data);
 		console.log("JS: " + js);

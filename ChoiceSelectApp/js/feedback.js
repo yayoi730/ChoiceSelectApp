@@ -36,7 +36,7 @@ function processGetAltFeedback(result) {
 		dataFb["creator"] = query.get("user");
 		
 		//make sure feedback is not empty
-		if (document.getElementById("feedbackInput").value == "") {
+		if (document.getElementById("feedbackInput").value == null || document.getElementById("feedbackInput").value == "") {
 			alert("Please enter a valid feedback description");
 		} else {
 			dataFb["description"] = document.getElementById("feedbackInput").value;
@@ -72,7 +72,7 @@ function processGetAltFeedback(result) {
 function handleFeedbackClick(e) {
 	
 	//make sure current alternative is valid
-	if (document.getElementById("altDesc").value == "") {
+	if (document.getElementById("altDesc").value == "" || document.getElementById("altDesc").value == null) {
 		alert("Cannot add feedback to empty alternative!");
 	} else {
 	
