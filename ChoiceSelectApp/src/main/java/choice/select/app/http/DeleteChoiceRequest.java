@@ -2,22 +2,22 @@ package choice.select.app.http;
 
 public class DeleteChoiceRequest {
 	
-	public String tID;
+	public int daysOld;
 	
 	public DeleteChoiceRequest(){}
 	
-	public DeleteChoiceRequest(String tID){this.tID = tID;}
+	public DeleteChoiceRequest(int daysOld){this.daysOld = daysOld;}
 	
-	public void settID(String tID) {
-		this.tID = tID;
+	public void setDaysOld(int daysOld) {
+		this.daysOld = daysOld;
 	}
 	
-	public String gettID() {
-		return this.tID;
+	public int getDaysOld() {
+		return this.daysOld;
 	}
 	
 	public String toString() {
-		return "Delete " + this.tID;
+		return "Delete " + this.daysOld;
 	}
 	
 }

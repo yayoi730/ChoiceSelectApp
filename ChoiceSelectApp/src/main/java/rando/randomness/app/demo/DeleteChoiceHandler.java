@@ -5,6 +5,7 @@ import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.s3.AmazonS3;
 
+
 import choice.select.app.http.DeleteChoiceRequest;
 import choice.select.app.http.DeleteChoiceResponse;
 import rando.randomness.app.demo.db.ChoiceDAO;
@@ -26,7 +27,7 @@ public class DeleteChoiceHandler  implements RequestHandler<DeleteChoiceRequest,
 		DeleteChoiceResponse response;
 		try {
 			ChoiceDAO dao = new ChoiceDAO();
-			dao.deleteChoice(req.gettID());
+			dao.deleteOldChoices(req.daysOld);
 			response = new DeleteChoiceResponse();
 		}
 		catch(Exception e) {
@@ -34,9 +35,7 @@ public class DeleteChoiceHandler  implements RequestHandler<DeleteChoiceRequest,
 		}
 		
 		logger.log(response.toString());
-		
 		return response;
 	}
 	
-
 }
