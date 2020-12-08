@@ -3,6 +3,7 @@ package rando.randomness.app.demo;
 import static org.junit.Assert.*;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -63,14 +64,15 @@ public class TestDatabase {
 	    	//Test adding team
 	    	t = cd.addTeam(t);  
 	    	System.out.println("Choice added correctly");
-	    	
+	    	t.getChoice().completeChoice(2);
 	    	String tID = t.getTID();
-	    	
+	    	cd.completeChoice(t.getChoice());
 	    	System.out.println(tID);
 	    	//Try retrieving the newly added team
 	    	Team tCopy = cd.retrieveTeam(tID);
 	    	System.out.println("Team Size: " + tCopy.getTeamSize());
 	    	System.out.println(tCopy.getChoice().getDescription());
+	    	System.out.println(tCopy.getChoice().getFinalChoice());
 	    	for(Alternative a: tCopy.getChoice().getAlternativeList())
 	    	{
 	    		System.out.println("Alt Number: " + a.getAltNumber());
@@ -101,6 +103,25 @@ public class TestDatabase {
 	    } catch (Exception e) {
 	    	fail ("didn't work:" + e.getMessage());
 	    }
+	}
+	
+	@Test
+	public void testDeleteOldChoices() throws Exception {
+		LocalDateTime a = new Timestamp(System.currentTimeMillis()).toLocalDateTime();
+		a = a.minusDays(3);
+		Timestamp t = Timestamp.valueOf(a);
+    	Choice c = new Choice("Go to office hours",t);
+    	ArrayList<Member> newMembers = new ArrayList<>();
+    	
+    	Member m1 = new Member("Luthor");
+    	newMembers.add(m1);
+    	Team team = new Team(newMembers, c);
+    	team.setTeamSize(10);
+    	
+    	ChoiceDAO cd = new ChoiceDAO();
+    	cd.addTeam(team);
+    	
+    	cd.deleteOldChoices(2);
 	}
 	
 	//@Test
