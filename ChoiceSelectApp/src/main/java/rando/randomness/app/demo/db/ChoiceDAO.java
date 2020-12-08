@@ -1,6 +1,7 @@
 package rando.randomness.app.demo.db;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -465,6 +466,58 @@ public class ChoiceDAO {
 			throw new Exception("Failed in getting disapprovers: " + e.getMessage());
 		}
 
+	}
+	
+	public boolean completeChoice(Choice c) throws Exception
+	{
+		try {
+			PreparedStatement ps = conn.prepareStatement("UPDATE " + cName + " SET dateOfCompletion = ?, finalChoice = ? WHERE CID = ?;");
+			ps.setString(1, c.getCompletionDate().toString());
+			ps.setInt(2, c.getFinalChoice());
+			ps.setString(3, c.getID());
+			ps.execute();
+			return true;
+		} catch (Exception e) {
+			throw new Exception("Failed to complete choice: " + e.getMessage());
+		}
+	}
+	
+	public boolean deleteOldChoices(int daysOld) throws Exception
+	{
+		Timestamp time = new Timestamp(System.currentTimeMillis());
+		ArrayList<Team> allTeams = new ArrayList<>();
+		ArrayList<String> tIDs = new ArrayList<>();
+		try {
+			PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tName + ";");
+			ResultSet resultSet = ps.executeQuery();
+			while (resultSet.next()) {
+				Team t = generateTeam(resultSet);
+				allTeams.add(t);
+			}
+			
+			for(Team team: allTeams)
+			{
+				Choice c = team.getChoice();
+				Timestamp creationDate = c.getCreationDate();
+				LocalDateTime conv = creationDate.toLocalDateTime();
+				conv.plusDays(daysOld);
+				creationDate = Timestamp.valueOf(conv);
+				if(creationDate.after(time))
+				{
+					tIDs.add(c.getID());
+				}
+			}
+			
+			for(String element: tIDs)
+			{
+				deleteChoice(element);
+			}
+			return true;
+			
+		} catch (Exception e) {
+			throw new Exception("Failed in getting disapprovers: " + e.getMessage());
+		}
+		
 	}
 
 	public boolean deleteTeam(String tID) throws Exception
