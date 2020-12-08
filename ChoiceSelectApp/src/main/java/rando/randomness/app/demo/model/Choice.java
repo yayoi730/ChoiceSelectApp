@@ -9,7 +9,7 @@ public class Choice {
 	String description;
 	Timestamp creationDate;
 	Timestamp completionDate;
-	int finalChoice;
+	int finalChoice = -1;
 
 	public Choice(String description, Timestamp creationDate) {
 		this.description = description;
