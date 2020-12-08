@@ -1,13 +1,7 @@
 package rando.randomness.app.demo;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.UUID;
-
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -15,12 +9,6 @@ import com.google.gson.Gson;
 
 import choice.select.app.http.CreateTeamRequest;
 import choice.select.app.http.CreateTeamResponse;
-import rando.randomness.app.demo.db.ChoiceDAO;
-import rando.randomness.app.demo.model.Alternative;
-import rando.randomness.app.demo.model.Choice;
-import rando.randomness.app.demo.model.Feedback;
-import rando.randomness.app.demo.model.Member;
-import rando.randomness.app.demo.model.Team;
 
 public class TestCreateTeamHandler extends LambdaTest {
 	
