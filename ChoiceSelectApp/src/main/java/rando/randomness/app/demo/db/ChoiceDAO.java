@@ -41,7 +41,14 @@ public class ChoiceDAO {
 			m.setMID(mID);
 			ps.setString(1,  mID);
 			ps.setString(2, m.getName());
-			ps.setString(3, m.getPassword());
+			if(m.getPassword() == null)
+			{
+				ps.setString(3, "");
+			}
+			else
+			{
+				ps.setString(3, m.getPassword());
+			}
 			ps.setInt(4, 0);
 			ps.setString(5, tID);
 			ps.execute();
@@ -500,9 +507,9 @@ public class ChoiceDAO {
 				Choice c = team.getChoice();
 				Timestamp creationDate = c.getCreationDate();
 				LocalDateTime conv = creationDate.toLocalDateTime();
-				conv.plusDays(daysOld);
+				conv = conv.plusDays(daysOld);
 				creationDate = Timestamp.valueOf(conv);
-				if(creationDate.after(time))
+				if(time.after(creationDate))
 				{
 					tIDs.add(c.getID());
 				}
@@ -510,7 +517,7 @@ public class ChoiceDAO {
 			
 			for(String element: tIDs)
 			{
-				deleteChoice(element);
+				deleteTeam(element);
 			}
 			return true;
 			
