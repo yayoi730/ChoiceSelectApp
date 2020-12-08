@@ -2,7 +2,6 @@ package choice.select.app.http;
 
 public class GetAltRequest {
 	int altNumber;
-
 	String cID;
 
 	public GetAltRequest() {}

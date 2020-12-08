@@ -34,7 +34,7 @@ function setup() {
 	
 	<form name = "choiceLabelForm">
 	
-	<input id = "markChoice" type = "button" value = "Mark As Chosen" onClick = "JavaScript:handleCompleteClick(this, 0)"/>
+	<input id = "markChoice" type = "button" value = "Mark As Chosen" onClick = "JavaScript:handleCompleteClick(this, false)"/>
 
 	<div id="cidLabel">Choice ID:</div>
 	<br>
@@ -61,7 +61,7 @@ function setup() {
 	
 	<form name = "altLabelsForm">
 	<br><br>
-	<input id = "markAlt" type = "button" value = "Mark As Chosen" onClick = />
+	<input id = "markAlt" type = "button" value = "Mark As Chosen" onClick = "JavaScript:handleCompleteClick(this, true)"/>
 	<div id="altDesc"></div>
 	
 	<br>

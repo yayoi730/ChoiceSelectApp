@@ -1,10 +1,7 @@
 package rando.randomness.app.demo.model;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Iterator;
 
 public class Choice {
 	ArrayList<Alternative> alternatives = new ArrayList<>();

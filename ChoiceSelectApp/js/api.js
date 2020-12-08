@@ -27,15 +27,15 @@ var createOpinion_url = base + "createOpinion";			//POST
 
 //
 //returns list of Report objects
-var deleteReports_url = base + "";				//POST
+var deleteReports_url = base + "deleteOld";				//POST
 
 //
 //return Team object
-var complete_url = base + "";					//POST
+var complete_url = base + "completeChoice";				//POST
 
 //tid, altNum, name, desc in payload
 //returns Alternative object
-var addFeedback_url = base + "";				//POST
+var addFeedback_url = base + "addFeedback";				//POST
 
 
 
