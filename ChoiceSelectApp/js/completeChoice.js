@@ -1,5 +1,5 @@
 
-function processCompleteChoice(result) {
+function processComplete(result, completionNum) {
 	console.log("complete result:" + result);
 	var js = JSON.parse(result);
 	
@@ -7,18 +7,28 @@ function processCompleteChoice(result) {
 	var error = js["error"];
 	
 	if (status == 200) {
-		alert("Choice/alternative successfully chosen");
+		if(completionNum == 0) {
+			alert("You chose: main choice. Choice has been finalized.")
+		} else if (completionNum > 0 && completionNum < 6) {
+			alert("You chose: alternative " + completionNum + ". Choice has been finalized.")
+		}
+		
+		//refreshing page will disable the buttons
+		wondow.location.refresh();
+		
 	} else {
 		alert("'Mark As Chosen' request could not be completed");
 		console.log("complete unexpected error: " + error);
 	}
 }
 
-function handleChooseChoice(e) {
-	//if alt with desc == "", alert "choose valid alt"
+function handleCompleteClick(e, completionNum) {
+	
+	var query = new URLSearchParams(window.location.search);
 
 	var data = {};
-	data[""] = ;
+	data[""] = query.get("tid");
+	data[""] = completionNum;
 
 	var js = JSON.stringify(data);
 	console.log("JS: " + js);
@@ -33,9 +43,9 @@ function handleChooseChoice(e) {
 	xhr = function () {
 	    if (xhr.readyState == XMLHttpRequest.DONE) {
 			console.log ("XHR:" + xhr.responseText);
-			processCompleteChoice(xhr.responseText);
+			processComplete(xhr.responseText, completionNum);
 		} else {
-			processCompleteChoice("N/A");
+			processComplete("N/A", completionNum);
 		}
   	};
 }

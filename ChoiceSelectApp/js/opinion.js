@@ -69,8 +69,9 @@ function handleOpinionClick(e, isApproval) {
 	var urlParams = new URLSearchParams(window.location.search);	//grab current url
 	currentAlt = urlParams.get("alt");								//grab alt number
 	currentUser = urlParams.get("user");							//grab user's name
+	currentId = urlParams.get("tid");								//grab tid
 	
-	console.log("retrieved from url: alt=" + currentAlt + ", user=" + currentUser);
+	console.log("retrieved from url: alt=" + currentAlt + ", tid=" + currentId);
 
 	//format data as JSON
 	var dataAlt = {};

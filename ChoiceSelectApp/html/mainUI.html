@@ -32,9 +32,9 @@ function setup() {
 	<h1>Choice Interface</h1>
 	<h3>Add feedback, approve/disapprove, and choose a choice or alternative</h3>
 	
-	<form name = "choiceLabelForm" method = "get">
+	<form name = "choiceLabelForm">
 	
-	<input id = "markChoice" type = "button" value = "Mark As Chosen" onClick = />
+	<input id = "markChoice" type = "button" value = "Mark As Chosen" onClick = "JavaScript:handleCompleteClick(this, 0)"/>
 
 	<div id="cidLabel">Choice ID:</div>
 	<br>
@@ -46,15 +46,15 @@ function setup() {
 	___________________________________________________________________________
 	
 
-	<form name = "alts" method = "get">
+	<form name = "alts">
 	<br>
 	Select an alternative to view:
 	<br>
-	<input type = "button" value = "Alt. #1" onClick = "JavaScript:handleAltClick(this, 1)"/>
-	<input type = "button" value = "Alt. #2" onClick = "JavaScript:handleAltClick(this, 2)"/>
-	<input type = "button" value = "Alt. #3" onClick = "JavaScript:handleAltClick(this, 3)"/>
-	<input type = "button" value = "Alt. #4" onClick = "JavaScript:handleAltClick(this, 4)"/>
-	<input type = "button" value = "Alt. #5" onClick = "JavaScript:handleAltClick(this, 5)"/>
+	<input name = alt1Btn type = "button" value = "Alt. #1" onClick = "JavaScript:handleAltClick(this, 1)"/>
+	<input name = alt2Btn type = "button" value = "Alt. #2" onClick = "JavaScript:handleAltClick(this, 2)"/>
+	<input name = alt3Btn type = "button" value = "Alt. #3" onClick = "JavaScript:handleAltClick(this, 3)"/>
+	<input name = alt4Btn type = "button" value = "Alt. #4" onClick = "JavaScript:handleAltClick(this, 4)"/>
+	<input name = alt5Btn type = "button" value = "Alt. #5" onClick = "JavaScript:handleAltClick(this, 5)"/>
 	<br><br>
 	</form>
 	___________________________________________________________________________
@@ -62,11 +62,11 @@ function setup() {
 	<form name = "altLabelsForm">
 	<br><br>
 	<input id = "markAlt" type = "button" value = "Mark As Chosen" onClick = />
-	<div id="altDesc">Alternative Description:</div>
+	<div id="altDesc"></div>
 	
 	<br>
-	<input type = "button" value = "Like" onClick = "JavaScript:handleOpinionClick(this, true)"/>
-	<input type = "button" value = "Dislike" onClick = "JavaScript:handleOpinionClick(this, false)"/>
+	<input name = "likeButton" type = "button" value = "Like" onClick = "JavaScript:handleOpinionClick(this, true)"/>
+	<input name = "dislikeButton" type = "button" value = "Dislike" onClick = "JavaScript:handleOpinionClick(this, false)"/>
 	<br><br>
 	
 	<div id="approversList">Approvers:</div>
@@ -76,11 +76,11 @@ function setup() {
 	</form>
 	___________________________________________________________________________
 	
-	<form name = "feedbackForm" method = "get">
+	<form name = "feedbackForm">
 	
 	<br><br>
 	<input name = "feedbackInput" value = "" />
-	<input type = "button" value = "Add Feedback" onClick = "handleFeedbackClick(this)"/>
+	<input name = "feebackButton" type = "button" value = "Add Feedback" onClick = "handleFeedbackClick(this)"/>
 	<br><br>
 	
 	</form>

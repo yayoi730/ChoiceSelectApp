@@ -19,7 +19,30 @@ function processGetTeam(result) {
 		document.getElementById("cidLabel").innerHTML = "Choice ID: " + cid;
 		document.getElementById("descLabel").innerHTML = "Choice Description: " + choiceDesc;
 		document.getElementById("sizeLabel").innerHTML = "Max Members: " + teamSize;
-
+		
+		//hide alt buttons if no alt exists
+		var listAlts = team["alternativeList"];
+		for (var i = 0; i < listAlts.length; i++) {
+			
+			var currentAlt = listAlts[i];
+			
+			if (currentAlt["description"] == "") {
+				var eleName = "alt" + currentAlt["altNumber"] + "Btn";
+				document.getElementById(eleName).style.display = "none";
+			}
+		}
+		
+		/*
+		//hide buttons if choice is finalized
+		if () {
+			document.getElementById('feedbackButton').style.display = "none";
+			document.getElementById('feedbackInput').style.display = "none";
+			document.getElementById('likeButton').style.display = "none";
+			document.getElementById('dislikeButton').style.display = "none";
+			document.getElementById('markAlt').style.display = "none";
+			document.getElementById('markChoice').style.display = "none";
+		}
+		*/
 		
 	} else {
 		alert("Error loading choice; retry login");

@@ -18,15 +18,6 @@ function process(result, name) {
 		var choiceId = choice["ID"];				//get cid from choice
 		var alts = choice["alternativeList"];		//get alts from choice
 		
-		/*
-		//display values on same page (testing purposes)
-		document.getElementById("cidLabel").innerHTML = choiceId;
-		document.getElementById("descLabel").innerHTML = choiceDesc;
-		document.getElementById("sizeLabel").innerHTML = teamSize;
-		document.getElementById("usernameLabel").innerHTML = members;
-		document.getElementById("altsLabel").innerHTML = alts;
-		*/
-		
 		//redirect to main interface page
 		var urlParams = new URLSearchParams();
 		urlParams.set("tid", choiceId);
@@ -36,6 +27,7 @@ function process(result, name) {
 		console.log("query: " + urlParams.toString());
 		
 	} else {
+		alert("Error loading choice. Choice ID does not exist or username is taken. Please try again.")
 		console.log("error loading choice");
 	}
 }
