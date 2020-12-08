@@ -20,6 +20,7 @@ function processGetTeam(result) {
 		document.getElementById("descLabel").innerHTML = "Choice Description: " + choiceDesc;
 		document.getElementById("sizeLabel").innerHTML = "Max Members: " + teamSize;
 		
+		/*
 		//hide alt buttons if no alt exists
 		var listAlts = team["alternativeList"];
 		for (var i = 0; i < listAlts.length; i++) {
@@ -31,7 +32,7 @@ function processGetTeam(result) {
 				document.getElementById(eleName).style.display = "none";
 			}
 		}
-		
+		*/
 		
 		//hide buttons if choice is finalized
 		if (choice["finalChoice"] != -1) {

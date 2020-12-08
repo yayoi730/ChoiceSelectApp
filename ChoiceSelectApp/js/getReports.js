@@ -36,15 +36,9 @@ function processGetReports(result, findOne) {
 					var creationDate = current["creationDate"];
 					var completed = current["completed"];
 					
-					if (completed != -1) {
-						var completion = "True";
-					} else {
-						var completion = "False";
-					}
-					
 					//display desired report
 					var singleReport = document.createElement("p");
-					singleReport.innerHTML = "Choice ID: " + cid + ", Creation Date: " + creationDate.toString() + ", Completed: " + completion;
+					singleReport.innerHTML = "Choice ID: " + cid + ", Creation Date: " + creationDate.toString() + ", Completed: " + completed;
 					document.reportsDisplay.appendChild(singleReport);
 				}
 			}
