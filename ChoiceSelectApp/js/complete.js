@@ -22,13 +22,20 @@ function processComplete(result, completionNum) {
 	}
 }
 
-function handleCompleteClick(e, completionNum) {
+function handleCompleteClick(e, isAlt) {
 	
 	var query = new URLSearchParams(window.location.search);
 
 	var data = {};
-	data[""] = query.get("tid");
-	data[""] = completionNum;
+	data["tID"] = query.get("tid");
+	
+	if (isAlt == "false") {
+		completionNum = 0;
+	} else {
+		completionNum = query.get("alt");
+	}
+	
+	data["choiceNum"]
 
 	var js = JSON.stringify(data);
 	console.log("JS: " + js);
