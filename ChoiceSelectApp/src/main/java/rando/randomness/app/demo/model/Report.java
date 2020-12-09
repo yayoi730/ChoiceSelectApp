@@ -8,13 +8,13 @@ public class Report {
 	
 	public Report(String choiceID, String description, String creationDate, boolean completed) {
 		this.choiceID = choiceID;
-		this.creationDate = creationDate;
 		this.description = description;
+		this.creationDate = creationDate;
 		this.completed = completed;
 	}
 	
 	public String toString() {
-		return "Report("+ this.choiceID + ", " +this.creationDate + ", " + this.completed+ ")";
+		return "Report("+ this.choiceID + ", " + this.description + ", "+this.creationDate + ", " + this.completed+ ")";
 	}
 	public String getChoiceID() {return this.choiceID;}
 	public String getCreationDate() {return this.creationDate;}
