@@ -45,7 +45,7 @@ public class CreateFeedbackHandler implements RequestHandler<CreateFeedbackReque
 	public Alternative createFeedback(String aID, String creator, String desc) throws Exception{
 		ChoiceDAO dao = new ChoiceDAO();
 		java.sql.Timestamp ts = new java.sql.Timestamp(System.currentTimeMillis());
-		Feedback f = new Feedback(ts, creator, desc);
+		Feedback f = new Feedback(ts, desc, creator);
 		dao.addFeedback(f, aID, creator);
 		Alternative a = dao.retrieveAlternative(aID);
 		return a;
