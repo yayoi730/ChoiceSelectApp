@@ -18,7 +18,7 @@ public class CreateFeedbackHandler implements RequestHandler<CreateFeedbackReque
 	
 	// To access S3 storage
 	private AmazonS3 s3 = null;
-	String errMsg = "Report Creation Failed";
+	String errMsg = "Failed";
 	
 	@Override
 	public CreateFeedbackResponse handleRequest(CreateFeedbackRequest req, Context context) {
@@ -32,6 +32,7 @@ public class CreateFeedbackHandler implements RequestHandler<CreateFeedbackReque
 		}
 		catch(Exception e) {
 			response = new CreateFeedbackResponse(400, errMsg);
+			e.printStackTrace();
 		}
 		
 		logger.log(response.toString());
@@ -43,7 +44,8 @@ public class CreateFeedbackHandler implements RequestHandler<CreateFeedbackReque
 		ChoiceDAO dao = new ChoiceDAO();
 		Feedback f = new Feedback(creator, desc);
 		dao.addFeedback(f, aID, creator);
-		return dao.retrieveAlternative(aID);
+		Alternative a = dao.retrieveAlternative(aID);
+		return a;
 	}
 
 }
