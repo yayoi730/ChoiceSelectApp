@@ -12,6 +12,14 @@
 	.center {
 		text-align: center;
 	}
+	table.center {
+	margin-left: auto; 
+	margin-right: auto;
+	}
+	table, th, td {
+	border: 1px solid black;
+	border-collapse: collapse;
+	}
 </style>
 
 <body>
@@ -22,18 +30,26 @@
 	
 	<form>
 	
-	<input type = "button" value = "Get Reports" onClick = "JavaScript:handleGetReports(this, false)"/>
-	<br>
-	<input type = "button" value = "Get Report with ID:" onClick = "JavaScript:handleGetReports(this, true)"/>
-	<input id = "idInput" value = "" />(Not functional)
+	<input type = "button" value = "Get Reports" onClick = "JavaScript:handleGetReports(this)"/>
 	<br><br>
 	<input type = "button" value = "Delete" onClick = />
 	<input id = "daysOldInput" value = "Enter number of days" />
 	<br><br><br>
 	Reports:
+	<br><br>
 	</form>
 	
 	<form name = "reportsDisplay">
+	
+	<table id = "reportsTable" class = "center">
+	<tr>
+		<th>Choice ID</th>
+		<th>Choice Description</th>
+		<th>Creation Date</th>
+		<th>Completed</th>
+	</tr>
+	</table>
+	
 	</form>
 	
 	
