@@ -58,11 +58,11 @@ function setup() {
 	<br>
 	Select an alternative to view:
 	<br>
-	<input name = alt1Btn type = "button" value = "Alt. #1" onClick = "JavaScript:handleAltClick(this, 1)"/>
-	<input name = alt2Btn type = "button" value = "Alt. #2" onClick = "JavaScript:handleAltClick(this, 2)"/>
-	<input name = alt3Btn type = "button" value = "Alt. #3" onClick = "JavaScript:handleAltClick(this, 3)"/>
-	<input name = alt4Btn type = "button" value = "Alt. #4" onClick = "JavaScript:handleAltClick(this, 4)"/>
-	<input name = alt5Btn type = "button" value = "Alt. #5" onClick = "JavaScript:handleAltClick(this, 5)"/>
+	<input id = alt1Btn type = "button" value = "Alt. #1" onClick = "JavaScript:handleAltClick(this, 1)"/>
+	<input id = alt2Btn type = "button" value = "Alt. #2" onClick = "JavaScript:handleAltClick(this, 2)"/>
+	<input id = alt3Btn type = "button" value = "Alt. #3" onClick = "JavaScript:handleAltClick(this, 3)"/>
+	<input id = alt4Btn type = "button" value = "Alt. #4" onClick = "JavaScript:handleAltClick(this, 4)"/>
+	<input id = alt5Btn type = "button" value = "Alt. #5" onClick = "JavaScript:handleAltClick(this, 5)"/>
 	<br><br>
 	</form>
 	___________________________________________________________________________
@@ -70,11 +70,11 @@ function setup() {
 	<form name = "altLabelsForm">
 	<br><br>
 	<input id = "markAlt" type = "button" value = "Mark As Chosen" onClick = "JavaScript:handleCompleteClick(this, true)"/>
-	<div id="altDesc"></div>
+	<div id = "altDesc"></div>
 	
 	<br>
-	<input name = "likeButton" type = "button" value = "Like" onClick = "JavaScript:handleOpinionClick(this, true)"/>
-	<input name = "dislikeButton" type = "button" value = "Dislike" onClick = "JavaScript:handleOpinionClick(this, false)"/>
+	<input id = "likeButton" type = "button" value = "Like" onClick = "JavaScript:handleOpinionClick(this, true)"/>
+	<input id = "dislikeButton" type = "button" value = "Dislike" onClick = "JavaScript:handleOpinionClick(this, false)"/>
 	<br><br>
 	
 	<div id="approversList">Approvers:</div>
@@ -87,8 +87,8 @@ function setup() {
 	<form name = "feedbackForm">
 	
 	<br><br>
-	<input name = "feedbackInput" value = "" />
-	<input name = "feebackButton" type = "button" value = "Add Feedback" onClick = "handleFeedbackClick(this)"/>
+	<input id = "feedbackInput" value = "" />
+	<input id = "feedbackButton" type = "button" value = "Add Feedback" onClick = "handleFeedbackClick(this)"/>
 	<br><br>
 	
 	</form>

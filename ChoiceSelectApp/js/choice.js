@@ -20,19 +20,21 @@ function processGetTeam(result) {
 		document.getElementById("descLabel").innerHTML = "Choice Description: " + choiceDesc;
 		document.getElementById("sizeLabel").innerHTML = "Max Members: " + teamSize;
 		
-		/*
+		
 		//hide alt buttons if no alt exists
-		var listAlts = team["alternativeList"];
+		var listAlts = choice["alternativeList"];
 		for (var i = 0; i < listAlts.length; i++) {
 			
 			var currentAlt = listAlts[i];
 			
 			if (currentAlt["description"] == "") {
-				var eleName = "alt" + currentAlt["altNumber"] + "Btn";
-				document.getElementById(eleName).style.display = "none";
+				var name;
+				if (currentAlt["altNumber"] == 3) { document.getElementById("alt3Btn").style.display = "none"; }
+				if (currentAlt["altNumber"] == 4) { document.getElementById("alt4Btn").style.display = "none"; }
+				if (currentAlt["altNumber"] == 5) { document.getElementById("alt5Btn").style.display = "none"; }
 			}
 		}
-		*/
+		
 		
 		//hide buttons if choice is finalized
 		if (choice["finalChoice"] != -1) {
@@ -45,7 +47,7 @@ function processGetTeam(result) {
 			
 			//dislpay choice is complete
 			var completionMsg = document.createElement("p");
-			completionMsg.innerHTML = "Choice was completed on" + choice["completionDate"].toString() 
+			completionMsg.innerHTML = "Choice was completed on" + choice["completionDate"] 
 				+ "<br>No more changes can be made.";
 			document.choiceLabelForm.append(completionMsg);
 		}
@@ -73,7 +75,7 @@ function processGetAlt(result, altNum) {
 		
 		//set alt description label
 		var altDescLabel = document.getElementById('altDesc');
-		altDescLabel.innerHTML = "Alternative " + altNum + " Description :" + desc;
+		altDescLabel.innerHTML = "Alternative " + altNum + " Description: " + desc;
 		
 		//get alt approvers and disapprovers lists
 		var listAp = altObj["approvers"];
@@ -86,24 +88,26 @@ function processGetAlt(result, altNum) {
 		disapLabel.innerHTML = listDisap.length + " Disapprovers: " + listDisap.toString();
 		
 		//get feedback from alt
-		var listFeedback = altObj["feedback"];
+		var list = altObj["feebackList"];
 
 		//display feedback
-		for (var i = 0; i < listFeedback.length; i++) {
-			//get feedback of current index
-			var current = listFeedback[i];
-
-			//get each attribute
-			var when = current["timestamp"];
-			var creator = current["creator"];
-			var desc = current["description"];
-			
-			//display in table
-			var table = document.getElementById("feedbackTable");
-			var currentRow = table.insertRow(1);
-			currentRow.insertCell(0).innerHTML = desc;
-			currentRow.insertCell(1).innerHTML = creator;
-			currentRow.insertCell(2).innerHTML = when;
+		if (list.length > 0) {
+			for (var i = 0; i < list.length; i++) {
+				//get feedback of current index
+				var current = list[i];
+	
+				//get each attribute
+				var when = current["timestamp"];
+				var creator = current["creator"];
+				var desc = current["description"];
+				
+				//display in table
+				var table = document.getElementById("feedbackTable");
+				var currentRow = table.insertRow(1);
+				currentRow.insertCell(0).innerHTML = desc;
+				currentRow.insertCell(1).innerHTML = creator;
+				currentRow.insertCell(2).innerHTML = when;
+			}
 		}
 		
 	} else {
