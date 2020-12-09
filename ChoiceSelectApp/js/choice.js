@@ -86,7 +86,7 @@ function processGetAlt(result, altNum) {
 		disapLabel.innerHTML = listDisap.length + " Disapprovers: " + listDisap.toString();
 		
 		//get feedback from alt
-		var listFeedback = altObj["feedbackList"];
+		var listFeedback = altObj["feedback"];
 
 		//display feedback
 		for (var i = 0; i < listFeedback.length; i++) {
@@ -97,13 +97,14 @@ function processGetAlt(result, altNum) {
 			var when = current["timestamp"];
 			var creator = current["creator"];
 			var desc = current["description"];
-
-			//create new <p> for each feeback
-			var fb = document.createElement("p");
-			fb.innerHTML = "Description: " + desc + ", Created by " + creator + " on " + when.toString();
-			document.feedbackDisplay.appendChild(fb);
+			
+			//display in table
+			var table = document.getElementById("feedbackTable");
+			var currentRow = table.insertRow(1);
+			currentRow.insertCell(0).innerHTML = desc;
+			currentRow.insertCell(1).innerHTML = creator;
+			currentRow.insertCell(2).innerHTML = when;
 		}
-		
 		
 	} else {
 		console.log("getAlt error: " + error);

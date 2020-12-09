@@ -24,6 +24,14 @@ function setup() {
 	.center {
 		text-align: center;
 	}
+	table.center {
+	margin-left: auto; 
+	margin-right: auto;
+	}
+	table, th, td {
+	border: 1px solid black;
+	border-collapse: collapse;
+	}
 </style>
 
 <body onload = "setup()">
@@ -88,6 +96,13 @@ function setup() {
 	<form name = "feedbackDisplay">
 	Feedback:
 	<br>
+	<table id = "feedbackTable" class = "center">
+	<tr>
+		<th>Feedback Description</th>
+		<th>Author</th>
+		<th>Creation Date</th>
+	</tr>
+	</table>
 	</form>
 	
 	<br><br><br>

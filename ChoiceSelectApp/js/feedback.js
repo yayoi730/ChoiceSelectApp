@@ -72,8 +72,8 @@ function processGetAltFeedback(result) {
 function handleFeedbackClick(e) {
 	
 	//make sure current alternative is valid
-	if (document.getElementById("altDesc").value == "" || document.getElementById("altDesc").value == null) {
-		alert("Cannot add feedback to empty alternative!");
+	if (document.getElementById("altDesc").value == "" || document.getElementById("altDesc").value == null || document.getElementById("feedbackInput").value == "") {
+		alert("Make sure alternative is feedback is a valid input.");
 	} else {
 	
 		var urlParams = new URLSearchParams(window.location.search);	//grab current url
