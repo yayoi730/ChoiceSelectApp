@@ -13,6 +13,7 @@ import choice.select.app.http.CreateFeedbackResponse;
 import rando.randomness.app.demo.db.ChoiceDAO;
 import rando.randomness.app.demo.model.Alternative;
 import rando.randomness.app.demo.model.Choice;
+import rando.randomness.app.demo.model.Member;
 import rando.randomness.app.demo.model.Team;
 
 public class FeedbackTest extends LambdaTest {
@@ -34,7 +35,9 @@ public class FeedbackTest extends LambdaTest {
 		ChoiceDAO dao = new ChoiceDAO();
 		ArrayList<Alternative> alts = new ArrayList<>();
 		alts.add(new Alternative("testDesc"));
-		Team t = new Team(null, new Choice("Choice", alts, new Timestamp(0)));
+		ArrayList<Member> mems = new ArrayList<>();
+		mems.add(new Member("TestName"));
+		Team t = new Team(mems, new Choice("Choice", alts, new java.sql.Timestamp(System.currentTimeMillis())));
 		try{
 			dao.addTeam(t);
 			cfr.setaID(alts.get(0).getAID());
