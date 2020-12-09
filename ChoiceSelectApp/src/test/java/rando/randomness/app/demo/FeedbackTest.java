@@ -1,6 +1,7 @@
 package rando.randomness.app.demo;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import org.junit.Assert;
 import org.junit.Test;
@@ -20,7 +21,7 @@ public class FeedbackTest extends LambdaTest {
     	CreateFeedbackHandler handler = new CreateFeedbackHandler();
     	CreateFeedbackRequest req = new Gson().fromJson(incoming, CreateFeedbackRequest.class);
        
-        CreateFeedbackResponse resp = handler.handleRequest(req, createContext("createFeedback"));
+        CreateFeedbackResponse resp = handler.handleRequest(req, createContext("addFeedback"));
         
         Assert.assertEquals(200, resp.httpCode);
     }
@@ -33,7 +34,7 @@ public class FeedbackTest extends LambdaTest {
 		ChoiceDAO dao = new ChoiceDAO();
 		ArrayList<Alternative> alts = new ArrayList<>();
 		alts.add(new Alternative("testDesc"));
-		Team t = new Team(null, new Choice(null, alts, null));
+		Team t = new Team(null, new Choice("Choice", alts, new Timestamp(0)));
 		try{
 			dao.addTeam(t);
 			cfr.setaID(alts.get(0).getAID());
