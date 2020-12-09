@@ -16,32 +16,37 @@ function processDeleteReports(result) {
 }
 
 
-function handleDeleteReports (e) {
+function handleDeleteReports(e) {
 	
 	//confirm deletion
 	if (confirm("Are you sure you want to delete the old reports?")) {
 		
-		var data = {};
-		data["daysOld"] = document.getElementById("daysOldInput");
+		if (Number.isInteger(Number(document.getElementById("daysOldInput").value))) {
+			var data = {};
+			data["daysOld"] = document.getElementById("daysOldInput").value;
+			
+			var js = JSON.stringify(data);
+			console.log("JS: " + js);
 		
-		var js = JSON.stringify(data);
-		console.log("JS: " + js);
-	
-		//send addFeedback request
-		var xhr = new XMLHttpRequest();
-		xhr("POST", deleteReports_url, true);
-		xhr(js);
-		console.log("deleteReports req sent");
-	
-		//process and update html
-		xhr = function () {
-	    	if (xhr.readyState == XMLHttpRequest.DONE) {
-				console.log ("XHR:" + xhr.responseText);
-				processDeleteReports(xhr.responseText);
-			} else {
-				processDeleteReports("N/A");
-			}
-  		};
+			//send addFeedback request
+			var xhr = new XMLHttpRequest();
+			xhr.open("POST", deleteReports_url, true);
+			xhr.send(js);
+			console.log("deleteReports req sent");
+		
+			//process and update html
+			xhr.onloadend = function () {
+		    	if (xhr.readyState == XMLHttpRequest.DONE) {
+					console.log ("XHR:" + xhr.responseText);
+					processDeleteReports(xhr.responseText);
+				} else {
+					processDeleteReports("N/A");
+				}
+  			};
+		} else {
+			alert("Value entered must be an integer");
+		}
+		
 	}
 
 }

@@ -20,12 +20,13 @@ function processGetReports(result) {
 			var cid = current["choiceID"];
 			var creationDate = current["creationDate"];				
 			var completed = current["completed"];
+			var desc = current["description"];
 			
 			//display in table
 			var table = document.getElementById("reportsTable");
 			var currentRow = table.insertRow(1);
 			currentRow.insertCell(0).innerHTML = cid;
-			currentRow.insertCell(1).innerHTML = "choice desc";
+			currentRow.insertCell(1).innerHTML = desc;
 			currentRow.insertCell(2).innerHTML = creationDate;
 			currentRow.insertCell(3).innerHTML = completed;
 		}
