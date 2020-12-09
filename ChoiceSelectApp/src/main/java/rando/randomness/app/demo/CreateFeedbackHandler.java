@@ -1,5 +1,7 @@
 package rando.randomness.app.demo;
 
+import java.sql.Timestamp;
+
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
@@ -42,7 +44,8 @@ public class CreateFeedbackHandler implements RequestHandler<CreateFeedbackReque
 	
 	public Alternative createFeedback(String aID, String creator, String desc) throws Exception{
 		ChoiceDAO dao = new ChoiceDAO();
-		Feedback f = new Feedback(creator, desc);
+		java.sql.Timestamp ts = new java.sql.Timestamp(System.currentTimeMillis());
+		Feedback f = new Feedback(ts, creator, desc);
 		dao.addFeedback(f, aID, creator);
 		Alternative a = dao.retrieveAlternative(aID);
 		return a;
