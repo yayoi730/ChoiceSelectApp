@@ -46,7 +46,7 @@ public class CreateReportHandler implements RequestHandler<CreateReportRequest, 
 		if(wantReports) {
 			ArrayList<Choice> choices = dao.retrieveAllChoices();
 			for(Choice c : choices) {
-				reports.add(new Report(c.getID(), c.getCreationDate().toString(), c.getCompleted()));
+				reports.add(new Report(c.getID(), c.getDescription() ,c.getCreationDate().toString(), c.getCompleted()));
 			}
 		}
 		return reports;

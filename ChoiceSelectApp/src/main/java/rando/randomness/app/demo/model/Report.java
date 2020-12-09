@@ -6,9 +6,10 @@ public class Report {
 	String creationDate;
 	boolean completed;
 	
-	public Report(String choiceID, String creationDate, boolean completed) {
+	public Report(String choiceID, String description, String creationDate, boolean completed) {
 		this.choiceID = choiceID;
 		this.creationDate = creationDate;
+		this.description = description;
 		this.completed = completed;
 	}
 	
