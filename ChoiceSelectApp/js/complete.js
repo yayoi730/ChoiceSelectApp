@@ -1,5 +1,5 @@
 
-function processComplete(result, completionNum) {
+function processComplete(result, isAlt) {
 	console.log("complete result:" + result);
 	var js = JSON.parse(result);
 	
@@ -7,16 +7,14 @@ function processComplete(result, completionNum) {
 	var error = js["error"];
 	
 	if (status == 200) {
-		if(completionNum == 0) {
+		if(isAlt != true) {
 			alert("You chose: main choice. Choice has been finalized.")
-		} else if (completionNum > 0 && completionNum < 6) {
-			alert("You chose: alternative " + completionNum + ". Choice has been finalized.")
 		} else {
-			console.log("invalid completion number?");
-		}	
+			alert("You chose: alternative " + completionNum + ". Choice has been finalized.")
+		}
 		
 		//refreshing page will disable the buttons
-		wondow.location.refresh();
+		window.location.reload();
 		
 	} else {
 		alert("'Mark As Chosen' request could not be completed");
@@ -47,17 +45,17 @@ function handleCompleteClick(e, isAlt) {
 
 		//send complete request
 		var xhr = new XMLHttpRequest();
-		xhr("POST", complete_url, true);
-		xhr(js);
+		xhr.open("POST", complete_url, true);
+		xhr.send(js);
 		console.log("complete req sent");
 	
 		//process and update html
-		xhr = function () {
+		xhr.onloadend = function () {
 	    	if (xhr.readyState == XMLHttpRequest.DONE) {
 				console.log ("XHR:" + xhr.responseText);
-				processComplete(xhr.responseText, completionNum);
+				processComplete(xhr.responseText, isAlt);
 			} else {
-				processComplete("N/A", completionNum);
+				processComplete("N/A", isAlt);
 			}
   		};
 	}
