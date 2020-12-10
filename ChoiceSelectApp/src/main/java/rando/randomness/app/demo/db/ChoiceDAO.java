@@ -176,7 +176,7 @@ public class ChoiceDAO {
 			f.setfID(fID);
 			ps.setString(1,  fID);
 			ps.setString(2,  aID);
-			ps.setString(3,  f.getTimestamp().toString());
+			ps.setString(3,  f.getTimestamp());
 			ps.setString(4, f.getDescription());
 			ps.setString(5, creator);
 			ps.execute();
@@ -727,10 +727,10 @@ public class ChoiceDAO {
 
 	private Feedback generateFeedback(ResultSet r) throws SQLException
 	{
-		Timestamp t = Timestamp.valueOf(r.getString("timestamp"));
+		String timestamp = r.getString("timestamp");
 		String desc = r.getString("description");
 		String creator = r.getString("name");
-		Feedback f = new Feedback(t.toString(), desc, creator);
+		Feedback f = new Feedback(timestamp, desc, creator);
 		f.setfID(r.getString("FID"));
 		return f;
 	}
