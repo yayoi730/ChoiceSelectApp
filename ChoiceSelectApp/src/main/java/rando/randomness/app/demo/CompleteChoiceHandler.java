@@ -33,7 +33,7 @@ public class CompleteChoiceHandler implements RequestHandler<CompleteChoiceReque
 			c.setCompletionDate(completionDate);
 			c.setFinalChoice(req.getChoiceNum());
 			dao.completeChoice(c);
-			response = new CompleteChoiceResponse();
+			response = new CompleteChoiceResponse(completionDate.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 			response = new CompleteChoiceResponse(400,"");
