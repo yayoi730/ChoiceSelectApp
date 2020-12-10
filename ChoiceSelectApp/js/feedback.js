@@ -34,6 +34,7 @@ function processGetAltFeedback(result) {
 		var dataFb = {};
 		dataFb["aID"] = aid;
 		dataFb["creator"] = query.get("user");
+		dataFb["cID"] = query.get("tid");
 		
 		//make sure feedback is not empty
 		if (document.getElementById("feedbackInput").value == null || document.getElementById("feedbackInput").value == "") {

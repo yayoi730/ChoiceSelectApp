@@ -37,6 +37,8 @@ function processGetAltOpinion(result, isApproval, currentUser) {
 		dataOp["aID"] = aid;
 		dataOp["prover"] = currentUser;
 		dataOp["approves"] = isApproval;
+		query = new URLSearchParams();
+		dataOp["cID"] = query.get("tid");
 		var jsOp = JSON.stringify(dataOp);
 		
 		//send request
