@@ -1,7 +1,5 @@
 package rando.randomness.app.demo.model;
 
-import java.sql.Timestamp;
-
 public class Feedback {
 	String fID;
 	String timestamp;

@@ -1,11 +1,14 @@
 package choice.select.app.http;
 
 public class CompleteChoiceResponse {
+	
+	public String timestamp;
 	public final int httpCode;
 	public final String error;
 	
 	// 200 means success
-		public CompleteChoiceResponse () {
+		public CompleteChoiceResponse (String ts) {
+			this.timestamp = ts;
 			this.httpCode = 200;
 			this.error = "";
 		}		
