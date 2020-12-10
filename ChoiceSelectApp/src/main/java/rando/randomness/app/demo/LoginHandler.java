@@ -26,8 +26,7 @@ public class LoginHandler implements RequestHandler<LoginRequest, LoginResponse>
 		logger.log("Loading Java Lambda handler of CreateMemberHandler");
 		logger.log(req.toString());
 		
-		ChoiceDAO dao =  new ChoiceDAO();
-		
+		ChoiceDAO dao =  new ChoiceDAO();		
 		
 		boolean login = false;
 		boolean newUser = false;
@@ -35,11 +34,15 @@ public class LoginHandler implements RequestHandler<LoginRequest, LoginResponse>
 		Member loadedMember = null;	
 		Member newMember = null;	
 		Team loadedTeam = null;
+		
 
 		try {
-			
 			loadedMember = loadMemberFromRDS(req.getCid(), req.getName());
 			loadedTeam = loadTeamFromRDS(req.getCid());
+			if(loadedTeam.getChoice().getCompleted())
+			{
+				//throw new Exception("Choice Complete");
+			}
 			if(req.getPassword().equals("")) {
 				if(loadedMember.getPassword().equals("")) {
 					login = true;
@@ -54,22 +57,23 @@ public class LoginHandler implements RequestHandler<LoginRequest, LoginResponse>
 			login = false;
 			try {
 				loadedTeam = dao.retrieveTeam(req.getCid());
+				if(loadedTeam.getChoice().getCompleted())
+				{
+					//throw new Exception("Choice Complete");
+				}
 				if(loadedTeam.getMembers().size() < loadedTeam.getTeamSize()){
 					newMember = new Member(req.getName(), req.getPassword());
 					dao.addMember(newMember, req.getCid());
-					newUser = true;
-					
+					newUser = true;		
 				}
 			}
 			catch (Exception b) {
 				login = false;
 				newUser = false;
 			}
-		}
+		}		
 		
 		
-		// compute proper response and return. Note that the status code is internal to the HTTP response
-		// and has to be processed specifically by the client code.
 		LoginResponse response;
 		if(login){
 			response = new LoginResponse(loadedMember, loadedTeam); 
@@ -82,33 +86,23 @@ public class LoginHandler implements RequestHandler<LoginRequest, LoginResponse>
 		return response; 
 	}
 
-	private Member loadMemberFromRDS(String tID, String name) {
+	private Member loadMemberFromRDS(String tID, String name) throws Exception{
 		ChoiceDAO dao =  new ChoiceDAO();
-		try {
-			ArrayList<Member> members =  dao.retrieveMembers(tID);
-			Member possibleMember = new Member(name);
-			for(int m = 0; m < members.size(); m++) {
-				if(members.get(m).getName().equals(possibleMember.getName())) {
-					return members.get(m);
-				}
+		ArrayList<Member> members =  dao.retrieveMembers(tID);
+		Member possibleMember = new Member(name);
+		for(int m = 0; m < members.size(); m++) {
+			if(members.get(m).getName().equals(possibleMember.getName())) {
+				return members.get(m);
 			}
-			return null;
 		}
-		catch(Exception e) {
-			return null;
-		}		
+		return null;	
 	}
 	
-	private Team loadTeamFromRDS(String tID) {
+	private Team loadTeamFromRDS(String tID) throws Exception{
 		ChoiceDAO dao =  new ChoiceDAO();
 		Team t = null;
-		try {
-			t = dao.retrieveTeam(tID);
-			return t;
-		}
-		catch(Exception e) {
-			return null;
-		}		
+		t = dao.retrieveTeam(tID);
+		return t;
 	}
 
 }

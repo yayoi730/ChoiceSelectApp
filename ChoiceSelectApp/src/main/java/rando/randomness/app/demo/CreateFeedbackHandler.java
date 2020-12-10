@@ -1,7 +1,5 @@
 package rando.randomness.app.demo;
 
-import java.sql.Timestamp;
-
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
@@ -30,7 +28,7 @@ public class CreateFeedbackHandler implements RequestHandler<CreateFeedbackReque
 		
 		CreateFeedbackResponse response;
 		try {
-			response = new CreateFeedbackResponse(createFeedback(req.getaID(), req.getCreator(), req.getDescription()));
+			response = new CreateFeedbackResponse(createFeedback(req.getcID(), req.getaID(), req.getCreator(), req.getDescription()));
 		}
 		catch(Exception e) {
 			response = new CreateFeedbackResponse(400, errMsg);
@@ -42,13 +40,16 @@ public class CreateFeedbackHandler implements RequestHandler<CreateFeedbackReque
 		return response;
 	}
 	
-	public Alternative createFeedback(String aID, String creator, String desc) throws Exception{
+	public Alternative createFeedback(String cID, String aID, String creator, String desc) throws Exception{
 		ChoiceDAO dao = new ChoiceDAO();
-		java.sql.Timestamp ts = new java.sql.Timestamp(System.currentTimeMillis());
-		Feedback f = new Feedback(ts, desc, creator);
-		dao.addFeedback(f, aID, creator);
-		Alternative a = dao.retrieveAlternative(aID);
-		return a;
+		if(dao.retrieveChoice(cID).getCompleted() == false) {
+			java.sql.Timestamp ts = new java.sql.Timestamp(System.currentTimeMillis());
+			Feedback f = new Feedback(ts.toString(), desc, creator);
+			dao.addFeedback(f, aID, creator);
+			Alternative a = dao.retrieveAlternative(aID);
+			return a;
+		}
+		else {throw new Exception("Choice Complete");}
 	}
 
 }
