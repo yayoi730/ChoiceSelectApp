@@ -504,15 +504,23 @@ public class ChoiceDAO {
 			
 			for(Team team: allTeams)
 			{
-				Choice c = team.getChoice();
-				Timestamp creationDate = c.getCreationDate();
-				LocalDateTime conv = creationDate.toLocalDateTime();
-				conv = conv.plusDays(daysOld);
-				creationDate = Timestamp.valueOf(conv);
-				if(time.after(creationDate))
+				if(team.getChoice() == null)
 				{
-					tIDs.add(c.getID());
+					tIDs.add(team.getTID());
 				}
+				else
+				{
+					Choice c = team.getChoice();
+					Timestamp creationDate = c.getCreationDate();
+					LocalDateTime conv = creationDate.toLocalDateTime();
+					conv = conv.plusDays(daysOld);
+					creationDate = Timestamp.valueOf(conv);
+					if(time.after(creationDate))
+					{
+						tIDs.add(c.getID());
+					}
+				}
+				
 			}
 			
 			for(String element: tIDs)
