@@ -30,6 +30,9 @@ public class OpinionHandler implements RequestHandler<OpinionRequest, OpinionRes
 		//How to check and update the database based on request to approve/disapprove
 		Alternative alt = null;
 		try {
+			if(dao.retrieveChoice(req.getcID()).getCompleted()) {
+				throw new Exception("Choice Complete");
+			}
 			dao.handleAppDisRequest(req.getApproves(), req.getaID(), req.getProver());
 			alt = dao.retrieveAlternative(req.getaID());
 			response = new OpinionResponse(alt);

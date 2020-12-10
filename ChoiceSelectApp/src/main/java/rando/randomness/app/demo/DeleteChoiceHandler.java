@@ -27,10 +27,13 @@ public class DeleteChoiceHandler  implements RequestHandler<DeleteChoiceRequest,
 		DeleteChoiceResponse response;
 		try {
 			ChoiceDAO dao = new ChoiceDAO();
-			dao.deleteOldChoices(req.daysOld);
-			response = new DeleteChoiceResponse();
+			if(dao.deleteOldChoices(req.daysOld)){
+				response = new DeleteChoiceResponse();
+			}
+			else {response = new DeleteChoiceResponse(400, "DOA returned false");}
 		}
 		catch(Exception e) {
+			e.printStackTrace();
 			response = new DeleteChoiceResponse(400, errMsg);
 		}
 		

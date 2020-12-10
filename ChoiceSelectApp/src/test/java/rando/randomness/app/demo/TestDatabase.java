@@ -38,8 +38,8 @@ public class TestDatabase {
 	    	a3.addApprover("Luthor");
 	    	a3.addApprover("Cameron");
 	    	a3.addDisapprover("Rodrick");
-	    	Feedback f1 = new Feedback(timestamp, "This is some feedback", "Rodrick");
-	    	Feedback f2 = new Feedback(timestamp, "This is some more feedback", "Luthor");
+	    	Feedback f1 = new Feedback(timestamp.toString(), "This is some feedback", "Rodrick");
+	    	Feedback f2 = new Feedback(timestamp.toString(), "This is some more feedback", "Luthor");
 	    	
 	    	a1.addFeedback(f1);
 	    	a2.addFeedback(f2);

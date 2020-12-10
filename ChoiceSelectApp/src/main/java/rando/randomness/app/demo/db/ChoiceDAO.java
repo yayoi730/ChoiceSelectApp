@@ -730,7 +730,7 @@ public class ChoiceDAO {
 		Timestamp t = Timestamp.valueOf(r.getString("timestamp"));
 		String desc = r.getString("description");
 		String creator = r.getString("name");
-		Feedback f = new Feedback(t, desc, creator);
+		Feedback f = new Feedback(t.toString(), desc, creator);
 		f.setfID(r.getString("FID"));
 		return f;
 	}

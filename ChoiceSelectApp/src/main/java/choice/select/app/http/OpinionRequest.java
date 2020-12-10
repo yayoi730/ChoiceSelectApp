@@ -1,9 +1,8 @@
 package choice.select.app.http;
 
-import java.util.ArrayList;
-
 public class OpinionRequest {
 	String aID;
+	String cID;
 	String approver;
 	boolean approves;
 	
@@ -15,6 +14,9 @@ public class OpinionRequest {
 	}
 	public String getaID() {return aID;}
 	public void setaID(String aID) {this.aID = aID;}
+	
+	public String getcID() {return this.cID;}
+	public void setcID(String cID) {this.cID = cID;}
 	
 	public String getProver() {return approver;}
 	public void setProver(String prover) {this.approver = prover;}
