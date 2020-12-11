@@ -47,7 +47,8 @@ function processGetTeam(result) {
 			
 			//dislpay choice is complete
 			var completionMsg = document.createElement("p");
-			completionMsg.innerHTML = "<mark>Choice was completed on " + choice["completionDate"].toString() 
+			var date = new Date(choice["completionDate"]);
+			completionMsg.innerHTML = "<mark>Choice was completed on " + date.toDateString()
 				+ "<br>No more changes can be made.</mark>";
 			document.choiceLabelForm.append(completionMsg);
 		}
