@@ -1,7 +1,6 @@
 package rando.randomness.app.demo.model;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 
 public class Team {

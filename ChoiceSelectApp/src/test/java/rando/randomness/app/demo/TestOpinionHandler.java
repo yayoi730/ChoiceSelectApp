@@ -9,9 +9,6 @@ import org.junit.Test;
 
 import com.google.gson.Gson;
 
-import choice.select.app.http.CreateTeamRequest;
-import choice.select.app.http.CreateTeamResponse;
-import choice.select.app.http.GetAltRequest;
 import choice.select.app.http.OpinionRequest;
 import choice.select.app.http.OpinionResponse;
 import rando.randomness.app.demo.db.ChoiceDAO;

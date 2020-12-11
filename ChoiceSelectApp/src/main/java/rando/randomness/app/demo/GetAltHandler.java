@@ -11,7 +11,6 @@ import choice.select.app.http.GetAltRequest;
 import choice.select.app.http.GetAltResponse;
 import rando.randomness.app.demo.db.ChoiceDAO;
 import rando.randomness.app.demo.model.Alternative;
-import rando.randomness.app.demo.model.Choice;
 
 public class GetAltHandler implements RequestHandler<GetAltRequest, GetAltResponse> {
 	
@@ -25,10 +24,7 @@ public class GetAltHandler implements RequestHandler<GetAltRequest, GetAltRespon
 		logger = context.getLogger();
 		logger.log("Loading Java Lambda handler of GetChoiceHandler");
 		logger.log(req.toString());
-		
-		ChoiceDAO dao =  new ChoiceDAO();
-		
-		boolean loaded = true;
+
 		String failMessage = "unexpected error retriving alternative";
 	
 		Alternative loadedAlt = null;
@@ -43,7 +39,7 @@ public class GetAltHandler implements RequestHandler<GetAltRequest, GetAltRespon
 			response = new GetAltResponse(loadedAlt);
 		} 
 		catch (Exception e) {
-			response = new GetAltResponse(400, "Could not retrieve alternative");		
+			response = new GetAltResponse(400, failMessage);		
 		}
 		
 		return response; 

@@ -1,8 +1,5 @@
 package choice.select.app.http;
 
-import java.sql.Date;
-import java.sql.Timestamp;
-
 public class CompleteChoiceRequest {
 	String tID;
 	int choiceNum;

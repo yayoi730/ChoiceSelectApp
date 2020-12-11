@@ -11,17 +11,6 @@ import com.google.gson.Gson;
 
 import choice.select.app.http.CompleteChoiceRequest;
 import choice.select.app.http.CompleteChoiceResponse;
-import choice.select.app.http.CreateReportRequest;
-import choice.select.app.http.CreateTeamRequest;
-import choice.select.app.http.CreateTeamResponse;
-import choice.select.app.http.DeleteChoiceRequest;
-import choice.select.app.http.DeleteChoiceResponse;
-
-import java.io.IOException;
-import java.util.ArrayList;
-
-
-import com.google.gson.Gson;
 
 class TestCompleteHandler extends LambdaTest {
 
@@ -47,7 +36,7 @@ class TestCompleteHandler extends LambdaTest {
 	}
 	
 	
-	@Test
+	//@Test
 	void test() {
 		fail("Not yet implemented");
 	}
