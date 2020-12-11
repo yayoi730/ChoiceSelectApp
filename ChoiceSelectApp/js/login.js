@@ -27,7 +27,7 @@ function process(result, name) {
 		console.log("query: " + urlParams.toString());
 		
 	} else {
-		alert("Error loading choice. Choice ID does not exist or username is taken. Please try again.")
+		alert("Error loading choice. Choice ID does not exist or username is taken. Please try again. Make sure the team is not already full.")
 		console.log("error loading choice");
 	}
 }
