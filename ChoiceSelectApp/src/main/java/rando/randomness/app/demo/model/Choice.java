@@ -8,7 +8,7 @@ public class Choice {
 	String cid;
 	String description;
 	Timestamp creationDate;
-	Timestamp completionDate;
+	String completionDate;
 	int finalChoice = -1;
 
 	public Choice(String description, Timestamp creationDate) {
@@ -41,8 +41,8 @@ public class Choice {
 	
 	public Timestamp getCreationDate() {return this.creationDate;}
 	
-	public Timestamp getCompletionDate() {return this.completionDate;}
-	public void setCompletionDate(Timestamp newTimestamp) {this.completionDate = newTimestamp;}
+	public String getCompletionDate() {return this.completionDate;}
+	public void setCompletionDate(String newTimestamp) {this.completionDate = newTimestamp;}
 	
 	public ArrayList<Alternative> getAlternativeList(){ return this.alternatives; }
 	public void addAlternative(Alternative a) { this.alternatives.add(a); }
@@ -61,7 +61,7 @@ public class Choice {
 	
 	public void completeChoice(int choiceNum) { // basically a setter, needs clarification
 		this.finalChoice = choiceNum;
-		this.completionDate = new Timestamp(System.currentTimeMillis());
+		this.completionDate = new Timestamp(System.currentTimeMillis()).toString();
 	}
 	
 }

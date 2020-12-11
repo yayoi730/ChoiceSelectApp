@@ -30,7 +30,7 @@ public class CompleteChoiceHandler implements RequestHandler<CompleteChoiceReque
 		Choice c;
 		try {
 			c = dao.retrieveChoice(tid);
-			c.setCompletionDate(completionDate);
+			c.setCompletionDate(completionDate.toString());
 			c.setFinalChoice(req.getChoiceNum());
 			dao.completeChoice(c);
 			response = new CompleteChoiceResponse(completionDate.toString());
