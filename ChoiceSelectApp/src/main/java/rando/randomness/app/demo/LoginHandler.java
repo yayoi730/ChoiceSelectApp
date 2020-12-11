@@ -61,7 +61,7 @@ public class LoginHandler implements RequestHandler<LoginRequest, LoginResponse>
 				{
 					//throw new Exception("Choice Complete");
 				}
-				if(loadedTeam.getMembers().size() < loadedTeam.getTeamSize()){
+				if(loadedTeam.getMembers().size() < loadedTeam.getTeamSize()){ //create new member
 					newMember = new Member(req.getName(), req.getPassword());
 					dao.addMember(newMember, req.getCid());
 					newUser = true;		

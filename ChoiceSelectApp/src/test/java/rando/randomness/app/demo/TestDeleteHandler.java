@@ -9,17 +9,8 @@ import org.junit.jupiter.api.Test;
 
 import com.google.gson.Gson;
 
-import choice.select.app.http.CreateReportRequest;
-import choice.select.app.http.CreateTeamRequest;
-import choice.select.app.http.CreateTeamResponse;
 import choice.select.app.http.DeleteChoiceRequest;
 import choice.select.app.http.DeleteChoiceResponse;
-
-import java.io.IOException;
-import java.util.ArrayList;
-
-
-import com.google.gson.Gson;
 
 class TestDeleteHandler extends LambdaTest {
 
@@ -44,7 +35,7 @@ class TestDeleteHandler extends LambdaTest {
 	}
 	
 	
-	@Test
+	//@Test
 	void test() {
 		fail("Not yet implemented");
 	}

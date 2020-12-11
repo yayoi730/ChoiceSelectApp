@@ -9,8 +9,6 @@ import com.google.gson.Gson;
 
 import choice.select.app.http.GetAltRequest;
 import choice.select.app.http.GetAltResponse;
-import choice.select.app.http.GetTeamRequest;
-import choice.select.app.http.GetTeamResponse;
 
 public class TestGetAltHandler extends LambdaTest{
 	void testSuccessInput(String incoming) throws IOException {

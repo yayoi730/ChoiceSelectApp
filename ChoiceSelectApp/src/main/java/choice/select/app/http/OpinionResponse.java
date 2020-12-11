@@ -1,9 +1,6 @@
 package choice.select.app.http;
 
-import java.util.ArrayList;
-
 import rando.randomness.app.demo.model.Alternative;
-import rando.randomness.app.demo.model.Report;
 
 public class OpinionResponse {
 	public Alternative alt;

@@ -2,9 +2,6 @@ package choice.select.app.http;
 
 import java.util.ArrayList;
 
-import rando.randomness.app.demo.model.Choice;
-import rando.randomness.app.demo.model.Member;
-
 public class CreateTeamRequest {
 	String name;
 	String password;

@@ -3,11 +3,8 @@ package rando.randomness.app.demo.db;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
-//import edu.wpi.cs.heineman.demo.model.Constant;
-import rando.randomness.app.demo.db.DatabaseUtil;
 import rando.randomness.app.demo.model.Alternative;
 import rando.randomness.app.demo.model.Choice;
 import rando.randomness.app.demo.model.Feedback;

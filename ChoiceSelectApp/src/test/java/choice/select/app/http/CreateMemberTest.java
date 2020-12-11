@@ -10,7 +10,6 @@ import org.junit.Test;
 import rando.randomness.app.demo.db.ChoiceDAO;
 import rando.randomness.app.demo.model.Alternative;
 import rando.randomness.app.demo.model.Choice;
-import rando.randomness.app.demo.model.Feedback;
 import rando.randomness.app.demo.model.Member;
 import rando.randomness.app.demo.model.Team;
 
