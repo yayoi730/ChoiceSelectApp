@@ -683,7 +683,7 @@ public class ChoiceDAO {
 		String cID = r.getString("CID");
 		String description = r.getString("description");
 		Timestamp dateOfCreation = Timestamp.valueOf(r.getString("dateOfCreation"));
-		String dOC= r.getString("dateOfCompletion");
+		String dOC = r.getString("dateOfCompletion");
 
 
 		Integer finalChoice = r.getInt("finalChoice");
@@ -699,7 +699,7 @@ public class ChoiceDAO {
 		}
 		else
 		{
-			Timestamp dateOfCompletion = Timestamp.valueOf(r.getString("dateOfCompletion"));
+			String dateOfCompletion = r.getString("dateOfCompletion");
 			c.setCompletionDate(dateOfCompletion);
 		}
 
